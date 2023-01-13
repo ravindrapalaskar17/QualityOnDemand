@@ -464,16 +464,7 @@ components:
             $ref: "#/components/schemas/ErrorInfo"
           example:
             code: NOT_FOUND
-            message: "Session Id does not exist"
-    Generic501:
-      description: Not Implemented
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-          example:
-            code: NOT_IMPLEMENTED
-            message: "Not Implemented for this version as server not support for this UE"        
+            message: "Session Id does not exist"     
     Generic503:
       description: Service unavailable
       content:
