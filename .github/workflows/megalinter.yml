@@ -4,10 +4,10 @@
 name: MegaLinter
 
 on:  # yamllint disable-line rule:truthy
-  push : 
-     branches: [draft/Enable-JAVA-linting-in-test-contribution-of-qod]
-   #pull_request:
-     #branches: [master, main]
+  push:
+    branches: [draft/Enable-JAVA-linting-in-test-contribution-of-qod]
+  # pull_request:
+    # branches: [master, main]
 
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
@@ -50,8 +50,8 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
-          DISABLE: COPYPASTE,MARKDOWN,JAVA_PMD
-          DISABLE_LINTERS: SPELL_CSPELL,SPELL_LYCHEE,YAML_PRETTIER,REPOSITORY_SEMGREP,REPOSITORY_DEVSKIM,REPOSITORY_KICS,REPOSITORY_TRIVY,REPOSITORY_CHECKOV,REPOSITORY_GITLEAKS
+          DISABLE: COPYPASTE,MARKDOWN
+          DISABLE_LINTERS: SPELL_CSPELL,SPELL_LYCHEE,YAML_PRETTIER,REPOSITORY_SEMGREP,REPOSITORY_DEVSKIM,REPOSITORY_KICS,REPOSITORY_TRIVY,REPOSITORY_CHECKOV,REPOSITORY_GITLEAKS,JAVA_PMD
           YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
           JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
 
