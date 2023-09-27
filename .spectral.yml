@@ -1,0 +1,20 @@
+rules:
+  no-empty-description:
+    description: Ensure that all operations have a non-empty description.
+    given: $.paths.*.*.description
+    severity: error
+    then:
+      field: "length"
+      function: greaterThan
+      functionOptions:
+        threshold: 0
+
+  no-unused-parameters:
+    description: Ensure that there are no unused parameters in operations.
+    given: $.paths.*.*.parameters
+    severity: warning
+    then:
+      field: "length"
+      function: greaterThan
+      functionOptions:
+        threshold: 0
