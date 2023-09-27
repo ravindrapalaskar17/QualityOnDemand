@@ -42,7 +42,7 @@ jobs:
         run: npm install -g @stoplight/spectral
 
       - name: Run Spectral Lint
-        run: spectral lint ${{ github.workspace }}/qod-api.yaml -c .spectral.yml
+        run: spectral lint ${{ github.workspace }}/qod-api.yaml
 
       # MegaLinter
       - name: MegaLinter
