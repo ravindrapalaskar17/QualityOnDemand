@@ -1,20 +1,14 @@
 rules:
-  no-empty-description:
-    description: Ensure that all operations have a non-empty description.
-    given: $.paths.*.*.description
-    severity: error
+  oas3-api-servers:
+    description: "OpenAPI `servers` must be present and non-empty."
+    formats: ["oas3"]
+    given: "$"
     then:
-      field: "length"
-      function: greaterThan
+      field: servers
+      function: schema
       functionOptions:
-        threshold: 0
-
-  no-unused-parameters:
-    description: Ensure that there are no unused parameters in operations.
-    given: $.paths.*.*.parameters
-    severity: warning
-    then:
-      field: "length"
-      function: greaterThan
-      functionOptions:
-        threshold: 0
+        schema:
+          items:
+            type: object
+          minItems: 1
+          type: array
