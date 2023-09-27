@@ -58,8 +58,7 @@ jobs:
 
           # Add the Spectral Linter
       - name: Spectral Linter
-        run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed
-      
+        run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed      
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
