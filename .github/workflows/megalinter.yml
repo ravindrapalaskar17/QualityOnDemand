@@ -38,6 +38,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
 
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral
+
+      - name: Run Spectral Lint
+        run: spectral lint code/API_definitions/qod-api.yaml -c .spectral.yml
+
       # MegaLinter
       - name: MegaLinter
         id: ml
