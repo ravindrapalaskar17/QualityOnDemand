@@ -28,6 +28,8 @@ jobs:
   build:
     name: MegaLinter
     runs-on: ubuntu-latest
+    container:
+      image: custom-nodejs-image:latest
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push, comment issues & post new PR
       # Remove the ones you do not need
@@ -35,6 +37,13 @@ jobs:
       issues: write
       pull-requests: write
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Choose your desired Node.js version
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm install spellchecker
       # Git Checkout
       - name: Checkout Code
         uses: actions/checkout@v3
