@@ -75,7 +75,6 @@ jobs:
            node spell-check.js qod-api.yaml
         env:
           NODE_PATH: ./node_modules
-          
         # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
