@@ -73,7 +73,7 @@ jobs:
         # JavaScript Spell Check
       - name: JavaScript Spell Check
         run: |
-           node spell-check.js <path_to_your_input_file>
+           node spell-check.js qod-api.yaml
         env:
            NODE_PATH: ./node_modules
 
