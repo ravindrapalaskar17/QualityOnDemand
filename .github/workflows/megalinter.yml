@@ -69,13 +69,13 @@ jobs:
           # Add the Spectral Linter
       - name: Spectral Linter
         run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed
-        
         # JavaScript Spell Check
       - name: JavaScript Spell Check
         run: |
            node spell-check.js qod-api.yaml
         env:
           NODE_PATH: ./node_modules
+          
         # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
