@@ -15,11 +15,7 @@ env:  # Comment env block if you do not want to apply fixes
   APPLY_FIXES_MODE: commit  # If APPLY_FIXES is used, defines if the fixes are directly committed (commit) or posted in a PR (pull_request)
   # Add Spectral Configuration
   SPECTRAL_CONFIG: .spectral.yml  # Path to your Spectral configuration file
-  # Enable the spell check linter
-  SPELL_CHECK: true
-  # Define the JavaScript spell check function
-  SPELL_CHECK_JS_FUNCTION: "checkSpell"
-
+  
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
@@ -35,13 +31,6 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Choose your desired Node.js version
-          cache: 'npm'
-      - name: Install Dependencies
-        run: npm install spellchecker
       # Git Checkout
       - name: Checkout Code
         uses: actions/checkout@v3
