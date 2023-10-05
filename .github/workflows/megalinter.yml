@@ -16,7 +16,7 @@ env:  # Comment env block if you do not want to apply fixes
   # Add Spectral Configuration
   SPECTRAL_CONFIG: .spectral.yml  # Path to your Spectral configuration file
   SPELL_CHECK: true  # Enable the spell check
-  SPELL_CHECK_JS_FILE: "spell-check.js"  # Specify the JavaScript file to run
+  SPELL_CHECK_JS_FILE: "scripts/spell-check.js"
 
 
 concurrency:
@@ -46,6 +46,10 @@ jobs:
 
       - name: Run Spectral Lint
         run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
+
+      - name: Install 'spellchecker' Module
+        run: npm install spellchecker
+        working-directory: ${{ github.workspace }}
 
       - name: JavaScript Spell Check
         run: |
