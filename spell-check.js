@@ -1,9 +1,9 @@
 const spellChecker = require('spellchecker');
-const exceptions = ["bic","datetime","gt","gte","icontains","iban","idempotency","isnull","lt","lte","md5","mimetype","oid","userpic"];
+const exceptions = ["bic", "datetime", "gt", "gte", "icontains", "iban", "idempotency", "isnull", "lt", "lte", "md5", "mimetype", "oid", "userpic"];
 
 const codeStyleRegex = /[_]/; // snake_case
 
-module.exports = function(input) {
+module.exports = (input) => {
   const words = input.split(codeStyleRegex);
   const mistakes = words
     .filter((word) => !exceptions.includes(word))
@@ -14,4 +14,5 @@ module.exports = function(input) {
       message: `Spelling mistakes found: ${mistakes.join(', ')}`,
     }];
   }
+  return [];
 }
