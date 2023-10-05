@@ -15,6 +15,9 @@ env:  # Comment env block if you do not want to apply fixes
   APPLY_FIXES_MODE: commit  # If APPLY_FIXES is used, defines if the fixes are directly committed (commit) or posted in a PR (pull_request)
   # Add Spectral Configuration
   SPECTRAL_CONFIG: .spectral.yml  # Path to your Spectral configuration file
+  SPELL_CHECK: true  # Enable the spell check
+  SPELL_CHECK_JS_FILE: "spell-check.js"  # Specify the JavaScript file to run
+
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -43,6 +46,12 @@ jobs:
 
       - name: Run Spectral Lint
         run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
+
+      - name: JavaScript Spell Check
+        run: |
+          node ${{ github.workspace }}/$SPELL_CHECK_JS_FILE qod-api.yaml
+        env:
+          NODE_PATH: ./node_modules
 
       # MegaLinter
       - name: MegaLinter
