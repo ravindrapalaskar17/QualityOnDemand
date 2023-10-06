@@ -4,9 +4,10 @@ const spellChecker = require('spellchecker');
 function findSpellingMistakesInYamlFile(filePath) {
   // Read the content of the YAML file
   const yamlContent = fs.readFileSync(filePath, 'utf8');
-
+ console.log(yamlContent);
   // Split the content into words (split by spaces, newlines, etc.)
   const words = yamlContent.split(/\s+/);
+  console.log(words);
 
   // Filter out any words that should be excluded from spell checking
   const exceptions = ["bic", "datetime", "gt", "gte", "icontains", "iban", "idempotency", "isnull", "lt", "lte", "md5", "mimetype", "oid", "userpic"];
@@ -14,6 +15,7 @@ function findSpellingMistakesInYamlFile(filePath) {
 
   // Find spelling mistakes
   const mistakes = filteredWords.filter((word) => spellChecker.isMisspelled(word));
+  console.log(mistakes);
 
   return mistakes;
 }
