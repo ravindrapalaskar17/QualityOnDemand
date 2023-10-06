@@ -45,7 +45,7 @@ jobs:
         run: npm install -g @stoplight/spectral
 
       - name: Run Spectral Lint
-        run: spectral lint ${{ github.workspace }}/qod-api2.yaml --verbose
+        run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
 
       - name: Install 'spellchecker' Module
         run: npm install spellchecker
