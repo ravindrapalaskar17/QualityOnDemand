@@ -1,25 +1,18 @@
 const fs = require('fs');
-const spellChecker = require('spellchecker');
+const spellCheck = require('spell-check');
 
 function findSpellingMistakesInYamlFile(filePath) {
   // Read the content of the YAML file
   const yamlContent = fs.readFileSync(filePath, 'utf8');
- console.log("YAML "+ yamlContent);
+  console.log("YAML " + yamlContent);
+
   // Split the content into words (split by spaces, newlines, etc.)
   const words = yamlContent.split(/\s+/);
-  console.log("Words "+words);
-
-  // Filter out any words that should be excluded from spell checking
-  const exceptions = ["bic", "datetime", "gt", "gte", "icontains", "iban", "idempotency", "isnull", "lt", "lte", "md5", "mimetype", "oid", "userpic"];
-  const filteredWords = words.filter((word) => !exceptions.includes(word.toLowerCase()));
-  console.log("Filterword " + filteredWords);
-
-  console.log("Words: ", words);
-  console.log("Exceptions: ", exceptions);
+  console.log("Words " + words);
 
   // Find spelling mistakes
-  const mistakes = filteredWords.filter((word) => spellChecker.isMisspelled(word));
-  console.log("Mistake "+mistakes);
+  const mistakes = words.filter((word) => !spellCheck.isCorrect(word));
+  console.log("Mistakes " + mistakes);
 
   return mistakes;
 }
@@ -30,7 +23,7 @@ const spellingMistakes = findSpellingMistakesInYamlFile(filePath);
 
 if (spellingMistakes.length > 0) {
   console.log('Spelling mistakes found:');
-  console.log("Spelling Mistake  "+spellingMistakes);
+  console.log("Spelling Mistakes " + spellingMistakes);
 } else {
   console.log('No spelling mistakes found.');
 }
