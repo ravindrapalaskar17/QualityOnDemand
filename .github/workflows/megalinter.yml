@@ -46,8 +46,8 @@ jobs:
 
       - name: Run Spectral Lint
         run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
+       # Add the Spectral Linter
 
-            # Add the Spectral Linter
       - name: Spectral Linter
         run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed
         env:
@@ -80,7 +80,6 @@ jobs:
           YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
           JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
 
-      
           # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
