@@ -53,14 +53,9 @@ jobs:
         env:
           NODE_PATH: ./node_modules
 
-      - name: Install 'spellchecker' Module
-        run: npm install spellchecker
+      - name: Install 'spell-check' Module
+        run: npm install spell-check
         working-directory: ${{ github.workspace }}
-
-      - name: Debug JavaScript Code
-        run:  node '/home/runner/work/QualityOnDemand/QualityOnDemand/spell-check.js' code/API_definitions/qod-api2.yaml
-        env:
-           NODE_PATH: ./node_modules
 
       - name: JavaScript Spell Check
         run: "node '${{ github.workspace }}/${{ env.SPELL_CHECK_JS_FILE }}' code/API_definitions/qod-api2.yaml"
