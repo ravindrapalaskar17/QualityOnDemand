@@ -14,6 +14,9 @@ function findSpellingMistakesInYamlFile(filePath) {
   const filteredWords = words.filter((word) => !exceptions.includes(word.toLowerCase()));
   console.log("Filterword " + filteredWords);
 
+  console.log("Words: ", words);
+  console.log("Exceptions: ", exceptions);
+
   // Find spelling mistakes
   const mistakes = filteredWords.filter((word) => spellChecker.isMisspelled(word));
   console.log("Mistake "+mistakes);
