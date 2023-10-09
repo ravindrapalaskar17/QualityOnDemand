@@ -46,7 +46,7 @@ jobs:
 
       - name: Run Spectral Lint
         run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
-      
+        
       - name: Spectral Linter
         run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed
         env:
