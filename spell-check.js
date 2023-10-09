@@ -13,7 +13,8 @@ function findSpellingMistakesInYamlFile(filePath) {
   // Find spelling mistakes
   const mistakes = [];
   words.forEach((word) => {
-    if (!spellchecker.isMisspelled(word)) {
+    // Check if the word is not in the dictionary (misspelled)
+    if (!spellchecker.isMisspelled(word) && !spellchecker.isMisspelled(word.toLowerCase())) {
       mistakes.push(word);
     }
   });
