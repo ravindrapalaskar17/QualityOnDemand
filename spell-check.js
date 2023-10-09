@@ -12,6 +12,7 @@ function findSpellingMistakesInYamlFile(filePath) {
   // Filter out any words that should be excluded from spell checking
   const exceptions = ["bic", "datetime", "gt", "gte", "icontains", "iban", "idempotency", "isnull", "lt", "lte", "md5", "mimetype", "oid", "userpic"];
   const filteredWords = words.filter((word) => !exceptions.includes(word.toLowerCase()));
+  console.log("Filterword" + filteredWords);
 
   // Find spelling mistakes
   const mistakes = filteredWords.filter((word) => spellChecker.isMisspelled(word));
