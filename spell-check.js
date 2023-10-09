@@ -1,5 +1,5 @@
 const fs = require('fs');
-const spellCheck = require('spell-check');
+const spellchecker = require('spellchecker');
 
 function findSpellingMistakesInYamlFile(filePath) {
   // Read the content of the YAML file
@@ -11,7 +11,13 @@ function findSpellingMistakesInYamlFile(filePath) {
   console.log("Words " + words);
 
   // Find spelling mistakes
-  const mistakes = words.filter((word) => !spellCheck.isCorrect(word));
+  const mistakes = [];
+  words.forEach((word) => {
+    if (!spellchecker.isMisspelled(word)) {
+      mistakes.push(word);
+    }
+  });
+
   console.log("Mistakes " + mistakes);
 
   return mistakes;
