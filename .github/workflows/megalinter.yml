@@ -53,7 +53,7 @@ jobs:
           NODE_PATH: ./node_modules
 
       - name: Install 'spellchecker' Module
-        run: npm install cspell
+        run: npm install cspell 7.3.7
         working-directory: ${{ github.workspace }}
 
       - name: JavaScript Spell Check
