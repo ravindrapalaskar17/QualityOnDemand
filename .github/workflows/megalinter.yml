@@ -47,6 +47,12 @@ jobs:
       - name: Run Spectral Lint
         run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
 
+            # Add the Spectral Linter
+      - name: Spectral Linter
+        run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed
+        env:
+          NODE_PATH: ./node_modules
+
       - name: Install 'spellchecker' Module
         run: npm install spellchecker
         working-directory: ${{ github.workspace }}
@@ -79,11 +85,7 @@ jobs:
           YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
           JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
 
-          # Add the Spectral Linter
-      - name: Spectral Linter
-        run: spectral lint --format stylish --output .spectral-report.json .spectral.yml  # Adjust as needed
-        env:
-          NODE_PATH: ./node_modules
+      
           # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
