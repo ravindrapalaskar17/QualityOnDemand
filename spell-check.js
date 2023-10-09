@@ -1,24 +1,17 @@
 const fs = require('fs');
-const spellchecker = require('spellchecker');
+const { check } = require('cspell');
 
 function findSpellingMistakesInYamlFile(filePath) {
   // Read the content of the YAML file
   const yamlContent = fs.readFileSync(filePath, 'utf8');
   console.log("YAML " + yamlContent);
 
-  // Split the content into words (split by spaces, newlines, etc.)
-  const words = yamlContent.split(/\s+/);
-  console.log("Words " + words);
+  // Check for spelling mistakes in the content
+  const spellingMistakes = check(yamlContent);
+  console.log("Spelling Mistakes " + JSON.stringify(spellingMistakes));
 
-  // Find spelling mistakes
-  const mistakes = [];
-  words.forEach((word) => {
-    // Check if the word is not in the dictionary (misspelled)
-    if (!spellchecker.isMisspelled(word) && !spellchecker.isMisspelled(word.toLowerCase())) {
-      mistakes.push(word);
-    }
-  });
-
+  // Filter out the words with spelling mistakes
+  const mistakes = spellingMistakes.map((mistake) => mistake.text);
   console.log("Mistakes " + mistakes);
 
   return mistakes;
@@ -34,3 +27,4 @@ if (spellingMistakes.length > 0) {
 } else {
   console.log('No spelling mistakes found.');
 }
+
