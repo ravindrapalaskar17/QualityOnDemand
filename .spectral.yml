@@ -2,8 +2,9 @@ functions:
   - check-spelling-code
 functionsDir: "./"
 rules:
- language-spelling-names:
-   message: "{{error}}"
+
+  language-spelling-names:
+    message: "{{error}}"
     severity: warn
     given:
       - "$.paths.*~"
@@ -12,7 +13,7 @@ rules:
     then:
       function: check-spelling-code
 
-   language-spelling-texts:
+  language-spelling-texts:
     message: "{{error}}"
     severity: warn
     given:
