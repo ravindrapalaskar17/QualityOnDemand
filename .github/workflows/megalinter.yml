@@ -52,8 +52,8 @@ jobs:
         env:
           NODE_PATH: ./node_modules
 
-      - name: Install cspell Module
-        run: npm install -g cspell
+      - name: Install 'cspell' Module
+        run: npm install cspell
         working-directory: ${{ github.workspace }}
 
       - name: JavaScript Spell Check
