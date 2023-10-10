@@ -1,5 +1,6 @@
 functions:
   - spell-check
+functionsDir: "./"
   rules:
   language-spelling-names:
     message: "{{error}}"
