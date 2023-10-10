@@ -51,5 +51,5 @@ function findSpellingMistakesInFile(filePath) {
 }
 
 // Example usage:
-const filePath = 'code/API_definitions/qod-api.yaml';
+const filePath = 'code/API_definitions/qod-api2.yaml';
 findSpellingMistakesInFile(filePath);
