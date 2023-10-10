@@ -1,7 +1,7 @@
 functions:
   - spell-check
 functionsDir: "./"
-  rules:
+rules:
   language-spelling-names:
     message: "{{error}}"
     severity: warn
