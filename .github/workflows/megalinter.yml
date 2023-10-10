@@ -47,8 +47,8 @@ jobs:
       - name: Run Spectral Lint
         run: spectral lint ${{ github.workspace }}/qod-api.yaml --verbose
 
-      - name: Install 'spellchecker' Module
-        run: npm install spellchecker
+      - name: Install 'spellChecker' Module
+        run: npm install spellChecker
         working-directory: ${{ github.workspace }}
 
       - name: JavaScript Spell Check
