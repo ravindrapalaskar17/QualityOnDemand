@@ -1,5 +1,27 @@
 functions:
   - check-spelling-code
 functionsDir: "./"
+rules:
+ language-spelling-names:
+    message: "{{error}}"
+    severity: warn
+    given:
+      - "$.paths.*~"
+      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].name"
+      - "$..properties.*~"
+    then:
+      function: check-spelling-code
+
+  language-spelling-texts:
+    message: "{{error}}"
+    severity: warn
+    given:
+      - "$.info.title"
+      - "$.info.summary"
+      - "$.info.description"
+      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
+      - "$..properties.*.description"
+    then:
+      function: check-spelling-code
 extends:
   - "spectral:oas"
