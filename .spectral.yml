@@ -1,2 +1,4 @@
+functions:
+  - spell-check
 extends:
   - "spectral:oas"
