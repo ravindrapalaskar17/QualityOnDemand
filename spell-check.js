@@ -1,19 +1,31 @@
+const { execSync } = require('child_process');
 const fs = require('fs');
-const markdownSpellcheck = require('markdown-spellcheck');
 
-function findSpellingMistakesInMarkdownFile(filePath) {
-  // Read the content of the Markdown file
-  const markdownContent = fs.readFileSync(filePath, 'utf8');
+function findSpellingMistakesInYamlFile(filePath) {
+  // Read the content of the YAML file
+  const yamlContent = fs.readFileSync(filePath, 'utf8');
 
-  // Perform spell check on the content
-  const mistakes = markdownSpellcheck.spellcheck(markdownContent);
+  // Write the content to a temporary file
+  fs.writeFileSync('temp.yaml', yamlContent);
 
-  return mistakes;
+  // Run the markdown-spellcheck CLI on the temporary file
+  try {
+    const output = execSync('markdown-spellcheck temp.yaml', { encoding: 'utf-8' });
+    // If there are spelling mistakes, the CLI will produce output
+    // You can parse the output to extract the mistakes
+    return output.split('\n');
+  } catch (error) {
+    // An error means no spelling mistakes were found
+    return [];
+  } finally {
+    // Clean up the temporary file
+    fs.unlinkSync('temp.yaml');
+  }
 }
 
 // Example usage:
 const filePath = 'code/API_definitions/qod-api2.yaml';
-const spellingMistakes = findSpellingMistakesInMarkdownFile(filePath);
+const spellingMistakes = findSpellingMistakesInYamlFile(filePath);
 
 if (spellingMistakes.length > 0) {
   console.log('Spelling mistakes found:');
