@@ -1,5 +1,5 @@
 const fs = require('fs');
-const spellChecker = require('spellchecker');
+const spellChecker = require('spellChecker');
 
 function findSpellingMistakesInYamlFile(filePath) {
   // Read the content of the YAML file
