@@ -53,7 +53,7 @@ jobs:
           NODE_PATH: ./node_modules
 
       - name: Install 'cspell' Module
-        run: npm install markdown-spellcheck
+        run: npm install -g markdown-spellcheck
         working-directory: ${{ github.workspace }}
 
       - name: JavaScript Spell Check
