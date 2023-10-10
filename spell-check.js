@@ -18,7 +18,7 @@ function findSpellingMistakesInYamlFile(filePath) {
   console.log("Filterword " + filteredWords);
 
   // Find spelling mistakes
-  const mistakes = filteredWords.filter((word) => spellChecker.isMisspelled(word));
+  const mistakes = filteredWords.filter((word) => !spellChecker.isMisspelled(word));
   console.log("Mistake "+mistakes);
 
   return mistakes;
