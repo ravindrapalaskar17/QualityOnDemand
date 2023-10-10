@@ -1,26 +1,24 @@
-const { execSync } = require('child_process');
 const fs = require('fs');
+const spellChecker = require('spellchecker');
 
 function findSpellingMistakesInYamlFile(filePath) {
   // Read the content of the YAML file
   const yamlContent = fs.readFileSync(filePath, 'utf8');
+ console.log("YAML "+ yamlContent);
+  // Split the content into words (split by spaces, newlines, etc.)
+  const words = yamlContent.split(/\s+/);
+  console.log("Words "+words);
 
-  // Write the content to a temporary file
-  fs.writeFileSync('temp.yaml', yamlContent);
+  // Filter out any words that should be excluded from spell checking
+  const exceptions = ["bic", "datetime", "gt", "gte", "icontains", "iban", "idempotency", "isnull", "lt", "lte", "md5", "mimetype", "oid", "userpic"];
+  const filteredWords = words.filter((word) => !exceptions.includes(word.toLowerCase()));
+  console.log("Filterword " + filteredWords);
 
-  // Run the markdown-spellcheck CLI on the temporary file
-  try {
-    const output = execSync('markdown-spellcheck temp.yaml', { encoding: 'utf-8' });
-    // If there are spelling mistakes, the CLI will produce output
-    // You can parse the output to extract the mistakes
-    return output.split('\n');
-  } catch (error) {
-    // An error means no spelling mistakes were found
-    return [];
-  } finally {
-    // Clean up the temporary file
-    fs.unlinkSync('temp.yaml');
-  }
+  // Find spelling mistakes
+  const mistakes = filteredWords.filter((word) => spellChecker.isMisspelled(word));
+  console.log("Mistake "+mistakes);
+
+  return mistakes;
 }
 
 // Example usage:
@@ -29,7 +27,7 @@ const spellingMistakes = findSpellingMistakesInYamlFile(filePath);
 
 if (spellingMistakes.length > 0) {
   console.log('Spelling mistakes found:');
-  console.log(spellingMistakes);
+  console.log("Spelling Mistake  "+spellingMistakes);
 } else {
   console.log('No spelling mistakes found.');
 }
