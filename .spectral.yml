@@ -1,5 +1,5 @@
 functions:
-  - spell-check
+  - findSpellingMistakesInFile
   rules:
   language-spelling-names:
     message: "{{error}}"
@@ -9,6 +9,6 @@ functions:
       - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].name"
       - "$..properties.*~"
     then:
-      function: spell-check
+      function: findSpellingMistakesInFile
 extends:
   - "spectral:oas"
