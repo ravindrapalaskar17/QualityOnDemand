@@ -1,5 +1,5 @@
 functions:
-  - spell-check
+  - check-spelling-code
 functionsDir: "./"
 extends:
   - "spectral:oas"
