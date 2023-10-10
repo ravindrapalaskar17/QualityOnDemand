@@ -1,15 +1,5 @@
 functions:
   - spell-check
 functionsDir: "./"
-rules:
-  language-spelling-names:
-    message: "{{error}}"
-    severity: warn
-    given:
-      - "$.paths.*~"
-      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].name"
-      - "$..properties.*~"
-    then:
-      function: spell-check
 extends:
   - "spectral:oas"
