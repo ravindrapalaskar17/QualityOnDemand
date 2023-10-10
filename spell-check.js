@@ -1,36 +1,57 @@
 const fs = require('fs');
-const spellChecker = require('spellchecker');
+const dictionary = require('dictionary-en');
+const nspell = require('nspell');
 
-function findSpellingMistakesInYamlFile(filePath) {
-  
-  // Read the content of the YAML file
-  const yamlContent = fs.readFileSync(filePath, 'utf8');
- console.log("YAML "+ yamlContent);
-  
-  // Split the content into words (split by spaces, newlines, etc.)
-  const words = yamlContent.split(/\s+/);
-  console.log("Words "+words);
+// List of exceptions (words that should not be considered as spelling mistakes)
+const exceptions = [
+  'API','MACE'
+];
 
-  // Filter out any words that should be excluded from spell checking
-  const exceptions = ["MACE", "API"];
-  
-  const filteredWords = words.filter((word) => !exceptions.includes(word.toLowerCase()));
-  console.log("Filterword " + filteredWords);
+// Regular expression to split text into words (space, newline, etc.)
+const separatorsRegex = /\s+/;
 
-  // Find spelling mistakes
-  const mistakes = filteredWords.filter((word) => !spellChecker.isMisspelled(word));
-  console.log("Mistake "+mistakes);
+// Function to check if a word includes a number
+function includesNumber(word) {
+  return /\d/.test(word);
+}
 
-  return mistakes;
+// Function to find spelling mistakes in a file
+function findSpellingMistakesInFile(filePath) {
+  try {
+    // Read the content of the file
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    
+    // Initialize the dictionary
+    dictionary((err, dict) => {
+      if (err) {
+        throw err;
+      }
+
+      // Initialize the spell checker
+      const spell = nspell(dict);
+
+      // Split the content into words
+      const words = fileContent.split(separatorsRegex);
+
+      // Filter out exceptions and spelling mistakes
+      const mistakes = words
+        .filter((word) => !exceptions.includes(word.toLowerCase()))
+        .filter((word) => !spell.correct(word))
+        .filter((word) => word !== '')
+        .filter((word) => !includesNumber(word));
+
+      if (mistakes.length > 0) {
+        console.log('Spelling mistakes found:');
+        console.log(mistakes);
+      } else {
+        console.log('No spelling mistakes found.');
+      }
+    });
+  } catch (error) {
+    console.error('An error occurred:', error.message);
+  }
 }
 
 // Example usage:
 const filePath = 'code/API_definitions/qod-api2.yaml';
-const spellingMistakes = findSpellingMistakesInYamlFile(filePath);
-
-if (spellingMistakes.length > 0) {
-  console.log('Spelling mistakes found:');
-  console.log("Spelling Mistake  "+spellingMistakes);
-} else {
-  console.log('No spelling mistakes found.');
-}
+findSpellingMistakesInFile(filePath);
