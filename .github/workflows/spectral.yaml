@@ -1,0 +1,36 @@
+name: Spectral Lint
+
+on:
+  # Pull Requests to main
+  pull_request:
+     branches: [master,main,Test-spectral-linting]
+  push:
+     branches:
+       - draft/Test-spectral-linting # You can specify the branch you want to trigger this on
+      
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and Spectral
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral
+
+      - name: Run Spectral Linting
+        run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml
+        # Replace 'openapi.yaml' with the path to your OpenAPI specification file
+
+      - name: Upload Spectral Results
+        if: always() # Always upload the results, even if linting fails
+        uses: actions/upload-artifact@v2
+        with:
+          name: spectral-results
+          path: spectral-report.yaml
