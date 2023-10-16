@@ -1,6 +1,6 @@
 functions:
   - check-spelling-code
-functionsDir: "./lint_functions"
+functionsDir: "./"
 rules:
   language-spelling-names:
     message: "{{error}}"
