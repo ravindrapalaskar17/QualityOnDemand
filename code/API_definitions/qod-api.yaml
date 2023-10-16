@@ -163,7 +163,7 @@ paths:
                     code: INVALID_ARGUMENT
                     message: "Insufficient properties specified: device"
                 InconsistentDeviceProperties:
-                  summary: Device parameters provided identify different devices
+                  summary: Device parameters provided identify dirent devices
                   value:
                     status: 400
                     code: INVALID_ARGUMENT
