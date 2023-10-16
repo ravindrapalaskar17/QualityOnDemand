@@ -51,13 +51,13 @@ jobs:
         run: npm install nspell && npm install dictionary-en
         working-directory: ${{ github.workspace }}
 
-      - name: Run Spectral Lint
+      - name: Run Custom Spectral Linting
         run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml
+        # Replace 'openapi.yaml' with the path to your OpenAPI specification file
 
-      - name: JavaScript Spell Check
-        run: "node '${{ github.workspace }}/${{ env.SPELL_CHECK_JS_FILE }}' code/API_definitions/qod-api2.yaml"
-        env:
-          NODE_PATH: ./node_modules
+      - name: Run spectral:oas Spectral Linting
+        run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral-oas.yml
+        # Replace 'openapi.yaml' with the path to your OpenAPI specification file
 
       # MegaLinter
       - name: MegaLinter
