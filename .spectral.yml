@@ -1,2 +1,33 @@
-extends:
-  - "spectral:oas"
+functions:
+  - check-spelling-code
+functionsDir: "./lint_functions"
+rules:
+  language-spelling-names:
+    message: "{{error}}"
+    severity: warn
+    given:
+      - "$.paths.*~"
+      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].name"
+      - "$..properties.*~"
+    then:
+      function: check-spelling-code
+
+  language-spelling-texts:
+    message: "{{error}}"
+    severity: warn
+    given:
+      - "$.info.title"
+      - "$.info.summary"
+      - "$.info.description"
+      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
+      - "$..properties.*.description"
+    then:
+      function: check-spelling-code
+
+  language-spelling-schema-names:
+    message: "{{error}}"
+    severity: warn
+    given:
+      - "$.components.schemas.*~"
+    then:
+      function: check-spelling-code
