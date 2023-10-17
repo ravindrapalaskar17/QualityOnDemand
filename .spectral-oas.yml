@@ -1,1 +1,1 @@
-extends:[[spectral:oas, off]]
+extends:[spectral:oas, off]
