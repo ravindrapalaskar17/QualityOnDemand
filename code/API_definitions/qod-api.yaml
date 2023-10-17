@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: QoD for enhanced communication
+  title: QoD fr enhanced communication
   description: |
     The Quality-On-Demand (QoD) API provides programmable interface for developers and other users (capabilities consumers) to request stable latency or throughput managed by Telco networks without the necessity to have an in-depth knowledge of the 4G/5G system or the overall complexity of the Telecom Systems.
 
@@ -228,7 +228,7 @@ paths:
       tags:
         - QoS sessions
       summary: Get QoS session information
-      description: Querying for QoS session resource information dtl
+      description: Querying for QoS session resource information details
       operationId: getSession
       parameters:
         - name: sessionId
