@@ -10,7 +10,7 @@ rules:
       - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].name"
       - "$..properties.*~"
     then:
-      function: check-spelling-code
+      function: spell-check
 
   language-spelling-texts:
     message: "{{error}}"
@@ -22,7 +22,7 @@ rules:
       - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
       - "$..properties.*.description"
     then:
-      function: check-spelling-code
+      function: spell-check
 
   language-spelling-schema-names:
     message: "{{error}}"
@@ -30,4 +30,4 @@ rules:
     given:
       - "$.components.schemas.*~"
     then:
-      function: check-spelling-code
+      function: spell-check
