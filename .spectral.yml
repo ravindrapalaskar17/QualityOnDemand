@@ -1,5 +1,5 @@
 functions:
-  - check-spelling-code
+  - spell-check
 functionsDir: "./"
 rules:
   language-spelling-names:
