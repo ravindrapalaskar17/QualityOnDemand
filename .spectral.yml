@@ -1,17 +1,7 @@
 functions:
-  - spell-check
+  - check-spelling-code
 functionsDir: "./"
 rules:
-  language-spelling-names:
-    message: "{{error}}"
-    severity: warn
-    given:
-      - "$.paths.*~"
-      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].name"
-      - "$..properties.*~"
-    then:
-      function: spell-check
-
   language-spelling-texts:
     message: "{{error}}"
     severity: warn
@@ -22,12 +12,4 @@ rules:
       - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
       - "$..properties.*.description"
     then:
-      function: spell-check
-
-  language-spelling-schema-names:
-    message: "{{error}}"
-    severity: warn
-    given:
-      - "$.components.schemas.*~"
-    then:
-      function: spell-check
+      function: check-spelling-code
