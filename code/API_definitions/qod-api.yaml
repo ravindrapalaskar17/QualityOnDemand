@@ -661,7 +661,7 @@ components:
     QosProfileName:
       description: |
         A unique name for identifying a specific QoS profile.
-        This may follow diffet formats depending on the service providers implementation.
+        This may follow diffet formats depending on the service providers implemention.
         Some options addresses:
           - A UUID style string
           - Support for predefined profiles QOS_S, QOS_M, QOS_L, and QOS_E
@@ -787,7 +787,7 @@ components:
       type: string
       format: uuid
       example: 5698d710-9b1b-4695-a958-7b228f08128c
-      description: Unique identifier of the event
+      description: Unique identifier of the even
 
     EventType:
       type: string
@@ -824,7 +824,7 @@ components:
 
     StatusInfo:
       description: |
-        Reason for the new `qosStatus`. Currently `statusInfo` is only applicable when `qosStatus` is 'UNAVAILABLE'.
+        Reason for the new `qosStatus`. Currently `statusInfo` is only applicabe when `qosStatus` is 'UNAVAILABLE'.
         * `DURATION_EXPIRED` - Session terminated due to requested duration expired
         * `NETWORK_TERMINATED` - Network terminated the session before the requested duration expired
       type: string
