@@ -1,4 +1,4 @@
-const fs = require('fs');
+//const fs = require('fs');
 const dictionary = require('dictionary-en');
 const nspell = require('nspell');
 
