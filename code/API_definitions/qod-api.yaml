@@ -163,7 +163,7 @@ paths:
                     code: INVALID_ARGUMENT
                     message: "Insufficient properties specified: device"
                 InconsistentDeviceProperties:
-                  summary: Device parameters provided identify dirent devices
+                  summary: Device parameters provided identify different devices
                   value:
                     status: 400
                     code: INVALID_ARGUMENT
@@ -228,7 +228,7 @@ paths:
       tags:
         - QoS sessions
       summary: Get QoS session information
-      description: Querying for QoS session resource information details
+      description: Querying for QoS session resource information dtl
       operationId: getSession
       parameters:
         - name: sessionId
