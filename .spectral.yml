@@ -33,4 +33,4 @@ rules:
           - original: "MSISDN"
             recommended: "phone number"
           - original: "mobile network"
-            recommended: "network"    
+            recommended: "network"
