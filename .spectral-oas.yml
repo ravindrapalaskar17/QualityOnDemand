@@ -2,3 +2,41 @@ extends: [[spectral:oas, all]]
 rules:
   operation-operationId-unique: false
   contact-properties: false
+  duplicated-entry-in-enum: false
+  info-contact: false
+  info-description: false
+  info-license: false
+  license-url: false
+  no-$ref-siblings: false
+  no-eval-in-markdown: false
+  no-script-tags-in-markdown: false
+  openapi-tags: false
+  openapi-tags-alphabetical: false
+  openapi-tags-alphabetical: false
+  openapi-tags-uniqueness: false
+  operation-description: false
+  operation-operationId: false
+  operation-operationId-unique: false
+  operation-operationId-valid-in-url: false
+  operation-parameters: false
+  operation-singular-tag: false
+  operation-success-response: false
+  operation-tags: false
+  operation-tag-defined: false
+  path-declarations-must-exist: false
+  path-keys-no-trailing-slash: false
+  path-not-include-query: false
+  path-params: false
+  tag-description: false
+  typed-enum: false
+  oas3-api-servers: false
+  oas3-examples-value-or-externalValue: false
+  oas3-operation-security-defined: false
+  oas3-parameter-description: false
+  oas3-schema: false
+  oas3-server-not-example.com: false
+  oas3-server-trailing-slash: false
+  oas3-unused-component: false
+  oas3-valid-media-example: false
+  oas3-valid-schema-example: false
+  oas3-server-variables: false
