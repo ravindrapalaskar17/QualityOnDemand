@@ -1,3 +1,4 @@
 extends: [[spectral:oas, all]]
 rules:
   operation-operationId-unique: false
+  contact-properties: false
