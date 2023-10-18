@@ -1,6 +1,6 @@
 extends: [[spectral:oas, all]]
 rules: # Below is list of spectral core rules. We can set true/false property as per need of API Specification
-  contact-properties: true
+  contact-properties: error
   duplicated-entry-in-enum: false
   info-contact: false
   info-description: false
