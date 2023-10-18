@@ -1,4 +1,4 @@
-extends: [[spectral:oas, all]]
+extends: [[spectral:oas, recommended]]
 rules:
   contact-properties: true
   duplicated-entry-in-enum: false
