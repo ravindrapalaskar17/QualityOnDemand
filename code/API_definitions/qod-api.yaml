@@ -702,7 +702,6 @@ components:
       type: string
       enum:
         - Days
-        - Days
         - Hours
         - Minutes
         - Seconds
@@ -718,7 +717,6 @@ components:
         - `DEPRECATED`- QoS profile is actively being used in a QoD session, but can not be deployed in new QoD sessions
       type: string
       enum:
-        - ACTIVE
         - ACTIVE
         - INACTIVE
         - DEPRECATED
