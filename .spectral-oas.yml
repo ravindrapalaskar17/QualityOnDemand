@@ -1,7 +1,6 @@
 extends: [[spectral:oas, all]]
 rules:
-  operation-operationId-unique: false
-  contact-properties: false
+  contact-properties: true
   duplicated-entry-in-enum: false
   info-contact: false
   info-description: false
@@ -11,7 +10,6 @@ rules:
   no-eval-in-markdown: false
   no-script-tags-in-markdown: false
   openapi-tags: false
-  openapi-tags-alphabetical: false
   openapi-tags-alphabetical: false
   openapi-tags-uniqueness: false
   operation-description: false
