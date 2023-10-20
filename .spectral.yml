@@ -19,6 +19,6 @@ rules:
     severity: hint
     description: |
       This rule checks for telco-specific terminology in your API definitions and suggests more inclusive terms.
-    given: "$.**"
+    given: "$..*.*"
     then:
       function: check-telco-specific-terms
