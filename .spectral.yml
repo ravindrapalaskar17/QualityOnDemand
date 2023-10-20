@@ -15,22 +15,10 @@ rules:
     then:
       function: check-spelling-code
   reduce-telco-specific-terminology:
-    type: style
-    recommended: true
+    message: "{{error}}"
+    severity: warn
     description: |
       This rule checks for telco-specific terminology in your API definitions and suggests more inclusive terms.
-    given: "$.**"  # Define the path to check, you can adjust this path as needed
+    given: "$.**"
     then:
-      function: suggestInclusiveTerms
-      functionOptions:
-        inclusiveTerms:
-          - device
-          - phone number
-          - network
-        replacements:
-          - original: "UE"
-            recommended: "device"
-          - original: "MSISDN"
-            recommended: "phone number"
-          - original: "mobile network"
-            recommended: "network"
+      function: check-telco-specific-code
