@@ -1,33 +1,44 @@
-// Write java script function 
-// spectral-functions.js
-const { createSuggestion } = require("@stoplight/spectral-functions");
+var replacements = [
+  { original: 'UE', recommended: 'device' },
+  { original: 'MSISDN', recommended: 'phone number' },
+  { original: 'mobile network', recommended: 'network' }
+];
 
-module.exports = {
-  suggestInclusiveTerms: (target, inclusiveTerms, replacements) => {
-    const messages = [];
+function includesNumber(value) {
+  return /\d/.test(value);
+}
 
-    replacements.forEach((replacement) => {
-      const original = replacement.original;
-      const recommended = replacement.recommended;
+export default async function (input) {
+  const errors = [];
+  const suggestions = [];
 
-      const regex = new RegExp(replaceAll(original, /[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+  // Check the description text for specified terms
+  for (const path in input) {
+    const descriptions = JSON.stringify(input[path]).match(/description":\s*"(.*?)"/g) || [];
 
-      target.replace(regex, (match, offset) => {
-        messages.push(
-          createSuggestion(`Consider replacing '${original}' with '${recommended}'.`, {
-            range: {
-              start: offset,
-              end: offset + original.length,
-            },
-          })
-        );
-      });
+    descriptions.forEach((description) => {
+      for (const replacement of replacements) {
+        const original = replacement.original;
+        const recommended = replacement.recommended;
+
+        if (description.includes(original)) {
+          errors.push(replacement);
+        }
+      }
+    });
+  }
+
+  if (errors.length > 0) {
+    errors.forEach((error) => {
+      suggestions.push(`Consider replacing '${error.original}' with '${error.recommended}'.`);
     });
 
-    return messages;
-  },
-};
+    return [
+      {
+        message: 'Telco-specific terminology found in descriptions: ' + suggestions.join(', '),
+      },
+    ];
+  }
 
-function replaceAll(string, search, replace) {
-  return string.split(search).join(replace);
+  return [];
 }
