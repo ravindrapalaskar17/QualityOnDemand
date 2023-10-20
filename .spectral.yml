@@ -14,7 +14,7 @@ rules:
       - "$..properties.*.description"
     then:
       function: check-spelling-code
-      
+
   reduce-telco-specific-terminology:
     message: "{{error}}"
     severity: hint
