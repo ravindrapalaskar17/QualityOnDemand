@@ -1,6 +1,6 @@
 functions:
-  - check-spelling-code
-  - check-telco-specific-terms
+  - checkSpellingCode
+  - checkTelcoSpecificTerms
 functionsDir: "./lint_function"
 rules:
   language-spelling-texts:
@@ -13,7 +13,7 @@ rules:
       - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
       - "$..properties.*.description"
     then:
-      function: check-spelling-code
+      function: checkSpellingCode
   reduce-telco-specific-terminology:
     message: "{{error}}"
     severity: hint
@@ -21,4 +21,4 @@ rules:
       This rule checks for telco-specific terminology in your API definitions and suggests more inclusive terms.
     given: "$..*.*"
     then:
-      function: check-telco-specific-terms
+      function: checkTelcoSpecificTerms
