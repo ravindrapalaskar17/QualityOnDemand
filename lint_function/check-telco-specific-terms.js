@@ -35,7 +35,7 @@ export default async function (input) {
 
     return [
       {
-        message: 'Telco-specific terminology found in descriptions: ' + suggestions.join(', '),
+        console.log("Telco-specific terminology found in descriptions: " + suggestions.join(', ')),
       },
     ];
   }
