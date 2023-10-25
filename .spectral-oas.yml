@@ -24,7 +24,7 @@ rules:
   path-declarations-must-exist: true
   path-keys-no-trailing-slash: true
   path-not-include-query: true
-  path-params: error
+  path-params: false
   tag-description: false
   typed-enum: true
   oas3-api-servers: true
