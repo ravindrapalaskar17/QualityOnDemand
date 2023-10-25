@@ -223,7 +223,7 @@ paths:
         - threeLegged:
             - "qod-sessions-write"
 
-  /sessions/{sessionId}:
+  /sessions/{Id}:
     get:
       tags:
         - QoS sessions
