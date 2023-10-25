@@ -1,6 +1,7 @@
 functions:
   - check-spelling-code
   - check-telco-specific-terms
+  - check-path-parameters
 functionsDir: "./lint_function"
 rules:
   check-spelling-code:
@@ -22,3 +23,19 @@ rules:
     given: "$..*.*"
     then:
       function: check-telco-specific-terms
+  camara-path-param-id:
+    message: "{{error}}"
+    severity: warn
+    description: |
+      Path parameters must be self-identifying. It is not enough with 'id'.
+    given: "$.paths.*.*.parameters"
+    then:
+      function: check-path-parameters
+  camara-path-param-id-morphology:
+    message: "{{error}}"
+    severity: warn
+    description: |
+      Path parameter identifiers should have a similar morphology on all endpoints.
+    given: "$.paths.*.*.parameters"
+    then:
+      function: check-path-parameters
