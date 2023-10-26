@@ -11,10 +11,10 @@ export default function (apiDefinition) {
       for (const parameter of pathParameters) {
         if (parameter.in === 'path' && parameter.name === 'id') {
           errors.push({
-            console.log("Path parameter 'id' in '${pathKey}' should provide more context" ,
-            path: paths.${pathKey}.${method}.parameters")
-          });
-        }
+            console.log(`Path parameter 'id' in '${pathKey}' should provide more context`, {
+             path: `paths.${pathKey}.${method}.parameters`
+             });
+         }
       }
     }
   }
