@@ -7,14 +7,15 @@ export default function (apiDefinition) {
     for (const method in path) {
       const operation = path[method];
       const pathParameters = operation.parameters || [];
-      
+
       for (const parameter of pathParameters) {
         if (parameter.in === 'path' && parameter.name === 'id') {
-         errors.push({
+          console.error(`Error: Path parameter 'id' in '${pathKey}' should provide more context.`);
+          errors.push({
             message: `Path parameter 'id' in '${pathKey}' should provide more context.`,
             path: `paths.${pathKey}.${method}.parameters`,
           });
-         }
+        }
       }
     }
   }
@@ -52,6 +53,7 @@ export default function (apiDefinition) {
           if (name.endsWith('Id')) {
             const entityName = name.substring(0, name.length - 2);
             if (!entityNames.has(entityName)) {
+              console.error(`Error: Path parameter '${name}' in '${pathKey}' does not follow the recommended naming convention.`);
               errors.push({
                 message: `Path parameter '${name}' in '${pathKey}' does not follow the recommended naming convention.`,
                 path: `paths.${pathKey}.${method}.parameters`,
@@ -63,5 +65,5 @@ export default function (apiDefinition) {
     }
   }
 
-  return  errors;
+  return errors;
 }
