@@ -1,7 +1,14 @@
 functions:
+  - check-reserved-words
   - check-path-parameters
 functionsDir: "./lint_function"
 rules:
+  check-reserved-words:
+    message: "{{error}}"
+    severity: warn
+    given: "$"
+    then:
+      function: check-reserved-words
   camara-path-param-id:
     message: "{{error}}"
     severity: warn
