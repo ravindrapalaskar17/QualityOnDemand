@@ -11,15 +11,72 @@ export default function (apiDefinition) {
   // Create an array to store messages
   const messages = [];
 
-  // Iterate through the OpenAPI specification
+  // Check reserved keywords in path keys
   for (const pathKey in apiDefinition.paths) {
-    const path = apiDefinition.paths[pathKey];
-
-    // Convert pathKey to lowercase for case-insensitive comparison
     const lowercasePathKey = pathKey.toLowerCase();
-
     if (reservedKeywords.includes(lowercasePathKey)) {
       messages.push(`Reserved keyword '${pathKey}' used in path name.`);
+    }
+  }
+
+  // Check reserved keywords in parameter names
+  for (const pathKey in apiDefinition.paths) {
+    const path = apiDefinition.paths[pathKey];
+    for (const method in path) {
+      const operation = path[method];
+      const parameters = operation.parameters || [];
+
+      for (const parameter of parameters) {
+        const paramName = parameter.name;
+        const lowercaseParamName = paramName.toLowerCase();
+
+        if (reservedKeywords.includes(lowercaseParamName)) {
+          messages.push(`Reserved keyword '${paramName}' used in parameter name in '${pathKey}' for method '${method}'.`);
+        }
+      }
+    }
+  }
+
+  // Check reserved keywords in request and response body property names
+  for (const pathKey in apiDefinition.paths) {
+    const path = apiDefinition.paths[pathKey];
+    for (const method in path) {
+      const operation = path[method];
+      const requestBody = operation.requestBody;
+      const responses = operation.responses;
+
+      // Check request body
+      if (requestBody && requestBody.content) {
+        const content = requestBody.content;
+        for (const mediaType in content) {
+          const schema = content[mediaType].schema;
+          if (schema && schema.properties) {
+            for (const propertyName in schema.properties) {
+              const lowercasePropertyName = propertyName.toLowerCase();
+              if (reservedKeywords.includes(lowercasePropertyName)) {
+                messages.push(`Reserved keyword '${propertyName}' used in request body property name in '${pathKey}' for method '${method}'.`);
+              }
+            }
+          }
+        }
+      }
+
+      // Check response bodies
+      for (const responseKey in responses) {
+        const response = responses[responseKey];
+        const content = response.content;
+        for (const mediaType in content) {
+          const schema = content[mediaType].schema;
+          if (schema && schema.properties) {
+            for (const propertyName in schema.properties) {
+              const lowercasePropertyName = propertyName.toLowerCase();
+              if (reservedKeywords.includes(lowercasePropertyName)) {
+                messages.push(`Reserved keyword '${propertyName}' used in response body property name in '${pathKey}' for method '${method}' and response '${responseKey}'.`);
+              }
+            }
+          }
+        }
+      }
     }
   }
 
