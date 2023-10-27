@@ -4,16 +4,16 @@ info:
   version: 1.0.0
 
 paths:
-  /users/{userId}:
+  /import/{Id}:
     get:
-      summary: Get User by ID
+      summary: Get import by ID
       parameters:
-        - name: userId
+        - name: Id
           in: path
           required: true
           schema:
             type: string
-          description: User ID
+          description: import ID
       responses:
         '200':
           description: Successful response
