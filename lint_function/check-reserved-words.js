@@ -4,7 +4,7 @@ export default function (apiDefinition) {
   // List of reserved words
   const reservedWords = [
     // Add your list of reserved words here
-    'reservedWord1',
+    'import',
     'reservedWord2',
     'reservedWord3',
   ];
