@@ -1,39 +1,54 @@
 export default function (apiDefinition) {
-  const errors = [];
-
-  // List of reserved words
-  const reservedWords = [
-    // Add your list of reserved words here
-    'reservedWord2',
-    'reservedWord3',
+  // Define a list of reserved keywords
+  const reservedKeywords = [
+    // Add your list of reserved keywords here
+    'reservedKeyword1',
+     'import',
+    'reservedKeyword2',
+    // Add more keywords as needed
   ];
 
-  // Function to check if a string contains a reserved word
-  function containsReservedWord(str) {
-    return reservedWords.some(word => str.includes(word));
-  }
+  // Create an array to store messages
+  const messages = [];
 
-  // Check reserved words in path and operation names
+  // Iterate through the OpenAPI specification
   for (const pathKey in apiDefinition.paths) {
-    if (containsReservedWord(pathKey)) {
-      errors.push({
-        message: `Reserved word found in path name: '${pathKey}'`,
-        path: `paths.${pathKey}`,
-      });
-    }
-
     const path = apiDefinition.paths[pathKey];
     for (const method in path) {
-      if (containsReservedWord(method)) {
-        errors.push({
-          message: `Reserved word found in operation name: '${method}'`,
-          path: `paths.${pathKey}.${method}`,
-        });
+      const operation = path[method];
+      const pathParameters = operation.parameters || [];
+      
+      // Check path and operation names
+      if (reservedKeywords.includes(pathKey)) {
+        messages.push(`Reserved keyword '${pathKey}' used in path name.`);
       }
+
+      // Check path or query parameter names
+      for (const parameter of pathParameters) {
+        if (parameter.in === 'path' || parameter.in === 'query') {
+          if (reservedKeywords.includes(parameter.name)) {
+            messages.push(`Reserved keyword '${parameter.name}' used in parameter name.`);
+          }
+        }
+      }
+
+      // Check request and response body property names
+      // Add your checks for request and response body properties here
+
+      // Check security schemes
+      // Add your checks for security schemes here
+
+      // Check component names
+      // Add your checks for component names here
+
+      // Check OperationIds
+      // Add your checks for OperationIds here
     }
   }
 
-  // Add more checks for other parts of the specification (e.g., parameter names, response body property names, security schemes, component names, operationIds) as needed
-
-  return errors;
+  // Print messages with console.log
+  if (messages.length > 0) {
+    console.log('Hint: Avoid using reserved keywords in your OpenAPI specification:');
+    messages.forEach(message => console.log(message));
+  }
 }
