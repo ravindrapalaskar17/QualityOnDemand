@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 paths:
-  /import/{importId}:
+  /switch/{switchId}:
     get:
       summary: Get import by ID
       parameters:
@@ -13,7 +13,7 @@ paths:
           required: true
           schema:
             type: string
-          description: import ID
+          description: switch ID
       responses:
         '200':
           description: Successful response
