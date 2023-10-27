@@ -6,9 +6,9 @@ info:
 paths:
   /switch/{switchId}:
     get:
-      summary: Get import by ID
+      summary: Get switch by ID
       parameters:
-        - name: importId
+        - name: switchId
           in: path
           required: true
           schema:
