@@ -4,11 +4,11 @@ info:
   version: 1.0.0
 
 paths:
-  /import/{Id}:
+  /import/{importId}:
     get:
       summary: Get import by ID
       parameters:
-        - name: Id
+        - name: importId
           in: path
           required: true
           schema:
