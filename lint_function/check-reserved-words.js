@@ -3,6 +3,7 @@ export default function (apiDefinition) {
   const reservedKeywords = [
     // Add your list of reserved keywords here, all in lowercase
     'import',
+    'switch',
     'reservedkeyword2',
     // Add more keywords as needed
   ];
