@@ -1,10 +1,9 @@
 export default function (apiDefinition) {
-  // Define a list of reserved keywords
+  // Define a list of reserved keywords in lowercase
   const reservedKeywords = [
-    // Add your list of reserved keywords here
-    'reservedKeyword1',
-     'import',
-    'reservedKeyword2',
+    // Add your list of reserved keywords here, all in lowercase
+    'import',
+    'reservedkeyword2',
     // Add more keywords as needed
   ];
 
@@ -14,35 +13,12 @@ export default function (apiDefinition) {
   // Iterate through the OpenAPI specification
   for (const pathKey in apiDefinition.paths) {
     const path = apiDefinition.paths[pathKey];
-    for (const method in path) {
-      const operation = path[method];
-      const pathParameters = operation.parameters || [];
-      
-      // Check path and operation names
-      if (reservedKeywords.includes(pathKey)) {
-        messages.push(`Reserved keyword '${pathKey}' used in path name.`);
-      }
 
-      // Check path or query parameter names
-      for (const parameter of pathParameters) {
-        if (parameter.in === 'path' || parameter.in === 'query') {
-          if (reservedKeywords.includes(parameter.name)) {
-            messages.push(`Reserved keyword '${parameter.name}' used in parameter name.`);
-          }
-        }
-      }
+    // Convert pathKey to lowercase for case-insensitive comparison
+    const lowercasePathKey = pathKey.toLowerCase();
 
-      // Check request and response body property names
-      // Add your checks for request and response body properties here
-
-      // Check security schemes
-      // Add your checks for security schemes here
-
-      // Check component names
-      // Add your checks for component names here
-
-      // Check OperationIds
-      // Add your checks for OperationIds here
+    if (reservedKeywords.includes(lowercasePathKey)) {
+      messages.push(`Reserved keyword '${pathKey}' used in path name.`);
     }
   }
 
