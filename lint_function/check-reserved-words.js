@@ -19,29 +19,31 @@ const reservedWords = [
   'import',
 ];
 
-const exceptions = [
-  // Add your exceptions here
-];
-
-const separatorsRegex = /\s/;
-const mistakes = [];
-
-function includesNumber(value) {
-  return /\d/.test(value);
-}
-
 export default async function (input) {
-  const no_special_characters = input.replace(/[^\w\s]/gi, '');
-  const words = no_special_characters.split(separatorsRegex);
+  const errors = [];
+  const suggestions = [];
 
-  const errors = words
-    .filter((word) => !exceptions.includes(word))
-    .filter((word) => reservedWords.includes(word))
-    .filter((word) => !includesNumber(word));
+  // Iterate over properties of the input object
+  for (const path in input) {
+    const value = input[path];
 
-  if (errors.length > 0 && mistakes[mistakes.length - 1] !== errors[errors.length - 1]) {
-    mistakes.push(errors);
-    errors = [];
-    console.log("\nReserved words found: " + mistakes);
+    // Check if the value is a string
+    if (typeof value === 'string') {
+      for (const word of reservedWords) {
+        // Use a regular expression to match 'word' as a standalone word
+        const regex = new RegExp(`\\b${word}\\b`, 'g');
+
+        // Check if 'word' exists in the value
+        if (regex.test(value)) {
+          errors.push(word);
+          suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
+        }
+      }
+    }
+  }
+
+  // Check if any reserved words are in the suggestions
+  if (errors.length > 0) {
+    console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
   }
 }
