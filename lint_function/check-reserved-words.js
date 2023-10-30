@@ -16,6 +16,7 @@ export default function (apiDefinition) {
     const lowercasePathKey = pathKey.toLowerCase();
     if (reservedKeywords.includes(lowercasePathKey)) {
       messages.push(`Reserved keyword '${pathKey}' used in path name.`);
+      console.log("This is Path" +message);
     }
   }
 
@@ -32,6 +33,7 @@ export default function (apiDefinition) {
 
         if (reservedKeywords.includes(lowercaseParamName)) {
           messages.push(`Reserved keyword '${paramName}' used in parameter name in '${pathKey}' for method '${method}'.`);
+           console.log("This is Parameter" +message);
         }
       }
     }
@@ -55,6 +57,7 @@ export default function (apiDefinition) {
               const lowercasePropertyName = propertyName.toLowerCase();
               if (reservedKeywords.includes(lowercasePropertyName)) {
                 messages.push(`Reserved keyword '${propertyName}' used in request body property name in '${pathKey}' for method '${method}'.`);
+                 console.log("This is request body" +message);
               }
             }
           }
@@ -72,6 +75,7 @@ export default function (apiDefinition) {
               const lowercasePropertyName = propertyName.toLowerCase();
               if (reservedKeywords.includes(lowercasePropertyName)) {
                 messages.push(`Reserved keyword '${propertyName}' used in response body property name in '${pathKey}' for method '${method}' and response '${responseKey}'.`);
+                 console.log("This is response body" +message);
               }
             }
           }
