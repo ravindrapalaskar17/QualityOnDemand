@@ -1,37 +1,47 @@
-export default async function (apiDefinition) {
-  const reservedWords = [
-    // Add your list of reserved words here
-    'import',
-    'switch',
-    // Add more reserved words as needed
-  ];
+const reservedWords = [
+  'class',
+  'const',
+  'let',
+  'function',
+  'var',
+  'if',
+  'else',
+  'while',
+  'for',
+  'switch',
+  'case',
+  'break',
+  'return',
+  'true',
+  'false',
+  'null',
+  'undefined',
+  'import',
+];
 
-  const errors = [];
-  const suggestions = [];
+const exceptions = [
+  // Add your exceptions here
+];
 
-  for (const pathKey in apiDefinition.paths) {
-    // Check reserved words in path keys
-    if (reservedWords.includes(pathKey.toLowerCase())) {
-      errors.push(pathKey);
-    }
+const separatorsRegex = /\s/;
+const mistakes = [];
 
-    const path = apiDefinition.paths[pathKey];
-    for (const method in path) {
-      const parameters = path[method].parameters || [];
+function includesNumber(value) {
+  return /\d/.test(value);
+}
 
-      for (const parameter of parameters) {
-        // Check reserved words in path parameters
-        if (parameter.in === 'path' && reservedWords.includes(parameter.name.toLowerCase())) {
-          errors.push(parameter.name);
-        }
-      }
-    }
-  }
+export default async function (input) {
+  const no_special_characters = input.replace(/[^\w\s]/gi, '');
+  const words = no_special_characters.split(separatorsRegex);
 
-  if (errors.length > 0) {
-    for (const error of errors) {
-      suggestions.push(`Avoid using reserved word '${error}'.`);
-    }
-    console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
+  const errors = words
+    .filter((word) => !exceptions.includes(word))
+    .filter((word) => reservedWords.includes(word))
+    .filter((word) => !includesNumber(word));
+
+  if (errors.length > 0 && mistakes[mistakes.length - 1] !== errors[errors.length - 1]) {
+    mistakes.push(errors);
+    errors = [];
+    console.log("\nReserved words found: " + mistakes);
   }
 }
