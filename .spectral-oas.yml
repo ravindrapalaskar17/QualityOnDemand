@@ -1,6 +1,6 @@
 extends: [[spectral:oas, all]]
 rules:
-  contact-properties: false
+  contact-properties: true
   duplicated-entry-in-enum: true
   info-contact: true
   info-description: true
