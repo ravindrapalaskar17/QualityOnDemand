@@ -76,10 +76,6 @@ const reservedWords = [
   'while'
 ];
 
-const reservedWords = [
-  // Your reserved words list
-];
-
 export default async function (doc) {
   const results = [];
 
