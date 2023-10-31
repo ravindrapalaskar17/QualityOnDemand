@@ -1,5 +1,5 @@
 functions:
-  - check-reserved-words
+  - camara-reserved-words
 functionsDir: "./lint_function"
 rules:
   check-reserved-words:
@@ -7,4 +7,4 @@ rules:
     severity: warn
     given: "$..*.*"
     then:
-      function: check-reserved-words
+      function: camara-reserved-words
