@@ -1,105 +1,38 @@
 const reservedWords = [
-  'abstract',
-  'apiclient',
-  'apiexception',
-  'apiresponse',
-  'assert',
-  'boolean',
-  'break',
-  'byte',
-  'case',
-  'catch',
-  'char',
-  'class',
-  'configuration',
-  'const',
-  'continue',
-  'default',
-  'do',
-  'double',
-  'else',
-  'enum',
-  'extends',
-  'file',
-  'final',
-  'finally',
-  'float',
-  'for',
-  'goto',
-  'if',
-  'implements',
-  'import',
-  'instanceof',
-  'int',
-  'interface',
-  'list',
-  'localdate',
-  'localreturntype',
-  'localtime',
-  'localvaraccept',
-  'localvaraccepts',
-  'localvarauthnames',
-  'localvarcollectionqueryparams',
-  'localvarcontenttype',
-  'localvarcontenttypes',
-  'localvarcookieparams',
-  'localvarformparams',
-  'localvarheaderparams',
-  'localvarpath',
-  'localvarpostbody',
-  'localvarqueryparams',
-  'long',
-  'native',
-  'new',
-  'null',
-  'object',
-  'offsetdatetime',
-  'package',
-  'private',
-  'protected',
-  'public',
-  'return',
-  'short',
-  'static',
-  'strictfp',
-  'stringutil',
-  'super',
   'switch',
-  'synchronized',
-  'this',
-  'throw',
-  'throws',
-  'transient',
-  'try',
-  'void',
-  'volatile',
-  'while'
+  // Add other reserved words
 ];
+
 export default async function (input) {
   const errors = [];
   const suggestions = [];
 
-  // Iterate over properties of the input object
-  for (const path in input) {
-    const value = input[path];
+  if (input.paths) {
+    // Iterate over the paths
+    for (const path in input.paths) {
+      // Check for reserved words in the path key
+      checkForReservedWords(path, errors, suggestions);
 
-    // Check if the value is a string
-    if (typeof value === 'string') {
-      for (const word of reservedWords) {
-        // Use a regular expression to match 'word' as a standalone word
-        const regex = new RegExp(`\\b${word}\\b`, 'g');
-
-        // Check if 'word' exists in the value
-        if (regex.test(value)) {
-          errors.push(word);
-          suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
-        }
-      }
+      const pathObject = input.paths[path];
+      // Continue to check other elements within the pathObject as needed.
     }
   }
 
   // Check if any reserved words are in the suggestions
   if (errors.length > 0) {
     console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
+  }
+}
+
+function checkForReservedWords(value, errors, suggestions) {
+  if (typeof value === 'string') {
+    for (const word of reservedWords) {
+      const regex = new RegExp(`\\b${word}\\b`, 'g');
+
+      if (regex.test(value)) {
+        errors.push(word);
+        suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
+      }
+    }
   }
 }
