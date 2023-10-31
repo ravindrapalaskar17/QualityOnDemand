@@ -16,9 +16,17 @@ paths:
         "201":
           description: Session created
         "400":
-          $ref: "#/components/responses/Generic400"
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
         "500":
-          $ref: "#/components/responses/Generic500"
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
 components:
   schemas:
     CreateSession:
@@ -49,18 +57,6 @@ components:
     QosProfileName:
       type: string
       example: QCI_1_voice
-    Generic400:
-      description: Invalid input
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
-    Generic500:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorInfo"
     ErrorInfo:
       type: object
       properties:
