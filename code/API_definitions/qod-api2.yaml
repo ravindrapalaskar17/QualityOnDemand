@@ -13,7 +13,7 @@ paths:
           required: true
           schema:
             type: string
-          description: ID
+          description: switch ID
       responses:
         '200':
           description: Successful response
