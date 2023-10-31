@@ -3,7 +3,7 @@ info:
   title: QoD for Enhanced Communication
   description: The Quality-On-Demand (QoD) API provides a programmable interface for developers and users.
 paths:
-  /sessions:
+  /super:
     post:
       summary: Creates a new session
       requestBody:
