@@ -1,10 +1,10 @@
 functions:
-  - camara-reserved-words
+  - check-for-reserved-words
 functionsDir: "./lint_function"
 rules:
-  check-reserved-words:
-    message: "{{error}}"
+  check-reserved-words-in-paths:
+    message: "Reserved words found in path key: {{error}}"
     severity: warn
-    given: "$.paths.* | $.paths.*.* | $.paths.*.*.* | $.paths.*.*.*.*"
+    given: "$.paths.*.*"
     then:
-      function: camara-reserved-words
+      function: check-for-reserved-words
