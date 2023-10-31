@@ -75,59 +75,31 @@ const reservedWords = [
   'volatile',
   'while'
 ];
-
 export default async function (input) {
   const errors = [];
   const suggestions = [];
 
-  // Function to check reserved words and log them
-  function checkAndLogReservedWords(text, location) {
-    for (const word of reservedWords) {
-      const regex = new RegExp(`\\b${word}\\b`, 'g');
-      if (regex.test(text)) {
-        errors.push(word);
-        suggestions.push(`Consider avoiding the use of reserved word '${word}' in ${location}.`);
+  // Iterate over properties of the input object
+  for (const path in input) {
+    const value = input[path];
+
+    // Check if the value is a string
+    if (typeof value === 'string') {
+      for (const word of reservedWords) {
+        // Use a regular expression to match 'word' as a standalone word
+        const regex = new RegExp(`\\b${word}\\b`, 'g');
+
+        // Check if 'word' exists in the value
+        if (regex.test(value)) {
+          errors.push(word);
+          suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
+        }
       }
     }
   }
 
-  // Check and log reserved words in the specified locations
-  checkAndLogReservedWords(input.path, 'Path');
-  checkAndLogReservedWords(input.operation, 'Operation');
-
-  if (input.parameters) {
-    for (const param of input.parameters) {
-      checkAndLogReservedWords(param.name, `Parameter '${param.name}'`);
-    }
-
-    if (input.requestBody) {
-      checkAndLogReservedWords(Object.keys(input.requestBody).join(', '), 'Request Body');
-    }
-  }
-
-  if (input.responses) {
-    for (const response of Object.values(input.responses)) {
-      checkAndLogReservedWords(Object.keys(response).join(', '), 'Response Body');
-    }
-  }
-
-  if (input.securitySchemes) {
-    checkAndLogReservedWords(Object.keys(input.securitySchemes).join(', '), 'Security Schemes');
-  }
-
-  if (input.components) {
-    checkAndLogReservedWords(Object.keys(input.components).join(', '), 'Components');
-  }
-
-  if (input.operationIds) {
-    checkAndLogReservedWords(input.operationIds.join(', '), 'Operation IDs');
-  }
-
-  // Check if any reserved words are found and log them
+  // Check if any reserved words are in the suggestions
   if (errors.length > 0) {
-    console.log('Reserved words found:');
-    for (const suggestion of suggestions) {
-      console.log(suggestion);
-    }
+    console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
   }
 }
