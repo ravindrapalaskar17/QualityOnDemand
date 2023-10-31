@@ -1,3 +1,6 @@
+functions:
+  - camara-reserved-words
+functionsDir: "./lint_function"
 rules:
   check-reserved-words:
     message: "{{error}}"
