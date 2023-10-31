@@ -35,7 +35,7 @@ components:
         duration:
           type: integer
           description: Session duration in seconds.
-        device:
+        switch:
           type: object
         applicationServer:
           type: object
