@@ -6,7 +6,7 @@ info:
 paths:
   /switch/{switchId}:
     get:
-      summary: Get s by ID
+      summary: Get switch by ID
       parameters:
         - name: switchId
           in: path
