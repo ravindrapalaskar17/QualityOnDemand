@@ -1,10 +1,7 @@
-functions:
-  - camara-reserved-words
-functionsDir: "./lint_function"
 rules:
   check-reserved-words:
     message: "{{error}}"
     severity: warn
-    given: "$..*.*"
+    given: "$.paths.*.* | $.components.schemas.* | $.components.responses.*"
     then:
       function: camara-reserved-words
