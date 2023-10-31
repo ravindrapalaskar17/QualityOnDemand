@@ -75,64 +75,31 @@ const reservedWords = [
   'volatile',
   'while'
 ];
+export default async function (input) {
+  const errors = [];
+  const suggestions = [];
 
-export default async function (doc) {
-  const results = [];
+  // Iterate over properties of the input object
+  for (const path in input) {
+    const value = input[path];
 
-  // Function to check for reserved words
-  function checkForReservedWords(value, path) {
-    for (const word of reservedWords) {
-      // Use a regular expression to match 'word' as a standalone word
-      const regex = new RegExp(`\\b${word}\\b`, 'g');
+    // Check if the value is a string
+    if (typeof value === 'string') {
+      for (const word of reservedWords) {
+        // Use a regular expression to match 'word' as a standalone word
+        const regex = new RegExp(`\\b${word}\\b`, 'g');
 
-      // Check if 'word' exists in the value
-      if (regex.test(value)) {
-        results.push({
-          message: `Reserved word '${word}' found in ${path}`,
-          path,
-          severity: 'warn',
-        });
-      }
-    }
-  }
-
-  // Iterate over paths, schemas, and responses
-  for (const path in doc.paths) {
-    const operations = doc.paths[path];
-    for (const operationName in operations) {
-      const operation = operations[operationName];
-      
-      // Check the operation summary and description for reserved words
-      checkForReservedWords(operation.summary, `${path}.${operationName}.summary`);
-      checkForReservedWords(operation.description, `${path}.${operationName}.description`);
-
-      // Check request and response schemas
-      const requestSchema = operation.requestBody?.content?.['application/json']?.schema;
-      if (requestSchema) {
-        checkForReservedWords(requestSchema.$ref, `${path}.${operationName}.requestBody.schema.$ref`);
-      }
-
-      for (const responseName in operation.responses) {
-        const response = operation.responses[responseName];
-        const responseSchema = response.content?.['application/json']?.schema;
-        if (responseSchema) {
-          checkForReservedWords(responseSchema.$ref, `${path}.${operationName}.responses.${responseName}.schema.$ref`);
+        // Check if 'word' exists in the value
+        if (regex.test(value)) {
+          errors.push(word);
+          suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
         }
       }
     }
   }
 
-  // Iterate over schemas
-  for (const schemaName in doc.components?.schemas) {
-    const schema = doc.components.schemas[schemaName];
-    for (const propertyName in schema.properties) {
-      const property = schema.properties[propertyName];
-      if (property.description) {
-        checkForReservedWords(property.description, `components.schemas.${schemaName}.properties.${propertyName}.description`);
-      }
-    }
+  // Check if any reserved words are in the suggestions
+  if (errors.length > 0) {
+    console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
   }
-
-  return results;
-  console.log("This is reserved word" + results);
 }
