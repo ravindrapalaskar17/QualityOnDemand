@@ -1,5 +1,5 @@
 functions:
-  - check-for-reserved-words
+  - camara-reserved-words
 functionsDir: "./lint_function"
 rules:
   check-reserved-words-in-paths:
@@ -7,4 +7,4 @@ rules:
     severity: warn
     given: "$.paths.*.*"
     then:
-      function: check-for-reserved-words
+      function: camara-reserved-words
