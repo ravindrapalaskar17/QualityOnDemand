@@ -5,6 +5,6 @@ rules:
   check-reserved-words:
     message: "{{error}}"
     severity: warn
-    given: "$..*.*"
+    given: "$.paths.* | $.paths.*.* | $.paths.*.*.* | $.paths.*.*.*.*"
     then:
       function: camara-reserved-words
