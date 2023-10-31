@@ -1,19 +1,76 @@
 openapi: 3.0.3
 info:
-  title: Sample API
-  version: 1.0.0
-
+  title: QoD for Enhanced Communication
+  description: The Quality-On-Demand (QoD) API provides a programmable interface for developers and users.
 paths:
-  /switch/{switchId}:
-    get:
-      summary: Get switch by ID
-      parameters:
-        - name: switchId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: switch ID
+  /sessions:
+    post:
+      summary: Creates a new session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSession"
+        required: true
       responses:
-        '200':
-          description: Successful response
+        "201":
+          description: Session created
+        "400":
+          $ref: "#/components/responses/Generic400"
+        "500":
+          $ref: "#/components/responses/Generic500"
+components:
+  schemas:
+    CreateSession:
+      type: object
+      properties:
+        duration:
+          type: integer
+          description: Session duration in seconds.
+        device:
+          type: object
+        applicationServer:
+          type: object
+        qosProfile:
+          $ref: "#/components/schemas/QosProfileName"
+        webhook:
+          type: object
+          required:
+            - notificationUrl
+          properties:
+            notificationUrl:
+              type: string
+            notificationAuthToken:
+              type: string
+        required:
+          - device
+          - applicationServer
+          - qosProfile
+    QosProfileName:
+      type: string
+      example: QCI_1_voice
+    Generic400:
+      description: Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorInfo"
+    Generic500:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorInfo"
+    ErrorInfo:
+      type: object
+      properties:
+        status:
+          type: integer
+        code:
+          type: string
+        message:
+          type: string
+        required:
+          - status
+          - code
+          - message
