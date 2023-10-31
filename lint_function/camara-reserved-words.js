@@ -1,5 +1,5 @@
 const reservedWords = [
-  'abstract',
+  'switch',
   // Add other reserved words
 ];
 
