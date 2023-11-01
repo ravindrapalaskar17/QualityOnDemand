@@ -5,6 +5,8 @@ rules:
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
-    given: "$.paths.*.parameters[?(@.in=='path')].name"
+    given: 
+      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
+      - "$..properties.*.description"
     then:
       function: camara-reserved-words
