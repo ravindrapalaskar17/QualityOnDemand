@@ -95,7 +95,7 @@ export default async function (input) {
         // Check if 'word' exists in the value
         if (regex.test(path)) {
           errors.push(formatWord);
-          suggestions.push(`Consider avoiding the use of reserved word '${formatWord}'.`);
+          suggestions.push(`Consider avoiding the use of reserved word '${formatWord}'in this path '${path}'.`);
         }
       }
     }
