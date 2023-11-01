@@ -2,7 +2,6 @@ openapi: 3.0.3
 info:
   title: Sample API
   version: 1.0.0
-
 paths:
   /switch/{switchId}:
     get:
@@ -17,3 +16,24 @@ paths:
       responses:
         '200':
           description: Successful response
+  /switch:
+    post:
+      summary: Create a new switch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                switchName:
+                  type: string
+                  description: Name of the switch
+                switchLocation:
+                  type: string
+                  description: Location of the switch
+      responses:
+        '201':
+          description: Switch created successfully
+        '400':
+          description: Bad request
