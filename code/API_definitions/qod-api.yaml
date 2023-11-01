@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: QoD fr enhanced communication
+  title: QoD for enhanced communication
   description: |
     The Quality-On-Demand (QoD) API provides programmable interface for developers and other users (capabilities consumers) to request stable latency or throughput managed by Telco networks without the necessity to have an in-depth knowledge of the 4G/5G system or the overall complexity of the Telecom Systems.
 
@@ -788,7 +788,7 @@ components:
       type: string
       format: uuid
       example: 5698d710-9b1b-4695-a958-7b228f08128c
-      description: Unique identifier of the even
+      description: Unique identifier of the event
 
     EventType:
       type: string
@@ -825,7 +825,7 @@ components:
 
     StatusInfo:
       description: |
-        Reason for the new `qosStatus`. Currently `statusInfo` is only applicabe when `qosStatus` is 'UNAVAILABLE'.
+        Reason for the new `qosStatus`. Currently `statusInfo` is only applicable when `qosStatus` is 'UNAVAILABLE'.
         * `DURATION_EXPIRED` - Session terminated due to requested duration expired
         * `NETWORK_TERMINATED` - Network terminated the session before the requested duration expired
       type: string
