@@ -75,35 +75,20 @@ const reservedWords = [
   'volatile',
   'while'
 ];
-export default async function (input) {
-//  const errors = [];
- // const suggestions = [];
 
+export default async function (input) {
+  
   // Iterate over properties of the input object
   for (const path in input) {
-   // const value = input[path];
-
-    // Check if the value is a string
+    
     if (typeof path === 'string') {
       for (const word of reservedWords) {
-       // console.log(path);
-        // Use a regular expression to match 'word' as a standalone word
-       //  const formatWord = word.replace(/[{}]/g, '');
-         const regex = new RegExp(`\\b${word}\\b`, 'g');
+        const regex = new RegExp(`\\b${word}\\b`, 'g');  // Use a regular expression to match 'word' as a standalone word
     
-
-        // Check if 'word' exists in the value
-        if (regex.test(path)) {
-          //errors.push(word);
-        //  suggestions.push(`Consider avoiding the use of reserved word '${word}'in this path '${path}'.`);
-          console.log(`Hint: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${word}'. `);
+           if (regex.test(path)) {
+               console.log(`Hint: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${word}'. `);
         }
       }
     }
   }
-
-  // Check if any reserved words are in the suggestions
-//  if (errors.length > 0) {
- //   console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
-  //}
 }
