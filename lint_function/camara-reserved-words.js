@@ -86,7 +86,7 @@ export default async function (input) {
         const regex = new RegExp(`\\b${word}\\b`, 'g');  // Use a regular expression to match 'word' as a standalone word
     
            if (regex.test(path)) {
-               console.log(`Hint: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${word}'. `);
+               console.log(`Warn: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${word}'. `);
         }
       }
     }
