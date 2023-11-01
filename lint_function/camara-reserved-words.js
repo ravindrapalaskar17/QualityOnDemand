@@ -1,55 +1,104 @@
 const reservedWords = [
+  'abstract',
+  'apiclient',
+  'apiexception',
+  'apiresponse',
+  'assert',
+  'boolean',
+  'break',
+  'byte',
+  'case',
+  'catch',
+  'char',
+  'class',
+  'configuration',
+  'const',
+  'continue',
+  'default',
+  'do',
+  'double',
+  'else',
+  'enum',
+  'extends',
+  'file',
+  'final',
+  'finally',
+  'float',
+  'for',
+  'goto',
+  'if',
+  'implements',
+  'import',
+  'instanceof',
+  'int',
+  'interface',
+  'list',
+  'localdate',
+  'localreturntype',
+  'localtime',
+  'localvaraccept',
+  'localvaraccepts',
+  'localvarauthnames',
+  'localvarcollectionqueryparams',
+  'localvarcontenttype',
+  'localvarcontenttypes',
+  'localvarcookieparams',
+  'localvarformparams',
+  'localvarheaderparams',
+  'localvarpath',
+  'localvarpostbody',
+  'localvarqueryparams',
+  'long',
+  'native',
+  'new',
+  'null',
+  'object',
+  'offsetdatetime',
+  'package',
+  'private',
+  'protected',
+  'public',
+  'return',
+  'short',
+  'static',
+  'strictfp',
+  'stringutil',
+  'super',
   'switch',
-  // Add other reserved words
+  'synchronized',
+  'this',
+  'throw',
+  'throws',
+  'transient',
+  'try',
+  'void',
+  'volatile',
+  'while'
 ];
-
 export default async function (input) {
   const errors = [];
   const suggestions = [];
 
-  // Function to check for reserved words
-  function checkForReservedWords(value, context) {
+  // Iterate over properties of the input object
+  for (const path in input) {
+    const value = input[path];
+
+    // Check if the value is a string
     if (typeof value === 'string') {
       for (const word of reservedWords) {
+        // Use a regular expression to match 'word' as a standalone word
         const regex = new RegExp(`\\b${word}\\b`, 'g');
 
+        // Check if 'word' exists in the value
         if (regex.test(value)) {
           errors.push(word);
-          suggestions.push(`Consider avoiding the use of reserved word '${word}' in ${context}.`);
+          suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
         }
       }
     }
   }
 
-  // Iterate over paths in the input object
-  if (input.paths) {
-    for (const path in input.paths) {
-      // Check path key for reserved words
-      checkForReservedWords(path, 'path');
-
-      const pathObject = input.paths[path];
-
-      // Check path parameters
-      if (pathObject.parameters) {
-        for (const param of pathObject.parameters) {
-          checkForReservedWords(param.name, 'path parameter');
-        }
-      }
-
-      // Check operations in the path
-      for (const method in pathObject) {
-        if (method !== 'parameters') {
-          const operation = pathObject[method];
-
-          // Check summary and description for reserved words
-          checkForReservedWords(operation.summary, 'summary');
-          checkForReservedWords(operation.description, 'description');
-        }
-      }
-    }
-  }
-
-  // Check if any reserved words are found
+  // Check if any reserved words are in the suggestions
   if (errors.length > 0) {
     console.log('Hint: Reserved words found in input: ' + suggestions.join(', '));
   }
