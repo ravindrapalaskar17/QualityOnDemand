@@ -86,7 +86,7 @@ export default async function (input) {
     // Check if the value is a string
     if (typeof path === 'string') {
       for (const word of reservedWords) {
-        console.log(input);
+        console.log(path);
         // Use a regular expression to match 'word' as a standalone word
         const regex = new RegExp(`\\b${word}\\b`, 'g');
 
