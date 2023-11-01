@@ -88,15 +88,15 @@ export default async function (input) {
       for (const word of reservedWords) {
        // console.log(path);
         // Use a regular expression to match 'word' as a standalone word
-         const formatWord = word.replace(/[{}]/g, '');
-         const regex = new RegExp(`\\b${formatWord}\\b`, 'g');
+       //  const formatWord = word.replace(/[{}]/g, '');
+         const regex = new RegExp(`\\b${word}\\b`, 'g');
     
 
         // Check if 'word' exists in the value
         if (regex.test(path)) {
-          //errors.push(formatWord);
-        //  suggestions.push(`Consider avoiding the use of reserved word '${formatWord}'in this path '${path}'.`);
-          console.log(`Hint: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${formatWord}'. `);
+          //errors.push(word);
+        //  suggestions.push(`Consider avoiding the use of reserved word '${word}'in this path '${path}'.`);
+          console.log(`Hint: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${word}'. `);
         }
       }
     }
