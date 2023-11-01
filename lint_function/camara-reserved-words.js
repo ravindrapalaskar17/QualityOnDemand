@@ -80,7 +80,7 @@ export default async function (input) {
   const suggestions = [];
 
   // Iterate over properties of the input object
- // for (const path in input) {
+  for (const path in input) {
    // const value = input[path];
 
     // Check if the value is a string
@@ -98,7 +98,7 @@ export default async function (input) {
         }
       }
     }
-//  }
+  }
 
   // Check if any reserved words are in the suggestions
   if (errors.length > 0) {
