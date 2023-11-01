@@ -81,17 +81,17 @@ export default async function (input) {
 
   // Iterate over properties of the input object
   for (const path in input) {
-    const value = input[path];
+   // const value = input[path];
 
     // Check if the value is a string
-    if (typeof value === 'string') {
+    if (typeof path === 'string') {
       for (const word of reservedWords) {
         console.log(input);
         // Use a regular expression to match 'word' as a standalone word
         const regex = new RegExp(`\\b${word}\\b`, 'g');
 
         // Check if 'word' exists in the value
-        if (regex.test(value)) {
+        if (regex.test(path)) {
           errors.push(word);
           suggestions.push(`Consider avoiding the use of reserved word '${word}'.`);
         }
