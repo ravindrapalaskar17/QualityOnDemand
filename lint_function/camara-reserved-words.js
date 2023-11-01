@@ -89,7 +89,7 @@ export default async function (input) {
         console.log(path);
         // Use a regular expression to match 'word' as a standalone word
          const formatWord = word.replace(/[{}]/g, '');
-        const regex = new RegExp(`\\b${word}\\b`, 'g');
+         const regex = new RegExp(`\\b${formatWord}\\b`, 'g');
     
 
         // Check if 'word' exists in the value
