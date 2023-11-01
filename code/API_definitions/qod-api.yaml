@@ -88,7 +88,7 @@ paths:
         - QoS sessions
       summary: Creates a new session
       description: Create QoS Session to manage latency/throughput priorities
-      operationId: createSession
+      operationId: abstract
       requestBody:
         description: Parameters to create a new session
         content:
@@ -452,7 +452,7 @@ components:
           example: 86400
         device:
           $ref: "#/components/schemas/Device"
-        super: "This is super"   
+        super: "This is super keyword added for component testing" 
         applicationServer:
           $ref: "#/components/schemas/ApplicationServer"
         devicePorts:
