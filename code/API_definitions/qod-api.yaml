@@ -452,6 +452,7 @@ components:
           example: 86400
         device:
           $ref: "#/components/schemas/Device"
+        super: "This is super"   
         applicationServer:
           $ref: "#/components/schemas/ApplicationServer"
         devicePorts:
