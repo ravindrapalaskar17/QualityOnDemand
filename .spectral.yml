@@ -5,6 +5,6 @@ rules:
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
-    given: "$..paths"
+    given: ""$..*.*""
     then:
       function: camara-reserved-words
