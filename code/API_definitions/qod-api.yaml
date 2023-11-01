@@ -452,7 +452,7 @@ components:
           example: 86400
         device:
           $ref: "#/components/schemas/Device"
-        super: "This is super keyword added for component testing" 
+        super: "This is super keyword added for component testing"
         applicationServer:
           $ref: "#/components/schemas/ApplicationServer"
         devicePorts:
