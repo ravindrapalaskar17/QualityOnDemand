@@ -82,7 +82,7 @@ servers:
         default: qod/v0
         description: Base path for the QoD API
 paths:
-  /sessions:
+  /switch:
     post:
       tags:
         - QoS sessions
@@ -223,7 +223,7 @@ paths:
         - threeLegged:
             - "qod-sessions-write"
 
-  /sessions/{sessionId}:
+  /switch/{switchId}:
     get:
       tags:
         - QoS sessions
