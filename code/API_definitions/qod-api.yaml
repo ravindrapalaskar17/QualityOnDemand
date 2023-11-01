@@ -383,7 +383,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: "{$request.body#/webhook/notificationAuthToken}"
-    threeLegged:
+    class:
       type: oauth2
       description: This API uses OAuth 2 with the authorization code grant flow.
       flows:
