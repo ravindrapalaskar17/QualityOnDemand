@@ -51,8 +51,8 @@ jobs:
         run: npm install nspell && npm install dictionary-en
         working-directory: ${{ github.workspace }}
 
-      # - name: Run spectral:oas Spectral Linting
-      #  run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral-oas.yml
+      - name: Run spectral:oas Spectral Linting
+        run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral-oas.yml
       #  Replace 'openapi.yaml' with the path to your OpenAPI specification file
 
       - name: Run spectral:oas Spectral Linting
