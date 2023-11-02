@@ -82,7 +82,7 @@ servers:
         default: qod/v0
         description: Base path for the QoD API
 paths:
-  /switch:
+  /session:
     post:
       tags:
         - QoS sessions
@@ -223,7 +223,7 @@ paths:
         - threeLegged:
             - "qod-sessions-write"
 
-  /switch/{switchId}:
+  /session/{sessionId}:
     get:
       tags:
         - QoS sessions
@@ -383,7 +383,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: "{$request.body#/webhook/notificationAuthToken}"
-    class:
+    threeLegged:
       type: oauth2
       description: This API uses OAuth 2 with the authorization code grant flow.
       flows:
@@ -452,7 +452,6 @@ components:
           example: 86400
         device:
           $ref: "#/components/schemas/Device"
-        super: "This is super keyword added for component testing"
         applicationServer:
           $ref: "#/components/schemas/ApplicationServer"
         devicePorts:
