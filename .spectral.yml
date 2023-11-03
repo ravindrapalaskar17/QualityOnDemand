@@ -1,5 +1,6 @@
 functions:
   - camara-reserved-words
+  - camara-oas-version
 functionsDir: "./lint_function"
 rules:
   check-reserved-words-in-paths:
@@ -15,3 +16,4 @@ rules:
       - "$.paths.*.*.operationId"
     then:
       function: camara-reserved-words
+      
