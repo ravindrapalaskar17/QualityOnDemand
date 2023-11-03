@@ -1,5 +1,5 @@
 functions:
-  - camara-oas-version
+  - camara-parameters-descriptions
 functionsDir: "./lint_function"
 rules:
   check-parameter-descriptions:
@@ -7,7 +7,7 @@ rules:
     description: |
       This rule checks if all parameters have descriptions.
     given:
-      - "$.parameters"
+      - "$.info"
     then:
       function: check-parameter-descriptions
     severity: warn
