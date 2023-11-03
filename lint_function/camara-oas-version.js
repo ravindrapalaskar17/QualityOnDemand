@@ -1,4 +1,4 @@
-export default async function checkOpenAPIVersion(input) {
+export default async function (input) {
   if (input.openapi && input.openapi === '3.0.3') {
     console.log("OpenAPI version is 3.0.3");
   } else {
