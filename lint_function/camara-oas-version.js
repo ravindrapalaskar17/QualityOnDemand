@@ -3,6 +3,6 @@ export default async function (input) {
   const inputAsString = input.toString(); // Convert input to a string
  
   if (inputAsString !== value) {
-    console.error(` '${inputAsString}' :This OpenAPI version not allowed, Pleae use '${value}'.`);
+    console.error(`Error:'${inputAsString}' :This OpenAPI version not allowed, Pleae use '${value}'.`);
   }
 }
