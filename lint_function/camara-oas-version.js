@@ -1,7 +1,7 @@
 export default async function (input) {
   if (input.openapi && input.openapi === '3.0.3') {
-    return null; // No issues, version is correct
+    console.log(`Thhis is valid openAPI version '${input}'.`);
   } else {
-    return "Message: Please use OpenAPI version 3.0.3";
+     console.log(`There is OpenAPI version not allowed '${input}'.`);
   }
 }
