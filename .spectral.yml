@@ -4,10 +4,10 @@ functionsDir: "./lint_function"
 rules:
   check-openapi-version:
     message: "OpenAPI version issue: {{error}}"
-    severity: error
     description: |
       This rule checks if the OpenAPI version is 3.0.3.
     given:
       - "$.openapi"
     then:
       function: camara-oas-version
+    severity: error
