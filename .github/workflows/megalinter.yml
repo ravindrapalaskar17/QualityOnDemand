@@ -5,9 +5,9 @@ name: MegaLinter
 
 on:  # yamllint disable-line rule:truthy
   # Pull Requests to main
-  pull_request:
-    branches:
-      - Extend-the-API-guidelines-with-a-concrete-ruleset
+ # pull_request:
+  #  branches:
+   #   - Extend-the-API-guidelines-with-a-concrete-ruleset
   push:
     branches: [master, main, draft/Extend-the-API-guidelines-with-a-concrete-ruleset]
 
