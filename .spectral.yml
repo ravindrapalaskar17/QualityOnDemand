@@ -1,5 +1,5 @@
 extends:
-  - ./spectral-oas.yml
+  - ./.spectral-oas.yml
 rules:
   camel-case-name:
   description:  This rule checks Operation ids should follow a specific case convention: camel case.
