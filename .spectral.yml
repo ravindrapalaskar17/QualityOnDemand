@@ -1,13 +1,11 @@
-functions:
-  - camara-parameters-descriptions
-functionsDir: "./lint_function"
-rules:
-  check-parameter-descriptions:
-    message: "Parameter description issue: {{error}}"
-    description: |
-      This rule checks if all parameters have descriptions.
-    given:
-      - "$.info"
-    then:
-      function: check-parameter-descriptions
-    severity: warn
+formats:
+  - oas3
+extends:
+  - spectral:oas
+camel-case-name:
+  description: Name should be camelCased.
+  given: "$.paths.*.*.operationId"
+  then:
+    function: casing
+    functionOptions:
+      type: camel
