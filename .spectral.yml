@@ -1,13 +1,15 @@
+formats:
+  - oas3
+extends:
+  - spectral:oas
 functions:
   - camara-parameters-descriptions
 functionsDir: "./lint_function"
 rules:
-  check-parameter-descriptions:
-    message: "Parameter description issue: {{error}}"
-    description: |
-      This rule checks if all parameters have descriptions.
-    given:
-      - "$.info"
-    then:
-      function: check-parameter-descriptions
-    severity: warn
+  camel-case-name:
+  description:  This rule checks Operation ids should follow a specific case convention: camel case.
+  given: "$.paths.*.*.operationId"
+  then:
+    function: casing
+    functionOptions:
+      type: camel
