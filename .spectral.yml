@@ -2,13 +2,14 @@ formats:
   - oas3
 extends:
   - spectral:oas
-camel-case-name:
-  message: "{{error}}"
-  severity: hint
-  description: |
-      This rule checks Operation ids should follow a specific case convention: camel case.
-  given: "$.paths.*.*.operationId"
-  then:
-    function: casing
-    functionOptions:
-      type: camel
+rules:
+  camel-case-name:
+    message: "{{error}}"
+    severity: hint
+    description: |
+        This rule checks Operation ids should follow a specific case convention: camel case.
+    given: "$.paths.*.*.operationId"
+    then:
+      function: casing
+      functionOptions:
+        type: camel
