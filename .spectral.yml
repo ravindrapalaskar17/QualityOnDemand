@@ -1,13 +1,13 @@
 functions:
-  - spectral:oas
+  - camara-parameters-descriptions
+functionsDir: "./lint_function"
 rules:
-  check-camel-case-properties:
-    description: Check for camel case property names
-    message: Property '{{key}}' should be in camelCase.
-    given: "$.paths.*.*.operationId"
+  check-parameter-descriptions:
+    message: "Parameter description issue: {{error}}"
+    description: |
+      This rule checks if all parameters have descriptions.
+    given:
+      - "$.info"
     then:
-      function: spectral:oas
-      functionOptions:
-        rules:
-          camelCase: true
-    severity: error
+      function: check-parameter-descriptions
+    severity: warn
