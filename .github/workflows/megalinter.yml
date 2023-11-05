@@ -45,7 +45,16 @@ jobs:
           fetch-depth: 0  # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
 
       - name: Install Spectral
-        run: npm install -g @stoplight/spectral && npm install --save @stoplight/spectral-functions && npm install --save @stoplight/spectral-formats
+        run: npm install -g @stoplight/spectral
+
+      - name: Install Spectral functions
+        run: npm install --save @stoplight/spectral-functions
+
+      - name: Install Spectral format
+        run: npm install --save @stoplight/spectral-formats
+
+      - name: Install Spectral core
+        run: npm install -g @stoplight/spectral-core
 
       - name: Install spell checker module 'nspell' & dictionary
         run: npm install nspell && npm install dictionary-en
