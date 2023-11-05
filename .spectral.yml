@@ -1,10 +1,5 @@
-formats:
-  - oas3
 extends:
   - spectral:oas
-functions:
-  - camara-parameters-descriptions
-functionsDir: "./lint_function"
 rules:
   camel-case-name:
   description:  This rule checks Operation ids should follow a specific case convention: camel case.
