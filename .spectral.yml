@@ -1,5 +1,3 @@
-formats:
-  - oas3
 rules:
   camel-case-name:
     message: "{{error}}"
