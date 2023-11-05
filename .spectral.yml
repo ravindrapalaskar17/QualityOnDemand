@@ -1,10 +1,13 @@
-extends:
-  - ./.spectral-oas.yml
+functions:
+  - spectral:oas
 rules:
-  camel-case-name:
-  description:  This rule checks Operation ids should follow a specific case convention: camel case.
-  given: "$.paths.*.*.operationId"
-  then:
-    function: casing
-    functionOptions:
-      type: camel
+  check-camel-case-properties:
+    description: Check for camel case property names
+    message: Property '{{key}}' should be in camelCase.
+    given: "$.paths.*.*.operationId"
+    then:
+      function: spectral:oas
+      functionOptions:
+        rules:
+          camelCase: true
+    severity: error
