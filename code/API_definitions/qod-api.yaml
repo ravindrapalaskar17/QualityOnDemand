@@ -88,7 +88,7 @@ paths:
         - QoS sessions
       summary: Creates a new session
       description: Create QoS Session to manage latency/throughput priorities
-      operationId: createSession
+      operationId: CreateSession
       requestBody:
         description: Parameters to create a new session
         content:
