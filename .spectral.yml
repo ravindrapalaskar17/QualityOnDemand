@@ -3,7 +3,10 @@ formats:
 extends:
   - spectral:oas
 camel-case-name:
-  description: Name should be camelCased.
+  message: "{{error}}"
+  severity: hint
+  description: |
+      This rule checks Operation ids should follow a specific case convention: camel case.
   given: "$.paths.*.*.operationId"
   then:
     function: casing
