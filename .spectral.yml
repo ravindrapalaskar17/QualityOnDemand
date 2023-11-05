@@ -1,7 +1,5 @@
 formats:
   - oas3
-extends:
-  - spectral:oas
 rules:
   camel-case-name:
     message: "{{error}}"
