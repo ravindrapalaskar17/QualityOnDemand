@@ -1,13 +1,10 @@
-functions:
-  - camara-parameters-descriptions
-functionsDir: "./lint_function"
-rules:
-  check-parameter-descriptions:
-    message: "Parameter description issue: {{error}}"
-    description: |
-      This rule checks if all parameters have descriptions.
-    given:
-      - "$.info"
-    then:
-      function: check-parameter-descriptions
-    severity: warn
+important-fields:
+  description: Absolutely must have a title and a description
+  message: "Missing the {{property}}"
+  given: "- "$.info"
+  then:
+    - field: "title"
+      function: truthy
+
+    - field: "description"
+      function: truthy
