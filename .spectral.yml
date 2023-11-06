@@ -1,9 +1,11 @@
+extends: spectral:oas
 rules:
-  important-fields:
-    description: Absolutely must have a title and a description
-    message: "Missing the description {{property}}"
+  tag-description:
+    description: Please provide a description for each tag.
+    documentationUrl: https://www.example.com/docs/tag-description.md
+    message: Info must have description "{{error}}"
     severity: hint
-  given: "$.info"
-  then:
-    - field: "description"
+    given: $.info[*]
+    then:
+      field: description
       function: truthy
