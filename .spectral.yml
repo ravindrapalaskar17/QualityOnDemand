@@ -1,6 +1,7 @@
-important-fields:
-  description: Absolutely must have a title and a description
-  message: "Missing the {{property}}"
+rules:
+  important-fields:
+    description: Absolutely must have a title and a description
+    message: "Missing the {{property}}"
   given: "- "$.info"
   then:
     - field: "title"
