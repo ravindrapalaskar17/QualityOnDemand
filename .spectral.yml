@@ -1,10 +1,9 @@
 rules:
-  tag-description:
-    description: Please provide a description for each tag.
-    documentationUrl: https://www.example.com/docs/tag-description.md
-    message: Info must have description "{{error}}"
+  camara-parameters-descriptions:
+    description: This spectral rules check for the description of ecah parameter
+    message: Parameter must have description "{{error}}"
     severity: hint
-    given: $.info[*]
+    given: $.components"[*]
     then:
       field: description
       function: truthy
