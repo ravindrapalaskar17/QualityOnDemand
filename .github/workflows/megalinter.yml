@@ -65,7 +65,7 @@ jobs:
       #  Replace 'openapi.yaml' with the path to your OpenAPI specification file
 
       - name: Run spectral:oas Spectral Linting
-        run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml
+        run: spectral lint code/API_definitions/qod-api2.yaml --verbose --ruleset .spectral.yml
         # Replace 'openapi.yaml' with the path to your OpenAPI specification file
 
 
