@@ -3,7 +3,7 @@ rules:
     description: This spectral rules check for the description of ecah parameter
     message: Parameter must have description "{{error}}"
     severity: hint
-    given: $.components"[*]
+    given: "$.components.schemes"
     then:
       field: description
       function: truthy
