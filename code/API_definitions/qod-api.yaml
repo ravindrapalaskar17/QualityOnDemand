@@ -375,7 +375,6 @@ components:
             - qosStatus
 
     CreateSession:
-      description: Attributes required to create a session
       type: object
       properties:
         duration:
