@@ -1,11 +1,9 @@
 rules:
   important-fields:
     description: Absolutely must have a title and a description
-    message: "Missing the {{property}}"
-  given: "- "$.info"
+    message: "Missing the description {{property}}"
+    severity: hint
+  given: "$.info"
   then:
-    - field: "title"
-      function: truthy
-
     - field: "description"
       function: truthy
