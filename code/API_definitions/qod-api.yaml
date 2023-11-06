@@ -390,7 +390,6 @@ components:
             startedAt:
               type: integer
               example: 1639479600
-              description: Timestamp of session start in seconds since Unix epoch
               format: int64
             expiresAt:
               type: integer
