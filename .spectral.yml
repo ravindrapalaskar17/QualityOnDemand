@@ -1,6 +1,6 @@
 rules:
   camel-case-name:
-    message: "{{error}}"
+    message: Operation Id must be in Camel case "{{error}}"
     severity: hint
     description: |
         This rule checks Operation ids should follow a specific case convention: camel case.
