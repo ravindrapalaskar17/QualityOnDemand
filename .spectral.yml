@@ -1,11 +1,13 @@
+functions:
+  - camara-parameters-descriptions
+functionsDir: "./lint_function"
 rules:
-  camel-case-name:
-    message: Operation Id must be in Camel case "{{error}}"
-    severity: hint
+  check-parameter-descriptions:
+    message: "Parameter description issue: {{error}}"
     description: |
-        This rule checks Operation ids should follow a specific case convention: camel case.
-    given: "$.paths.*.*.operationId"
+      This rule checks if all parameters have descriptions.
+    given:
+      - "$.info"
     then:
-      function: casing
-      functionOptions:
-        type: camel
+      function: check-parameter-descriptions
+    severity: warn
