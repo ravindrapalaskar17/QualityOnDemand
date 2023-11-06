@@ -1,4 +1,3 @@
-extends: spectral:oas
 rules:
   tag-description:
     description: Please provide a description for each tag.
