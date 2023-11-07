@@ -1,27 +1,33 @@
-//import * as spellchecker from 'spellchecker'; // Import the spellchecker package
-const spellChecker = require('spellchecker');
-const exceptions = ['eventId', 'eventType', 'eventTime', 'eventSubscriptionId', 'publicAddress', 'subnet', 'privateAddress', 'publicPort', 'sessionId', 'UUID', 'devicePorts', 'QoS', 'qosProfile', 'TCP', 'UDP', 'QOS_S', 'QOS_M', 'QOS_L', 'QOS_E', 'webhook', 'notificationUrl', 'notificationAuthToken', 'startedAt', 'expiresAt', 'qosprofiles', 'minDuration', 'maxDuration', 'packetDelayBudget', 'oneway', 'endtoend', 'jitter', 'roundtrip', 'ITU', 'eg', 'realtime', 'packetErrorLossRate', 'QCI', 'maxDownstreamRate', 'QOS_STATUS_CHANGED', 'qosStatus', 'statusInfo', 'DURATION_EXPIRED', 'Enduser', 'IoT', 'sensorsactuators', 'phoneNumber', 'networkAccessIdentifier', 'MNO', 'invoker', 'MNOs', 'MSISDN', 'GPSI', 'IdentifierDomain', 'DNS', 'ie', 'applicationServerPorts', 'maxDownstreamBurstRate', 'maxUpstreamRate', 'QoD', 'cmunication', 'QualityOnDemand', 'Telco', 'indepth', 'Telecom', 'VRGaming', 'backend', 'OverviewhttpsrawgithubusercontentcomcamaraprojectQualityOnDemandmaindocumentationAPI_documentationresourcesQoD_latency_overviewPNG', 'QOD', 'OAuth', 'andor', 'AppFlow', 'portranges', 'AppFlows', 'portportranges', 'Appflow', 'br', 'APIhttpsrawgithubusercontentcomcamaraprojectQualityOnDemandmaindocumentationAPI_documentationresourcesQoD_detailsPNG', 'CAMARA', 'DRAFThttpsgithubcomcamaraprojectQualityOnDemandblobmaindocumentationAPI_documentationQoSProfile_Mapping_Tablemd', 'IETF', 'addressmask', 'applicationServer', 'dottedquad', 'sessionssessionId', 'createSession', 'targetMinUpstreamRate', 'SessionId', 'SessionInfo', 'EventNotification', 'PhoneNumber', 'QosStatus', 'EventQosStatus', 'ErrorInfo', 'GBR', 'latencysensitive', 'DOCSIS', 'maxUpstreamBurstRate', 'targetMinDownstreamRate', 'qosprofilesname', 'RateUnitEnum', 'CreateSession', 'PortsSpec', 'QosProfile', 'QosProfileName', 'TimeUnitEnum', 'QosProfileStatusEnum', 'EventId', 'EventType', 'EventTime', 'QosStatusChangedEvent', 'eventDetail', 'NETWORK_TERMINATED', 'StatusInfo', 'ApplicationServer', 'NetworkAccessIdentifier'];
+// Import the 'dictionary-en' module if not already imported
+const dictionary = require('dictionary-en');
+const nspell = require('nspell');
 
+// Function to check for spelling errors
+export default async function (input) {
+  // Load the dictionary
+  const dict = dictionary('en_US');
+  const spell = nspell(dict);
 
-// Load the dictionary
-const dictionaryEn = require('dictionary-en');
+  // Split the input text into words
+  const words = input.split(/\s+/);
 
-// Convert the dictionary to an array (example)
-const dictionary = dictionaryEn.sync(); // Replace with your actual dictionary source
+  // Array to store spelling mistakes
+  const mistakes = [];
 
-export default (input) => {
-  const words = input.split(/[_]/); // Split input based on underscores
-  const mistakes = words
-    .filter((word) => !exceptions.includes(word))
-    .filter((word) => !isInDictionary(word, dictionary));
+  for (const word of words) {
+    // Check if the word is empty or contains only digits
+    if (/^\d*$/.test(word) || word.trim() === '') {
+      continue;
+    }
 
-  if (mistakes.length > 0) {
-    return [{
-      message: `Spelling mistakes found: ${mistakes.join(', ')}`,
-    }];
+    // Check if the word is not in the dictionary
+    if (!spell.correct(word)) {
+      mistakes.push(word);
+    }
   }
-};
 
-function isInDictionary(word, dictionary) {
-  return dictionary.includes(word.toLowerCase()); // Check if the lowercase version of the word is in the dictionary
+  // If mistakes are found, print a warning
+  if (mistakes.length > 0) {
+    console.log('Spelling mistakes found: ' + mistakes.join(', '));
+  }
 }
