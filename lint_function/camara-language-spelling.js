@@ -1,29 +1,21 @@
 import * as spellchecker from 'spellchecker'; // Import the spellchecker package
 
 const exceptions = ['eventId', 'eventType', 'eventTime', 'eventSubscriptionId', 'publicAddress', 'subnet', 'privateAddress', 'publicPort', 'sessionId', 'UUID', 'devicePorts', 'QoS', 'qosProfile', 'TCP', 'UDP', 'QOS_S', 'QOS_M', 'QOS_L', 'QOS_E', 'webhook', 'notificationUrl', 'notificationAuthToken', 'startedAt', 'expiresAt', 'qosprofiles', 'minDuration', 'maxDuration', 'packetDelayBudget', 'oneway', 'endtoend', 'jitter', 'roundtrip', 'ITU', 'eg', 'realtime', 'packetErrorLossRate', 'QCI', 'maxDownstreamRate', 'QOS_STATUS_CHANGED', 'qosStatus', 'statusInfo', 'DURATION_EXPIRED', 'Enduser', 'IoT', 'sensorsactuators', 'phoneNumber', 'networkAccessIdentifier', 'MNO', 'invoker', 'MNOs', 'MSISDN', 'GPSI', 'IdentifierDomain', 'DNS', 'ie', 'applicationServerPorts', 'maxDownstreamBurstRate', 'maxUpstreamRate', 'QoD', 'cmunication', 'QualityOnDemand', 'Telco', 'indepth', 'Telecom', 'VRGaming', 'backend', 'OverviewhttpsrawgithubusercontentcomcamaraprojectQualityOnDemandmaindocumentationAPI_documentationresourcesQoD_latency_overviewPNG', 'QOD', 'OAuth', 'andor', 'AppFlow', 'portranges', 'AppFlows', 'portportranges', 'Appflow', 'br', 'APIhttpsrawgithubusercontentcomcamaraprojectQualityOnDemandmaindocumentationAPI_documentationresourcesQoD_detailsPNG', 'CAMARA', 'DRAFThttpsgithubcomcamaraprojectQualityOnDemandblobmaindocumentationAPI_documentationQoSProfile_Mapping_Tablemd', 'IETF', 'addressmask', 'applicationServer', 'dottedquad', 'sessionssessionId', 'createSession', 'targetMinUpstreamRate', 'SessionId', 'SessionInfo', 'EventNotification', 'PhoneNumber', 'QosStatus', 'EventQosStatus', 'ErrorInfo', 'GBR', 'latencysensitive', 'DOCSIS', 'maxUpstreamBurstRate', 'targetMinDownstreamRate', 'qosprofilesname', 'RateUnitEnum', 'CreateSession', 'PortsSpec', 'QosProfile', 'QosProfileName', 'TimeUnitEnum', 'QosProfileStatusEnum', 'EventId', 'EventType', 'EventTime', 'QosStatusChangedEvent', 'eventDetail', 'NETWORK_TERMINATED', 'StatusInfo', 'ApplicationServer', 'NetworkAccessIdentifier'];
-const separatorsRegex = /\s/;
-const mistakes = [];
+//const spellChecker = require('spellchecker');
+//const exceptions = ["bic","datetime","gt","gte","icontains","iban","idempotency","isnull","lt","lte","md5","mimetype","oid","userpic"];
 
-function includesNumber(value) {
-    return /\d/.test(value);
-}
+const codeStyleRegex = /[_]/        // snake_case
 
-export default function (input) {
-    // Load and use the dictionary
-    spellchecker.load('en-US');
+export default (input) => {
 
-    var no_special_characters = input.replace(/[^\w\s]/gi, '');
-    const words = no_special_characters.split(separatorsRegex);
+  const words = input.split(codeStyleRegex);
+  const mistakes = words
+    .filter((word) => !exceptions.includes(word))
+    .filter((word) => spellChecker.isMisspelled(word));
 
-    var errors = words
-        .filter((word) => !exceptions.includes(word))
-        .filter((word) => !spellchecker.isMisspelled(word)) // Use the spellchecker package for spelling check
-        .filter((word) => word !== '') // Correct the condition here
-        .filter((word) => !includesNumber(word));
-
-    if (errors.length > 0 && mistakes[mistakes.length - 1] !== errors[errors.length - 1]) {
-        mistakes.push(errors);
-        errors = [];
-        console.log('\nWarn: There was a spelling mistake: ' + mistakes);
-    }
-}
+  if (mistakes.length > 0) {
+    return [{
+      message: `Spelling mistakes found: ${mistakes.join(', ')}`,
+    }];
+  }
+};
