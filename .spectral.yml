@@ -1,6 +1,6 @@
 functions:
   - camara-language-spelling
-  - check-telco-avoid-telco
+  - camara-language-avoid-telco
 functionsDir: "./lint_function" 
 check-spelling-code:
     message: "{{error}}"
@@ -20,4 +20,4 @@ check-spelling-code:
       This rule checks for telco-specific terminology in your API definitions and suggests more inclusive terms.
     given: "$..*.*"
     then:
-      function: check-telco-avoid-telco
+      function: camara-language-avoid-telco
