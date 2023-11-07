@@ -335,7 +335,7 @@ paths:
         "503":
           $ref: "#/components/responses/Generic503"
 
-  /qos-profiles/{name}:
+  /qos-Profiles/{name}:
     get:
       tags:
         - QoS Profiles
