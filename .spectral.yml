@@ -1,18 +1,6 @@
 functions:
-  - camara-language-spelling
   - camara-language-avoid-telco
 functionsDir: "./lint_function" 
-check-spelling-code:
-    message: "{{error}}"
-    severity: warn
-    given:
-      - "$.info.title"
-      - "$.info.summary"
-      - "$.info.description"
-      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
-      - "$..properties.*.description"
-    then:
-      function: camara-language-spelling
   check-telco-specific-terms:
     message: "{{error}}"
     severity: hint
