@@ -54,7 +54,7 @@ jobs:
         run: npm install --save @stoplight/spectral-functions
 
       - name: Install spell checker module 'nspell' & dictionary
-        run: npm install nspell && npm install dictionary-en
+        run: npm install spellchecker
         working-directory: ${{ github.workspace }}
 
       # - name: Run spectral:oas Spectral Linting
