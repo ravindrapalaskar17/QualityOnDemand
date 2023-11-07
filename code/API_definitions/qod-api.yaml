@@ -459,7 +459,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/PortsSpec"
         applicationServerPorts:
-          description: A list of single ports or port ranges on the application server
+          description: A lis of single ports or port ranges on the application server
           allOf:
             - $ref: "#/components/schemas/PortsSpec"
         qosProfile:
