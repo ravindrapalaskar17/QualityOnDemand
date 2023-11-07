@@ -28,5 +28,3 @@ export default async function (input) {
         }
     })
 };
- 16 changes: 16 additions & 0 deletions16  
-lint_function/camara-operationId-casing-convention.js
