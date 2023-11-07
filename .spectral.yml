@@ -1,7 +1,6 @@
 functions:
   - camara-language-avoid-telco
   - camara-oas-version
-  - camara-language-spelling
 functionsDir: "./lint_function" 
 rules:
   check-telco-specific-terms:
