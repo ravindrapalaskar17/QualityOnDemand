@@ -19,8 +19,6 @@ env:  # Comment env block if you do not want to apply fixes
   # Add Spectral Configuration
   SPECTRAL_CONFIG: .spectral.yml  # Path to your Spectral configuration file
   SPELL_CHECK: true  # Enable the spell check
-  SPELL_CHECK_JS_FILE: "spell-check.js"
-
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
