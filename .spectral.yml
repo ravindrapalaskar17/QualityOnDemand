@@ -1,9 +1,6 @@
-parserOptions:
-  duplicateKeys: warn # error is the default value
-  incompatibleValues: off # error is the default value
 rules:
   camara-parameters-descriptions:
-    description: This spectral rules check for the description of ecah parameter
+    description: This spectral rules check for the description of each parameter
     message: Parameter must have description "{{error}}"
     severity: hint
     given: "$.components.schemas.*.properties"
