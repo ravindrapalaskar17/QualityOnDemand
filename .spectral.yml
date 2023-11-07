@@ -29,18 +29,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^(\/|[a-z0-9-.]+|{[a-zA-Z0-9_]+})+$"
-  camara-language-spelling:
-    message: "{{error}}"
-    severity: warn
-    given:
-      - "$.info.title"
-      - "$.info.summary"
-      - "$.info.description"
-      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
-      - "$..properties.*.description"
-    then:
-      function: camara-language-spelling      
+        match: "^(\/|[a-z0-9-.]+|{[a-zA-Z0-9_]+})+$"    
   check-openapi-version:
     message: "OpenAPI version issue: {{error}}"
     severity: warn
