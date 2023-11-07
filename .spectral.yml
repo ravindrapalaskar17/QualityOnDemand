@@ -1,6 +1,7 @@
 functions:
   - camara-language-avoid-telco
 functionsDir: "./lint_function" 
+rules
   check-telco-specific-terms:
     message: "{{error}}"
     severity: hint
