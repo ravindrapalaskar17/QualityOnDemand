@@ -1,9 +1,23 @@
-rules:
-  camara-parameters-descriptions:
-    description: This spectral rules check for the description of each parameter
-    message: Parameter must have description "{{error}}"
-    severity: hint
-    given: "$.components.schemas.*.properties"
+functions:
+  - check-spelling-code
+  - check-telco-specific-terms
+functionsDir: "./lint_function" 
+check-spelling-code:
+    message: "{{error}}"
+    severity: warn
+    given:
+      - "$.info.title"
+      - "$.info.summary"
+      - "$.info.description"
+      - "$.paths.*.*.parameters[?(@.in==='query' || @.in==='path' || @.in==='cookie')].description"
+      - "$..properties.*.description"
     then:
-      field: description
-      function: truthy
+      function: check-spelling-code
+  check-telco-specific-terms:
+    message: "{{error}}"
+    severity: hint
+    description: |
+      This rule checks for telco-specific terminology in your API definitions and suggests more inclusive terms.
+    given: "$..*.*"
+    then:
+      function: check-telco-specific-terms
