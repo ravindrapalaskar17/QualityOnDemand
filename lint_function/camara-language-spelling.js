@@ -1,26 +1,29 @@
-import dictionary from 'dictionary-en';
-import nspell from 'nspell';
+import * as spellchecker from 'spellchecker'; // Import the spellchecker package
 
-async function checkSpelling(input) {
-  try {
-    const dict = await dictionary();
-    const spell = nspell(dict);
-    const noSpecialCharacters = input.replace(/[^\w\s]/gi, '');
-    const words = noSpecialCharacters.split(/\s/);
-    const errors = words
-      .filter((word) => !exceptions.includes(word))
-      .filter((word) => !spell.correct(word))
-      .filter((word) => word !== '')
-      .filter((word) => !includesNumber(word));
+const exceptions = ['eventId', 'eventType', 'eventTime', 'eventSubscriptionId', /* ...other exceptions... */];
+const separatorsRegex = /\s/;
+const mistakes = [];
 
-    if (errors.length > 0 && mistakes[mistakes.length - 1] !== errors[errors.length - 1]) {
-      mistakes.push(errors);
-      errors = [];
-      console.log('\nWarn: There was a spelling mistake: ' + mistakes);
-    }
-  } catch (err) {
-    throw err;
-  }
+function includesNumber(value) {
+    return /\d/.test(value);
 }
 
-export default checkSpelling;
+export default function (input) {
+    // Load and use the dictionary
+    spellchecker.load('en-US');
+
+    var no_special_characters = input.replace(/[^\w\s]/gi, '');
+    const words = no_special_characters.split(separatorsRegex);
+
+    var errors = words
+        .filter((word) => !exceptions.includes(word))
+        .filter((word) => !spellchecker.isMisspelled(word)) // Use the spellchecker package for spelling check
+        .filter((word) => word !== '') // Correct the condition here
+        .filter((word) => !includesNumber(word));
+
+    if (errors.length > 0 && mistakes[mistakes.length - 1] !== errors[errors.length - 1]) {
+        mistakes.push(errors);
+        errors = [];
+        console.log('\nWarn: There was a spelling mistake: ' + mistakes);
+    }
+}
