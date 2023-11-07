@@ -1,5 +1,6 @@
 functions:
   - camara-language-avoid-telco
+  - camara-oas-version  
 functionsDir: "./lint_function" 
 rules:
   check-telco-specific-terms:
@@ -19,4 +20,13 @@ rules:
     then:
       function: casing
       functionOptions:
-        type: camel  
+        type: camel
+  check-openapi-version:
+    message: "OpenAPI version issue: {{error}}"
+    severity: warn
+    description: |
+      This rule checks if the OpenAPI version is 3.0.3.
+    given:
+      - "$.openapi"
+    then:
+      function: camara-oas-version      
