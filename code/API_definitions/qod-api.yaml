@@ -808,7 +808,6 @@ components:
           properties:
             eventDetail:
               type: object
-              description: Event details depending on the event type
               required:
                 - sessionId
                 - qosStatus
@@ -944,6 +943,7 @@ components:
       type: object
       properties:
         severity:
+          description: Message severity
           type: string
           enum: ["INFO", "WARNING"]
         description:
