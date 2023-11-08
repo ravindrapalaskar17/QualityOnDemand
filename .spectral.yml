@@ -13,7 +13,6 @@ rules:
     given: "$..*.*"
     then:
       function: camara-language-avoid-telco
-
   camel-case-name:
     message: Operation Id must be in Camel case "{{error}}"
     severity: hint
@@ -24,7 +23,6 @@ rules:
       function: casing
       functionOptions:
         type: camel
-
   paths-kebab-case:
     description: Paths should be kebab-case.
     message: "{{property}} should be kebab-case (lower-case and separated with hyphens)"
@@ -34,7 +32,6 @@ rules:
       function: pattern
       functionOptions:
         match: "^(\/|[a-z0-9-.]+|{[a-zA-Z0-9_]+})+$"
-
   check-sensitive-data-in-paths:
     message: "Sensitive data found in path: {{error}}"
     severity: warn
@@ -44,7 +41,6 @@ rules:
     - "$.paths"
   then:
     function: camara-security-no-secrets-in-path-or-query-parameters
-  
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
@@ -58,7 +54,6 @@ rules:
        - "$.paths.*.*.operationId"
     then:
       function: camara-reserved-words
- 
   check-openapi-version:
     message: "OpenAPI version issue: {{error}}"
     severity: warn
