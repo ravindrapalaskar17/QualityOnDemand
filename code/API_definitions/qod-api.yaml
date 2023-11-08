@@ -808,6 +808,7 @@ components:
           properties:
             eventDetail:
               type: object
+              description: Event details depending on the event type
               required:
                 - sessionId
                 - qosStatus
