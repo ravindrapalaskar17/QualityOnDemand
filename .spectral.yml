@@ -36,11 +36,11 @@ rules:
     message: "Sensitive data found in path: {{error}}"
     severity: warn
     description: |
-    This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
-  given: 
-    - "$.paths"
-  then:
-    function: camara-security-no-secrets-in-path-or-query-parameters
+      This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
+    given: 
+      - "$.paths"
+    then:
+      function: camara-security-no-secrets-in-path-or-query-parameters
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
