@@ -58,7 +58,9 @@ rules:
     description: This spectral rules check for the description of each parameter
     message: Parameter must have description "{{error}}"
     severity: hint
-    given: "$.components.*.*"
+    given: 
+       - "$.components.*.*"
+       - "$.components.*.*.properties"
     then:
       field: description
       function: truthy	    
