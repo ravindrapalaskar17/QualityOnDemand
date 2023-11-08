@@ -981,12 +981,12 @@ components:
       properties:
         status:
           type: integer
+          description: HTTP status code returned along with this error response
         code:
           type: string
           description: Code given to this error
         message:
           type: string
-          description: Detailed error description
       required:
         - status
         - code
