@@ -60,7 +60,6 @@ rules:
     severity: hint
     given: 
        - "$.components.*.*"
-       - "$.components.*.*.properties.*."
     then:
       field: description
       function: truthy	    
