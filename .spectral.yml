@@ -54,6 +54,14 @@ rules:
        - "$.paths.*.*.operationId"
     then:
       function: camara-reserved-words
+  camara-parameters-descriptions:
+    description: This spectral rules check for the description of each parameter
+    message: Parameter must have description "{{error}}"
+    severity: hint
+    given: "$.components.*.*"
+    then:
+      field: description
+      function: truthy	    
   check-openapi-version:
     message: "OpenAPI version issue: {{error}}"
     severity: warn
