@@ -944,7 +944,6 @@ components:
       type: object
       properties:
         severity:
-          description: Message severity
           type: string
           enum: ["INFO", "WARNING"]
         description:
@@ -987,6 +986,7 @@ components:
           description: Code given to this error
         message:
           type: string
+          description: Detailed error description
       required:
         - status
         - code
