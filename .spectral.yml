@@ -3,7 +3,7 @@ functions:
   - camara-oas-version
   - camara-reserved-words
   - camara-security-no-secrets-in-path-or-query-parameters
-functionsDir: "./lint_function" 
+functionsDir: "./lint_function"
 rules:
   check-telco-specific-terms:
     message: "{{error}}"
@@ -37,7 +37,7 @@ rules:
     severity: warn
     description: |
       This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
-    given: 
+    given:
       - "$.paths"
     then:
       function: camara-security-no-secrets-in-path-or-query-parameters
@@ -46,19 +46,19 @@ rules:
     severity: warn
     description: |
       This rule checks Reserved words must not be used in the following parts of an API specification [Paths, Request Body properties, Component, Operation Id, Security Schema]
-    given: 
-       - "$.paths"
-       - "$.components.schemas.*.properties"
-       - "$.components.securitySchemes"
-       - "$.components"
-       - "$.paths.*.*.operationId"
+    given:
+      - "$.paths"
+      - "$.components.schemas.*.properties"
+      - "$.components.securitySchemes"
+      - "$.components"
+      - "$.paths.*.*.operationId"
     then:
       function: camara-reserved-words
   camara-parameters-descriptions:
     description: This spectral rules check for the description of each parameter
     message: Parameter must have description "{{error}}"
     severity: hint
-    given: 
+    given:
        - "$.components.*.*"
        - "$.components.*.*.properties.*"
     then:
@@ -69,8 +69,8 @@ rules:
     severity: warn
     given: "$.paths.*"
     then:
-      field: summary 
-      function: truthy   
+      field: summary
+      function: truthy
   check-openapi-version:
     message: "OpenAPI version issue: {{error}}"
     severity: warn
@@ -79,4 +79,4 @@ rules:
     given:
       - "$.openapi"
     then:
-      function: camara-oas-version      
+      function: camara-oas-version
