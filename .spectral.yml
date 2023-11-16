@@ -64,7 +64,7 @@ rules:
     then:
       field: description
       function: truthy
- camara-operation-summary:
+  camara-operation-summary:
     message: Summary must be defined on each operation, describing with a short summary what the operation does.
     severity: warn
     given: "$.paths.*."
