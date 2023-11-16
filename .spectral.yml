@@ -63,7 +63,14 @@ rules:
        - "$.components.*.*.properties.*"
     then:
       field: description
-      function: truthy	    
+      function: truthy
+ camara-operation-summary:
+    message: Summary must be defined on each operation, describing with a short summary what the operation does.
+    severity: warn
+    given: "$.paths.*."
+    then:
+      field: summary 
+      function: truthy   
   check-openapi-version:
     message: "OpenAPI version issue: {{error}}"
     severity: warn
