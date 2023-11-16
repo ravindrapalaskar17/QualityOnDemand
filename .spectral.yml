@@ -59,8 +59,8 @@ rules:
     message: Parameter must have description "{{error}}"
     severity: hint
     given:
-       - "$.components.*.*"
-       - "$.components.*.*.properties.*"
+      - "$.components.*.*"
+      - "$.components.*.*.properties.*"
     then:
       field: description
       function: truthy
