@@ -28,7 +28,7 @@ jobs:
   build:
     name: MegaLinter
     runs-on: ubuntu-latest
-    
+
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push, comment issues & post new PR
       # Remove the ones you do not need
@@ -42,13 +42,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
-          
+
       - name: Install Spectral
         run: npm install -g @stoplight/spectral
 
       - name: Install Spectral functions
         run: npm install --save @stoplight/spectral-functions
-        
+
       - name: Run spectral:oas Spectral Linting
         run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml
         # Replace 'openapi.yaml' with the path to your OpenAPI specification file
