@@ -67,7 +67,13 @@ rules:
   camara-operation-summary:
     message: Summary must be defined on each operation, describing with a short summary what the operation does.
     severity: warn
-    given: "$.paths.*"
+    given: 
+      - "$.paths.*.post"
+      - "$.paths.*.get"
+      - "$.paths.*.delete"
+      - "$.paths.*.put"
+      - "$.paths.*.gatch"
+      - "$.paths.*.options"
     then:
       field: summary
       function: truthy
