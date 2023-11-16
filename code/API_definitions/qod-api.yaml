@@ -227,6 +227,7 @@ paths:
     get:
       tags:
         - QoS sessions
+      summary: Get QoS session information
       description: Querying for QoS session resource information details
       operationId: getSession
       parameters:
