@@ -223,14 +223,14 @@ paths:
         - threeLegged:
             - "qod-sessions-write"
 
-  /sessions/{Id}:
+  /sessions/{sessionId}:
     get:
       tags:
         - QoS sessions
       description: Querying for QoS session resource information details
       operationId: getSession
       parameters:
-        - name: Id
+        - name: sessionId
           in: path
           description: Session ID that was obtained from the createSession operation
           required: true
