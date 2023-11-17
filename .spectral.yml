@@ -13,7 +13,7 @@ rules:
     then:
       function: camara-language-avoid-telco
   camel-case-name:
-    message: Operation Id must be in Camel case {{error}} Please use OpenAPI version 3.0.3"
+    message: "Operation Id must be in Camel case {{error}}"
     severity: hint
     description: |
         This rule checks Operation ids should follow a specific case convention: camel case.
@@ -86,7 +86,7 @@ rules:
       functionOptions:
         notMatch: \b(id|Id|ID|iD)\b    
   check-openapi-version:
-    message: "OpenAPI version issue: {{error}}"
+    message: "OpenAPI version issue: {{error}} Please use OpenAPI version 3.0.3""
     severity: warn
     description: |
       This rule checks if the OpenAPI version is 3.0.3.
