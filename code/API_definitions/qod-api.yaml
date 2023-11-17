@@ -86,7 +86,7 @@ paths:
     post:
       tags:
         - QoS sessions
-      summary: Creates a new session  
+      summary: Creates a new session
       description: Create QoS Session to manage latency/throughput priorities
       operationId: CreateSession
       requestBody:
