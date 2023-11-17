@@ -13,7 +13,7 @@ rules:
     then:
       function: camara-language-avoid-telco
   camel-case-name:
-    message: Operation Id must be in Camel case "{{error}}"
+    message: Operation Id must be in Camel case "{{error}} Please use OpenAPI version 3.0.3"
     severity: hint
     description: |
         This rule checks Operation ids should follow a specific case convention: camel case.
