@@ -1,6 +1,5 @@
 functions:
   - camara-language-avoid-telco
-  - camara-oas-version
   - camara-reserved-words
   - camara-security-no-secrets-in-path-or-query-parameters
 functionsDir: "./lint_function"
@@ -91,7 +90,9 @@ rules:
     severity: warn
     description: |
       This rule checks if the OpenAPI version is 3.0.3.
-    given:
-      - "$.openapi"
+    given: "$"
     then:
-      function: camara-oas-version
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: 3.0.3
