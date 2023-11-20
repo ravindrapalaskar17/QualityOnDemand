@@ -1,7 +1,50 @@
+extends: [[spectral:oas, all]] 
 functions:
   - camara-reserved-words
 functionsDir: "./lint_function"
-rules: 
+rules:
+  #  Built-in OpenAPI Specification ruleset. Each rule then can be enabled individually.
+  #  The severity keyword is optional in rule definition and can be error, warn, info, hint, or off. The default value is warn. 
+  contact-properties: true
+  duplicated-entry-in-enum: true
+  info-contact: true
+  info-description: true
+  info-license: true
+  license-url: true
+  no-$ref-siblings: error
+  no-eval-in-markdown: true
+  no-script-tags-in-markdown: true
+  openapi-tags: false
+  openapi-tags-alphabetical: false
+  openapi-tags-uniqueness: error
+  operation-description: true
+  operation-operationId: true
+  operation-operationId-unique: error
+  operation-operationId-valid-in-url: true
+  operation-parameters: true
+  operation-singular-tag: true
+  operation-success-response: true
+  operation-tags: true
+  operation-tag-defined: true
+  path-declarations-must-exist: true
+  path-keys-no-trailing-slash: true
+  path-not-include-query: true
+  path-params: false
+  tag-description: false
+  typed-enum: true
+  oas3-api-servers: true
+  oas3-examples-value-or-externalValue: true
+  oas3-operation-security-defined: true
+  oas3-parameter-description: false
+  oas3-schema: true
+  oas3-server-not-example.com: true
+  oas3-server-trailing-slash: true
+  oas3-unused-component: true
+  oas3-valid-media-example: true
+  oas3-valid-schema-example: true
+  oas3-server-variables: true
+  
+  # Custome rules
   check-sensitive-data-in-paths-and-query-params:
     message: "Sensitive data found in path or query parameters: {{error}}"
     severity: warn
@@ -12,6 +55,7 @@ rules:
       function: pattern
       functionOptions:
         notMatch: /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i
+        
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
@@ -25,6 +69,7 @@ rules:
       - "$.paths.*.*.operationId"
     then:
       function: camara-reserved-words
+      
   camara-parameters-descriptions:
     message: "Parameter description is missing or empty: {{error}}"
     severity: hint
@@ -36,6 +81,7 @@ rules:
     then:
       field: description
       function: truthy
+      
   camara-operation-summary:
     message: "Operation Summary Warning: Each operation should include a short summary for better understanding."
     severity: warn
@@ -51,7 +97,8 @@ rules:
       - "$.paths.*.options"
     then:
       field: summary
-      function: truthy    
+      function: truthy
+      
   camara-path-param-id:
     message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
     severity: warn
@@ -63,7 +110,8 @@ rules:
       field: name
       function: pattern
       functionOptions:
-        notMatch: \b(id|Id|ID|iD)\b    
+        notMatch: \b(id|Id|ID|iD)\b
+        
   check-openapi-version:
     message: "OpenAPI Version Error: The OpenAPI specification must adhere to version 3.0.3."
     severity: error
