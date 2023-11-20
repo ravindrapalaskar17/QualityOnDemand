@@ -64,7 +64,7 @@ rules:
     given: 
        - "$.paths"
        - "$.components.securitySchemes"
-       - "$.components.Schemes"
+       - "$.components.schemes"
        - "$.paths.*."
     then:
       function: camara-reserved-words
