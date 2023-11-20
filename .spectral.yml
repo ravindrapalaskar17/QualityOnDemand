@@ -1,6 +1,5 @@
 functions:
   - camara-reserved-words
-  - camara-security-no-secrets-in-path-or-query-parameters
 functionsDir: "./lint_function"
 rules:
   check-sensitive-data-in-paths:
@@ -9,9 +8,12 @@ rules:
     description: |
       This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
     given:
-      - "$.paths"
+    - "$.paths.*.*.parameters[?(@.in == 'path' && (@.name =~ /MSISDN|IMSI/i || @.description =~ /MSISDN|IMSI/i))]"
     then:
-      function: camara-security-no-secrets-in-path-or-query-parameters
+      field: name
+      function: pattern
+      functionOptions:
+        match: \b(MSISDN|IMSI)\b
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
@@ -36,7 +38,7 @@ rules:
       field: description
       function: truthy
   camara-operation-summary:
-    message: Operation Summary Warning: Each operation should include a short summary for better understanding.
+    message: "Operation Summary Warning: Each operation should include a short summary for better understanding."
     severity: warn
     description: |
             This rule checks if each operation (POST, GET, DELETE, PUT, PATCH, OPTIONS) in your API specification has a meaningful summary. 
