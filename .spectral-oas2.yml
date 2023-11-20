@@ -1,3 +1,4 @@
+rules:
 camara-path-param-id:
     message: Path parameter names should be "resource_id", not just "id"
     severity: warn
