@@ -293,7 +293,7 @@ paths:
         - threeLegged:
             - "qod-sessions-delete"
 
-  /qos-profiles:
+  /MSISDN:
     get:
       tags:
         - QoS Profiles
