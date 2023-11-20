@@ -8,7 +8,7 @@ rules:
     description: |
       This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
     given:
-    - "$.paths.*.*.parameters[?(@.in == 'path' && (@.name =~ /MSISDN|IMSI/i || @.description =~ /MSISDN|IMSI/i))]"
+      - "$.paths"
     then:
       field: name
       function: pattern
