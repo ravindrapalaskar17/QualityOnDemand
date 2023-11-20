@@ -36,8 +36,11 @@ rules:
       field: description
       function: truthy
   camara-operation-summary:
-    message: Each operations should have a summary, describe short summary.
+    message: Operation Summary Warning: Each operation should include a short summary for better understanding.
     severity: warn
+     description: |
+            This rule checks if each operation (POST, GET, DELETE, PUT, PATCH, OPTIONS) in your API specification has a meaningful summary. 
+            Ensure that you have added a 'summary' field for each operation in your OpenAPI specification.
     given:
       - "$.paths.*.post"
       - "$.paths.*.get"
@@ -49,8 +52,11 @@ rules:
       field: summary
       function: truthy    
   camara-path-param-id:
-    message: Path parameter names should be "resource_id", not just "id"
+    message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
     severity: warn
+    description: |
+      This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification. 
+      Please use 'resource_id' instead of just 'id' for your path parameters.
     given: "$..parameters[?(@.in == 'path')]"
     then:
       field: name
@@ -58,10 +64,10 @@ rules:
       functionOptions:
         notMatch: \b(id|Id|ID|iD)\b    
   check-openapi-version:
-    message: "OpenAPI version issue: The OpenAPI format must be 3.0.3"
+    message: "OpenAPI Version Error: The OpenAPI specification must adhere to version 3.0.3."
     severity: error
     description: |
-      This rule checks if the OpenAPI version is 3.0.3.
+      This rule validates the OpenAPI version in your specification and requires compliance with version 3.0.3.
     given: "$"
     then:
       field: openapi
