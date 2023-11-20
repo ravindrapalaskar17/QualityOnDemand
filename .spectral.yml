@@ -6,7 +6,7 @@ rules:
     message: "Sensitive data found in path or query parameters: {{error}}"
     severity: error
     description: |
-    This rule checks for sensitive data ('client_secret', 'token', 'access_token', 'refresh_token', 'id_token', 'password', 'secret', 'apikey', 'MSISDN') in API paths and query parameters, and recommends passing such information in headers instead.
+       This rule checks for sensitive data ('client_secret', 'token', 'access_token', 'refresh_token', 'id_token', 'password', 'secret', 'apikey', 'MSISDN') in API paths and query parameters, and recommends passing such information in headers instead.
     given:
       - "$..parameters[?(@.in == 'path' && (@.name =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i || @.description =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i))].name"
       - "$..parameters[?(@.in == 'query' && (@.name =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i || @.description =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i))].name"
