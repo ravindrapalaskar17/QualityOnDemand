@@ -1,7 +1,3 @@
-formats:
-  - oas3
-extends:
-  - spectral:oas
 rules:
   camara-version:
     description: Version must be MAJOR.MINOR.PATCH Adding -rc and -wip as valid suffixes though we should add these to the commonalities if we continue to use them
