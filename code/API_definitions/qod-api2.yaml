@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Sample API for Spectral Testing
+  version: 1.0.0
+paths:
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /accounts/{accountId}:
+    get:
+      summary: Get account by ID
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /vehicles/{vehicleId}:
+    get:
+      summary: Get vehicle by ID
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /users/{userId}/vehicles/{vehicleId}:
+    get:
+      summary: Get user's vehicle by IDs
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vehicleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
