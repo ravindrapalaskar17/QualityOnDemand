@@ -88,7 +88,7 @@ paths:
         - QoS sessions
       summary: Creates a new session  
       description: Create QoS Session to manage latency/throughput priorities
-      operationId: CreateSession
+      operationId: break
       requestBody:
         description: Parameters to create a new session
         content:
@@ -107,7 +107,7 @@ paths:
                 Important: this endpoint is to be implemented by the API consumer.
                 The QoD server will call this endpoint whenever any network related event occurs.
                 Currently only QOS_STATUS_CHANGED event is defined.
-              operationId: goto
+              operationId: postNotification
               requestBody:
                 required: true
                 content:
