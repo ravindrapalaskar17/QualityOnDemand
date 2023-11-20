@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: QoD for enhanced communicatio
+  title: QoD for enhanced communication
   description: |
     The Quality-On-Demand (QoD) API provides programmable interface for developers and other users (capabilities consumers) to request stable latency or throughput managed by Telco networks without the necessity to have an in-depth knowledge of the 4G/5G system or the overall complexity of the Telecom Systems.
 
@@ -458,7 +458,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/PortsSpec"
         applicationServerPorts:
-          description: A lis of single ports or port ranges on the application server
+          description: A list of single ports or port ranges on the application server
           allOf:
             - $ref: "#/components/schemas/PortsSpec"
         qosProfile:
