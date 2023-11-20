@@ -1,1 +1,9 @@
-
+camara-path-param-id:
+    message: Path parameter names should be "resource_id", not just "id"
+    severity: warn
+    given: "$..parameters[?(@.in == 'path')]"
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        notMatch: \b(id|Id|ID|iD)\b
