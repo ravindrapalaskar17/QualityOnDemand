@@ -46,20 +46,19 @@ rules:
   
   # Custome rules
   check-sensitive-data-in-paths-and-query-params:
-    message: "Sensitive data found in path or query parameters: {{error}}"
+    message: "Sensitive data found in path or query parameters: {{property}}"
     severity: warn
     description: |
       This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
     given:
-      - "$.paths.*.*.parameters[?(@.in == 'path' && (@.name =~ /MSISDN|IMSI/i || @.description =~ /MSISDN|IMSI/i))].name"
-      - "$.paths.*.*.parameters[?(@.in == 'query' && (@.name =~ /MSISDN|IMSI/i || @.description =~ /MSISDN|IMSI/i))].name"
+      - "$..parameters[?(@.in == 'path' && (@.name =~ /MSISDN|IMSI/i || @.description =~ /MSISDN|IMSI/i))].name"
+      - "$..parameters[?(@.in == 'query' && (@.name =~ /MSISDN|IMSI/i || @.description =~ /MSISDN|IMSI/i))].name"
     then:
       field: name
       function: pattern
       functionOptions:
         match: /^(MSISDN|IMSI)$/i
 
-        
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
