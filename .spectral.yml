@@ -26,9 +26,10 @@ rules:
     then:
       function: camara-reserved-words
   camara-parameters-descriptions:
-    description: This spectral rules check for the description of each parameter
-    message: Parameter must have description "{{error}}"
+    message: "Parameter description is missing or empty: {{error}}"
     severity: hint
+    description: |
+      This Spectral rule ensures that each parameter in the API specification, including components and properties, has a descriptive and meaningful description.
     given:
       - "$.components.*.*"
       - "$.components.*.*.properties.*"
