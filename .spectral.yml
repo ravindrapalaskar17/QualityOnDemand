@@ -1,20 +1,17 @@
 functions:
   - camara-reserved-words
 functionsDir: "./lint_function"
-rules:
+rules: 
   check-sensitive-data-in-paths-and-query-params:
     message: "Sensitive data found in path or query parameters: {{error}}"
-    severity: error
-    description: |
-       This rule checks for sensitive data ('client_secret', 'token', 'access_token', 'refresh_token', 'id_token', 'password', 'secret', 'apikey', 'MSISDN') in API paths and query parameters, and recommends passing such information in headers instead.
+    severity: warn
     given:
-      - "$..parameters[?(@.in == 'path' && (@.name =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i || @.description =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i))].name"
-      - "$..parameters[?(@.in == 'query' && (@.name =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i || @.description =~ /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i))].name"
+      - "$..parameters[?(@ && @.in && @.in.match(/path/))].name"
+      - "$..parameters[?(@ && @.in && @.in.match(/query/))].name"
     then:
-      field: name
       function: pattern
       functionOptions:
-        match: /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i
+        notMatch: /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
     severity: warn
