@@ -396,7 +396,7 @@ components:
             qod-profiles-read: Retrieval of QoS profiles
 
   schemas:
-    SessionId:
+    void:
       description: Session ID in UUID format
       type: string
       format: uuid
