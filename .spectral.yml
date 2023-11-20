@@ -38,7 +38,7 @@ rules:
   camara-operation-summary:
     message: Operation Summary Warning: Each operation should include a short summary for better understanding.
     severity: warn
-     description: |
+    description: |
             This rule checks if each operation (POST, GET, DELETE, PUT, PATCH, OPTIONS) in your API specification has a meaningful summary. 
             Ensure that you have added a 'summary' field for each operation in your OpenAPI specification.
     given:
