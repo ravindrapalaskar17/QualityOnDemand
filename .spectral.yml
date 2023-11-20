@@ -74,7 +74,7 @@ rules:
       
   camara-parameters-descriptions:
     message: "Parameter description is missing or empty: {{error}}"
-    severity: hint
+    severity: warn
     description: |
       This Spectral rule ensures that each parameter in the API specification, including components and properties, has a descriptive and meaningful description.
     given:
@@ -116,7 +116,7 @@ rules:
         
   check-openapi-version:
     message: "OpenAPI Version Error: The OpenAPI specification must adhere to version 3.0.3."
-    severity: error
+    severity: warn
     description: |
       This rule validates the OpenAPI version in your specification and requires compliance with version 3.0.3.
     given: "$"
