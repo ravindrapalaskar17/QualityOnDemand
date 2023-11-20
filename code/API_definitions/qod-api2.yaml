@@ -15,7 +15,7 @@ paths:
       responses:
         '200':
           description: Successful response
-  /accounts/{accountId}:
+  /accounts/{Id}:
     get:
       summary: Get account by ID
       parameters:
@@ -39,7 +39,7 @@ paths:
       responses:
         '200':
           description: Successful response
-  /users/{userId}/vehicles/{vehicleId}:
+  /users/{userId}/vehicles/{Id}:
     get:
       summary: Get user's vehicle by IDs
       parameters:
