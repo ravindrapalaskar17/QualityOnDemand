@@ -61,8 +61,7 @@ rules:
     severity: warn
     description: |
       This rule checks Reserved words must not be used in the following parts of an API specification [Paths, Request Body properties, Component, Operation Id, Security Schema]
-    given:   
-      - "$.paths.*.*.operationId"
+    given: "$.paths.*.*.operationId"
     then:
       function: camara-reserved-words
       
