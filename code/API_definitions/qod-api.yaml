@@ -107,7 +107,7 @@ paths:
                 Important: this endpoint is to be implemented by the API consumer.
                 The QoD server will call this endpoint whenever any network related event occurs.
                 Currently only QOS_STATUS_CHANGED event is defined.
-              operationId: postNotification
+              operationId: goto
               requestBody:
                 required: true
                 content:
@@ -334,7 +334,7 @@ paths:
         "503":
           $ref: "#/components/responses/Generic503"
 
-  /qos-Profiles/{MSISDN}:
+  /qos-Profiles/{finally}:
     get:
       tags:
         - QoS Profiles
@@ -382,7 +382,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: "{$request.body#/webhook/notificationAuthToken}"
-    threeLegged:
+    interface:
       type: oauth2
       description: This API uses OAuth 2 with the authorization code grant flow.
       flows:
@@ -484,7 +484,7 @@ components:
         - applicationServer
         - qosProfile
 
-    Port:
+    case:
       description: TCP or UDP port number
       type: integer
       minimum: 0
