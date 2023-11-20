@@ -58,6 +58,7 @@ rules:
       function: pattern
       functionOptions:
         match: /^(MSISDN|IMSI)$/i
+
         
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
