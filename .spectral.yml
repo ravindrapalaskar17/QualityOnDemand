@@ -47,7 +47,7 @@ rules:
   
   # Custome rules
   check-sensitive-data-in-paths-and-query-params:
-    message: "Sensitive data found in path: {{error}}"
+    message: "Sensitive data found in path: {{error}} Consider avoiding the use of Sesentive data "
     severity: warn
     description: |
       This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
@@ -57,7 +57,7 @@ rules:
       function: camara-security-no-secrets-in-path-or-query-parameters
 
   check-reserved-words-in-paths:
-    message: "Reserved words found in path key: {{error}}"
+    message: "Reserved words found {{error}} Consider avoiding the use of reserved word "
     severity: warn
     description: |
       This rule checks Reserved words must not be used in the following parts of an API specification [Paths, Request Body properties, Component, Operation Id, Security Schema]
