@@ -36,14 +36,14 @@ rules:
       field: description
       function: truthy
   camara-operation-summary:
-    message: Summary must be defined on each operation, describing with a short summary what the operation does.
+    message: Each operations should have a summary, describe short summary.
     severity: warn
     given:
       - "$.paths.*.post"
       - "$.paths.*.get"
       - "$.paths.*.delete"
       - "$.paths.*.put"
-      - "$.paths.*.gatch"
+      - "$.paths.*.patch"
       - "$.paths.*.options"
     then:
       field: summary
