@@ -1,6 +1,7 @@
 extends: [[spectral:oas, off]]
 functions:
   - camara-reserved-words
+  - camara-security-no-secrets-in-path-or-query-parameters
 functionsDir: "./lint_function"
 rules:
   #  Built-in OpenAPI Specification ruleset. Each rule then can be enabled individually.
@@ -46,15 +47,14 @@ rules:
   
   # Custome rules
   check-sensitive-data-in-paths-and-query-params:
-    message: "Sensitive data found in path or query parameters: {{error}}"
+    message: "Sensitive data found in path: {{error}}"
     severity: warn
+    description: |
+      This rule checks for sensitive data ('MSISDN' and 'IMSI') in API paths and suggests avoiding their use.
     given:
-      - "$..parameters[?(@ && @.in && @.in.match(/path/))].name"
-      - "$..parameters[?(@ && @.in && @.in.match(/query/))].name"
+      - "$.paths"
     then:
-      function: pattern
-      functionOptions:
-        notMatch: /^(client_secret|token|access_token|refresh_token|id_token|password|secret|apikey|MSISDN)$/i
+      function: camara-security-no-secrets-in-path-or-query-parameters
         
   check-reserved-words-in-paths:
     message: "Reserved words found in path key: {{error}}"
