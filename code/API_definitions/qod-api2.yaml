@@ -19,7 +19,7 @@ paths:
     get:
       summary: Get account by ID
       parameters:
-        - name: accountId
+        - name: Id
           in: path
           required: true
           schema:
@@ -48,7 +48,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: vehicleId
+        - name: Id
           in: path
           required: true
           schema:
