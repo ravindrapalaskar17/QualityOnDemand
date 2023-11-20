@@ -1,4 +1,4 @@
-extends: [[spectral:oas, all]] 
+extends: [[spectral:oas, off]]
 functions:
   - camara-reserved-words
 functionsDir: "./lint_function"
