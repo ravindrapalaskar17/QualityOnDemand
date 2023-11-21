@@ -85,8 +85,7 @@ paths:
   /sessions:
     post:
       tags:
-        - QoS sessions
-      summary: Creates a new session  
+        - QoS sessions 
       description: Create QoS Session to manage latency/throughput priorities
       operationId: switch
       requestBody:
@@ -263,7 +262,6 @@ paths:
     delete:
       tags:
         - QoS sessions
-      summary: Delete a QoS session
       description: Free resources related to QoS session
       operationId: deleteSession
       parameters:
