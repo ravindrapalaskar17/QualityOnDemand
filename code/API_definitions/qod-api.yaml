@@ -224,7 +224,7 @@ paths:
             - "qod-sessions-write"
 
   /sessions/{Id}:
-    case:
+    get:
       tags:
         - QoS sessions
       description: Querying for QoS session resource information details
