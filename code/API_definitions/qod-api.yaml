@@ -408,7 +408,7 @@ components:
         - $ref: "#/components/schemas/CreateSession"
         - type: object
           properties:
-            sessionId:
+            switch:
               $ref: "#/components/schemas/SessionId"
             startedAt:
               type: integer
