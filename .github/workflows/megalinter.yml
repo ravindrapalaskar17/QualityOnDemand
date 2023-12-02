@@ -5,8 +5,8 @@ name: MegaLinter
 
 on:  # yamllint disable-line rule:truthy
   # Pull Requests to main
-  pull_request:
-    branches: [master, main]
+   pull_request:
+      branches: [master, main]
 
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
