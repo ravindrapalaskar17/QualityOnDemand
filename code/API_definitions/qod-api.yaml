@@ -85,7 +85,7 @@ paths:
   /sessions:
     post:
       tags:
-        - QoS sessions 
+        - QoS sessions
       description: Create QoS Session to manage latency/throughput priorities
       operationId: switch
       requestBody:
