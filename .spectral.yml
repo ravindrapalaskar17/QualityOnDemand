@@ -1,4 +1,4 @@
-extends: [[spectral:oas, off]]
+extends: "spectral:oas"
 functions:
   - camara-reserved-words
   - camara-language-avoid-telco
@@ -45,9 +45,9 @@ rules:
   oas3-valid-media-example: true
   oas3-valid-schema-example: true
   oas3-server-variables: true
- 
+
   # Custom Rules Utilizing Spectral's Built-in Functions and JavaScript Implementations
- 
+
   camara-language-avoid-telco:
     message: "{{error}}"
     severity: hint
@@ -68,12 +68,12 @@ rules:
       function: pattern
       functionOptions:
         match: 3.0.3
-  
+
   camara-path-param-id:
     message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
     severity: warn
     description: |
-      This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification. 
+      This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
       Please use 'resource_id' instead of just 'id' for your path parameters.
     given: "$..parameters[?(@.in == 'path')]"
     then:
@@ -81,7 +81,7 @@ rules:
       function: pattern
       functionOptions:
         notMatch: \b(id|Id|ID|iD)\b
-  
+
   check-sensitive-data-in-paths-and-query-params:
     message: "Sensitive data found in path: {{error}} Consider avoiding the use of Sesentive data "
     severity: warn
@@ -105,7 +105,7 @@ rules:
   camara-get-no-request-body:
     message: There must be no request body for Get and DELETE
     severity: error
-    given: 
+    given:
       - "$.paths.*.get"
       - "$.paths.*.delete"
     then:
@@ -117,14 +117,14 @@ rules:
     severity: warn
     description: |
       This rule checks Reserved words must not be used in the following parts of an API specification [Paths, Request Body properties, Component, Operation Id, Security Schema]
-    given: 
+    given:
        - "$.paths"                              # Paths
        - "$..parameters[*]"                     # Path or Query Parameter Names:
-       - "$..components.schemas.*.properties.*" # Request and Response body parameter
+       - "$..components.schemas.*.properties.*"   # Request and Response body parameter
        - "$.paths.*."                           # Path and Operation Names:
        - "$.components.securitySchemes"         # Security Schemes:
        - "$.components.*.*"                     # Component Names:
-       - "$.paths.*.*.operationId"              # OperationIds:     
+       - "$.paths.*.*.operationId"              # OperationIds:
     then:
       function: camara-reserved-words
 
@@ -144,7 +144,7 @@ rules:
     message: "Operation Summary Warning: Each operation should include a short summary for better understanding."
     severity: warn
     description: |
-            This rule checks if each operation (POST, GET, DELETE, PUT, PATCH, OPTIONS) in your API specification has a meaningful summary. 
+            This rule checks if each operation (POST, GET, DELETE, PUT, PATCH, OPTIONS) in your API specification has a meaningful summary.
             Ensure that you have added a 'summary' field for each operation in your OpenAPI specification.
     given:
       - "$.paths.*.post"
@@ -156,7 +156,7 @@ rules:
     then:
       field: summary
       function: truthy
-      
+
   camara-discriminator-use:
     description: |
       Ensure that API definition YAML files with oneOf or anyOf sections include a discriminator object for serialization, deserialization, and validation.
@@ -186,7 +186,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^([A-Z][a-z0-9]*([A-Z][a-z0-9]*)*)$"      
+        match: "^([A-Z][a-z0-9]*([A-Z][a-z0-9]*)*)$"
 
   camara-parameter-casing-convention:
     description: Paths should be kebab-case.
@@ -196,4 +196,4 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$"  # doesn't allow /asasd{asdas}sadas pattern or not closed braces 
+        match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$"  # doesn't allow /asasd{asdas}sadas pattern or not closed braces
