@@ -118,13 +118,13 @@ rules:
     description: |
       This rule checks Reserved words must not be used in the following parts of an API specification [Paths, Request Body properties, Component, Operation Id, Security Schema]
     given:
-       - "$.paths"                              # Paths
-       - "$..parameters[*]"                     # Path or Query Parameter Names:
-       - "$..components.schemas.*.properties.*"   # Request and Response body parameter
-       - "$.paths.*."                           # Path and Operation Names:
-       - "$.components.securitySchemes"         # Security Schemes:
-       - "$.components.*.*"                     # Component Names:
-       - "$.paths.*.*.operationId"              # OperationIds:
+      - "$.paths"                              # Paths
+      - "$..parameters[*]"                     # Path or Query Parameter Names:
+      - "$..components.schemas.*.properties.*"   # Request and Response body parameter
+      - "$.paths.*."                           # Path and Operation Names:
+      - "$.components.securitySchemes"         # Security Schemes:
+      - "$.components.*.*"                     # Component Names:
+      - "$.paths.*.*.operationId"              # OperationIds:
     then:
       function: camara-reserved-words
 
