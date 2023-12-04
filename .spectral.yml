@@ -7,7 +7,7 @@ functionsDir: "./lint_function"
 rules:
   #  Built-in OpenAPI Specification ruleset. Each rule then can be enabled individually.
   #  The severity keyword is optional in rule definition and can be error, warn, info, hint, or off. The default value is warn.
-  contact-properties: true
+  contact-properties: false
   duplicated-entry-in-enum: true
   info-contact: true
   info-description: true
