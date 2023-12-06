@@ -83,7 +83,7 @@ export default async function lintReservedWords(input) {
 
         if (regex.test(path)) {
           const lineNumber = input[path].lineNumber || 'unknown';
-          const warningRuleName = 'reserved-words';
+          const warningRuleName = 'camara-reserved-words';
           const description = `Reserved words found in input: '${path}'. Consider avoiding the use of reserved word '${word}'.`;
           const location = `paths.${path}`;
 
