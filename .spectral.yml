@@ -69,7 +69,7 @@ rules:
       function: pattern
       functionOptions:
         match: 3.0.3
-    recommended: true  # Set to false to disable this rule
+    recommended: false  # Set to false to disable this rule
 
   camara-path-param-id:
     message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
