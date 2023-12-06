@@ -74,17 +74,20 @@ const reservedWords = [
   'while'
 ];
 // Reserved word 'enum' and 'default' are removed from above reserved word array as they are common in openAPI keyword
-export default async function (input) {
-  
+export default async function lintReservedWords(input) {
   // Iterate over properties of the input object
   for (const path in input) {
-    
     if (typeof path === 'string') {
       for (const word of reservedWords) {
         const regex = new RegExp(`\\b${word}\\b`, 'g');  // Use a regular expression to match 'word' as a standalone word
-    
-           if (regex.test(path)) {
-               console.log(`Warn: Reserved words found in input: '${path}' Consider avoiding the use of reserved word '${word}'. `);
+
+        if (regex.test(path)) {
+          const lineNumber = input[path].lineNumber || 'unknown';
+          const warningRuleName = 'reserved-words';
+          const description = `Reserved words found in input: '${path}'. Consider avoiding the use of reserved word '${word}'.`;
+          const location = `paths.${path}`;
+
+          console.log(`${lineNumber}:${word.length + 1}  warning  ${warningRuleName}  ${description}  ${location}`);
         }
       }
     }
