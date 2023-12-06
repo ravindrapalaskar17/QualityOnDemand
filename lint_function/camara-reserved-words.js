@@ -78,11 +78,12 @@ export default async function lintReservedWords(input) {
   // Iterate over properties of the input object
   for (const path in input) {
     if (typeof path === 'string') {
+      const lineNumber = input[path]?.lineNumber || 'unknown';
+
       for (const word of reservedWords) {
         const regex = new RegExp(`\\b${word}\\b`, 'g');  // Use a regular expression to match 'word' as a standalone word
 
         if (regex.test(path)) {
-          const lineNumber = input[path].lineNumber || 'unknown';
           const warningRuleName = 'camara-reserved-words';
           const description = `Reserved words found in input: '${path}'. Consider avoiding the use of reserved word '${word}'.`;
           const location = `paths.${path}`;
