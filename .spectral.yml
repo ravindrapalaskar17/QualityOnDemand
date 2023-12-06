@@ -56,6 +56,7 @@ rules:
     given: "$..*.*"
     then:
       function: camara-language-avoid-telco
+    recommended: false  # Set to false to disable this rule  
 
   check-openapi-version:
     message: "OpenAPI Version Error: The OpenAPI specification must adhere to version 3.0.3."
@@ -68,6 +69,7 @@ rules:
       function: pattern
       functionOptions:
         match: 3.0.3
+    recommended: true  # Set to false to disable this rule
 
   camara-path-param-id:
     message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
