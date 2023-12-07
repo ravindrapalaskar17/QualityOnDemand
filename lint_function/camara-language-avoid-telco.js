@@ -30,8 +30,12 @@ export default async function (input) {
     }
   }
 
-  // Check if any word from 'replacements' is in the suggestions
+ // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
-    console.log('Hint: Telco-specific terminology found in input: ' + suggestions.join(', '));
+          const warningRuleName = 'camara-language-avoid-telco';
+          const description = `Telco-specific terminology found in input:`;
+          const location = `paths.${path}`;
+    
+    console.log('Hint: ${warningRuleName}  ${description} ' + suggestions.join(', ') + ' ${location} ');
   }
 };
