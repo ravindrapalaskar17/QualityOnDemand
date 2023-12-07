@@ -84,7 +84,7 @@ export default async function lintReservedWords(input) {
 
         if (regex.test(path)) {
           const warningRuleName = 'camara-reserved-words';
-          const description = `Reserved words found in input: '${path}'. Consider avoiding the use of reserved word '${word}'`;
+          const description = `Reserved words found in input: Consider avoiding the use of reserved word '${word}'`;
           const location = `paths.${path}`;
 
           console.log(`warning  ${warningRuleName}  ${description}  ${location}`);
