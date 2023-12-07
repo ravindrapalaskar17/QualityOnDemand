@@ -29,8 +29,6 @@ export default async function (input) {
       }
     }
   }
-
-  //const description = `Telco-specific terminology found in input:`;
   
  // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
