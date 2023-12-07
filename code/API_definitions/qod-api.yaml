@@ -31,10 +31,10 @@ info:
     * **Identifier for the application server**:
     IPv4 and/or IPv6 address of the application server (application backend)
 
-    * **App-Flow (between the application client and application server)**: 
+    * **App-Flow (between the application client and application server)**:
     The precise application data flow the developer wants to prioritize and have stable latency or throughput for. This flow is in the current API version determined by the identifiers used for the device and the application server. And it can be further elaborated with details such as ports or port-ranges. Future version of the API might allow more detailed flow identification features.
 
-    * **Duration**: 
+    * **Duration**:
     Duration (in seconds) for which the QoS session (between application client and application server) should be created. This parameter is optional. When not specified, a default session duration (e.g. 24 hours) is applied. The user may request a termination before its expiration.
 
     * **Notification URL and token**:
@@ -55,7 +55,7 @@ info:
 
     ![QoD Management API](https://raw.githubusercontent.com/camaraproject/QualityOnDemand/main/documentation/API_documentation/resources/QoD_details.PNG)
 
-    How QoS profiles are mapped to connectivity characteristics are subject to agreements between the communication service provider and the API invoker. Within the CAMARA project, you can find a sample for such a mapping of QoS profiles. [CAMARA QoS Profiles Mapping Table (REFERENCE DRAFT)](https://github.com/camaraproject/QualityOnDemand/blob/main/documentation/API_documentation/QoSProfile_Mapping_Table.md) 
+    How QoS profiles are mapped to connectivity characteristics are subject to agreements between the communication service provider and the API invoker. Within the CAMARA project, you can find a sample for such a mapping of QoS profiles. [CAMARA QoS Profiles Mapping Table (REFERENCE DRAFT)](https://github.com/camaraproject/QualityOnDemand/blob/main/documentation/API_documentation/QoSProfile_Mapping_Table.md)
 
     # Further info and support
 
@@ -66,7 +66,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.9.0-wip
+  version: 0.10.0-rc
 externalDocs:
   description: Product documentation at Camara
   url: https://github.com/camaraproject/
@@ -81,11 +81,16 @@ servers:
       basePath:
         default: qod/v0
         description: Base path for the QoD API
+tags:
+  - name: QoS Sessions
+    description: Manage QoS sessions
+  - name: QoS Profiles
+    description: Manage QoS Profiles
 paths:
   /sessions:
     post:
       tags:
-        - QoS sessions
+        - QoS Sessions
       summary: Creates a new session
       description: Create QoS Session to manage latency/throughput priorities
       operationId: createSession
@@ -111,9 +116,12 @@ paths:
               requestBody:
                 required: true
                 content:
-                  application/json:
+                  application/cloudevents+json:
                     schema:
-                      $ref: "#/components/schemas/EventNotification"
+                      $ref: "#/components/schemas/CloudEvent"
+                    examples:
+                      QOS_STATUS_CHANGED_EXAMPLE:
+                        $ref: "#/components/examples/QOS_STATUS_CHANGED_EXAMPLE"
               responses:
                 "204":
                   description: Successful notification
@@ -193,7 +201,7 @@ paths:
                     code: INVALID_ARGUMENT
                     message: "Expected property is missing: qosProfile"
                 InvalidDevicePortsRanges:
-                  summary: Invalid port ranges specified for devicePorts 
+                  summary: Invalid port ranges specified for devicePorts
                   value:
                     status: 400
                     code: OUT_OF_RANGE
@@ -221,12 +229,12 @@ paths:
       security:
         - oAuth2ClientCredentials: []
         - threeLegged:
-          - "qod-sessions-write"
-      
+            - "qod-sessions-write"
+
   /sessions/{sessionId}:
     get:
       tags:
-        - QoS sessions
+        - QoS Sessions
       summary: Get QoS session information
       description: Querying for QoS session resource information details
       operationId: getSession
@@ -244,6 +252,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SessionInfo"
+        "400":
+          $ref: "#/components/responses/Generic400"
         "401":
           $ref: "#/components/responses/Generic401"
         "403":
@@ -257,11 +267,11 @@ paths:
       security:
         - oAuth2ClientCredentials: []
         - threeLegged:
-          - "qod-sessions-read"
+            - "qod-sessions-read"
 
     delete:
       tags:
-        - QoS sessions
+        - QoS Sessions
       summary: Delete a QoS session
       description: Free resources related to QoS session
       operationId: deleteSession
@@ -275,6 +285,8 @@ paths:
       responses:
         "204":
           description: Session deleted
+        "400":
+          $ref: "#/components/responses/Generic400"
         "401":
           $ref: "#/components/responses/Generic401"
         "403":
@@ -288,8 +300,71 @@ paths:
       security:
         - oAuth2ClientCredentials: []
         - threeLegged:
-          - "qod-sessions-delete"
-          
+            - "qod-sessions-delete"
+
+  /sessions/{sessionId}/extend:
+    post:
+      tags:
+        - QoS Sessions
+      summary: "Extend the duration of an active session"
+      description: |
+        Extend the duration of an active QoS session. If this operation is executed successfully, the new duration of the target session will be the original duration plus the additional duration. The remaining duration plus the requested additional duration shall not exceed the maximum limit. Otherwise, the new remaining duration will be the maximum limit.
+      operationId: extendQosSessionDuration
+      parameters:
+        - name: sessionId
+          in: path
+          description: Session ID that was obtained from the createSession operation
+          required: true
+          schema:
+            $ref: "#/components/schemas/SessionId"
+      requestBody:
+        description: Parameters to extend the duration of an active session
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendSessionDuration"
+        required: true
+      responses:
+        "200":
+          description: Contains information about active session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionInfo"
+        "400":
+          description: Invalid input for extendQosSessionDuration operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorInfo"
+              examples:
+                Generic400:
+                  summary: Some parameter combinations or parameter values provided are not schema compliant
+                  value:
+                    status: 400
+                    code: INVALID_ARGUMENT
+                    message: "Schema validation failed at  ..."
+                InactiveSession:
+                  summary: The target session is inactive
+                  value:
+                    status: 400
+                    code: INVALID_ARGUMENT
+                    message: "The target session is inactive"
+        "401":
+          $ref: "#/components/responses/Generic401"
+        "403":
+          $ref: "#/components/responses/Generic403"
+        "404":
+          $ref: "#/components/responses/SessionNotFound404"
+        "500":
+          $ref: "#/components/responses/Generic500"
+        "503":
+          $ref: "#/components/responses/Generic503"
+      security:
+        - oAuth2ClientCredentials: []
+        - threeLegged:
+            - "qod-sessions-write"
+
   /qos-profiles:
     get:
       tags:
@@ -373,8 +448,8 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: "{tokenUrl}"
-          scopes: {}  
+          tokenUrl: https://api.example.com/oauth/token
+          scopes: {}
     notificationsBearerAuth:
       type: http
       scheme: bearer
@@ -384,14 +459,14 @@ components:
       description: This API uses OAuth 2 with the authorization code grant flow.
       flows:
         authorizationCode:
-          authorizationUrl: "{authorizationUrl}"
-          tokenUrl: "{tokenUrl}"
+          authorizationUrl: https://api.example.com/oauth2/authorize
+          tokenUrl: https://api.example.com/oauth/token
           scopes:
             qod-sessions-read: Retrieval of QoS sessions
             qod-sessions-write: Creation and update of QoS sessions
             qod-sessions-delete: Deletion of QoS sessions
             qod-profiles-read: Retrieval of QoS profiles
- 
+
   schemas:
     SessionId:
       description: Session ID in UUID format
@@ -436,9 +511,9 @@ components:
         duration:
           description: |
             Session duration in seconds. Maximal value of 24 hours is used if not set.
-            After session is expired the, client will receive a `QOS_STATUS_CHANGED` event with 
-             - `qosStatus` as `UNAVAILABLE`, and, 
-             - `statusInfo` as `DURATION_EXPIRED`. 
+            After session is expired the, client will receive a `QOS_STATUS_CHANGED` event with
+             - `qosStatus` as `UNAVAILABLE`, and,
+             - `statusInfo` as `DURATION_EXPIRED`.
             See notification callback.
           type: integer
           format: int32
@@ -451,12 +526,12 @@ components:
         applicationServer:
           $ref: "#/components/schemas/ApplicationServer"
         devicePorts:
+          description: The ports used locally by the device for flows to which the requested QoS profile should apply. If omitted, then the qosProfile will apply to all flows between the device and the specified application server address and ports
           allOf:
-            - description: The ports used locally by the device for flows to which the requested QoS profile should apply. If omitted, then the qosProfile will apply to all flows between the device and the specified application server address and ports
-            - $ref: "#/components/schemas/PortsSpec" 
+            - $ref: "#/components/schemas/PortsSpec"
         applicationServerPorts:
+          description: A list of single ports or port ranges on the application server
           allOf:
-            - description: A list of single ports or port ranges on the application server
             - $ref: "#/components/schemas/PortsSpec"
         qosProfile:
           $ref: "#/components/schemas/QosProfileName"
@@ -482,7 +557,7 @@ components:
         - qosProfile
 
     Port:
-      description:  TCP or UDP port number
+      description: TCP or UDP port number
       type: integer
       minimum: 0
       maximum: 65535
@@ -517,6 +592,22 @@ components:
           - 5060
           - 5070
 
+    ExtendSessionDuration:
+      description: Attributes required to extend the duration of an active session
+      type: object
+      properties:
+        requestedAdditionalDuration:
+          description: |
+            Additional duration in seconds to be extended.
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 86399
+          example: 60
+      required:
+        - requestedAdditionalDuration
+
+
     QosProfile:
       description: |
         Data type with attributes of a QosProfile
@@ -532,77 +623,72 @@ components:
         status:
           $ref: "#/components/schemas/QosProfileStatusEnum"
         targetMinUpstreamRate:
+          description: |
+            This is the target minimum upstream rate for the QoS profile.
+            For 5G networks 3GPP Guaranteed Bit Rate (GBR) refers to a dedicated, fixed data rate assigned to
+            specific services, ensuring a minimum performance level. As per 3GPP TS 23.203,
+            GBR is a QoS parameter used to manage traffic classes in mobile networks. It
+            provides a stable data rate for latency-sensitive applications, such as voice calls or
+            video streaming, helping maintain a consistent user experience. When this attribute is set
+            this could imply that a GBR QCI is used, though mechanisms on the network can be used to
+            ensure a minimum performance level without using a GBR QCI.
+            The committed data rate allocated to specific services, ensuring a consistent level of
+            performance. For DOCSIS networks, the "Minimum Reserved Traffic Rate" is defined in the
+            DOCSIS 3.1 - MAC and Upper Layer Protocols Interface Specification"
+            and it ensures a consistent level of performance for specific services within the network.
           allOf:
             - $ref: "#/components/schemas/Rate"
-            - description: |
-                This is the target minimum upstream rate for the QoS profile.
-
-                For 5G networks 3GPP Guaranteed Bit Rate (GBR) refers to a dedicated, fixed data rate assigned to
-                specific services, ensuring a minimum performance level. As per 3GPP TS 23.203,
-                GBR is a QoS parameter used to manage traffic classes in mobile networks. It
-                provides a stable data rate for latency-sensitive applications, such as voice calls or
-                video streaming, helping maintain a consistent user experience. When this attribute is set
-                this could imply that a GBR QCI is used, though mechanisms on the network can be used to
-                ensure a minimum performance level without using a GBR QCI.
-
-                The committed data rate allocated to specific services, ensuring a consistent level of
-                performance. For DOCSIS networks, the "Minimum Reserved Traffic Rate" is defined in the 
-                DOCSIS 3.1 - MAC and Upper Layer Protocols Interface Specification" 
-                and it ensures a consistent level of performance for specific services within the network.
         maxUpstreamRate:
+          description: |
+            The maximum best effort data
           allOf:
             - $ref: "#/components/schemas/Rate"
-            - description: |
-                The maximum best effort data
         maxUpstreamBurstRate:
+          description: |
+            When defined, this is the maximum upstream burst rate for the QoS profile, that will enable
+            the network to burst data at a higher rate than the maxUpstreamRate for a period of time.
           allOf:
             - $ref: "#/components/schemas/Rate"
-            - description: |
-                When defined, this is the maximum upstream burst rate for the QoS profile, that will enable
-                the network to burst data at a higher rate than the maxUpstreamRate for a period of time.
         targetMinDownstreamRate:
+          description: |
+            This is the target minimum downstream rate for the QoS profile.
+            For 5G networks 3GPP Guaranteed Bit Rate (GBR) refers to a dedicated, fixed data rate assigned to
+            specific services, ensuring a minimum performance level. As per 3GPP TS 23.203,
+            GBR is a QoS parameter used to manage traffic classes in mobile networks. It
+            provides a stable data rate for latency-sensitive applications, such as voice calls or
+            video streaming, helping maintain a consistent user experience.  When this attribute is set
+            this could imply that a GBR QCI is used, though mechanisms on the network can be used to
+            ensure a minimum performance level without using a GBR QCI.
+            The committed data rate allocated to specific services, ensuring a consistent level of
+            performance. DOCSIS networks, the "Minimum Reserved Traffic Rate" is defined in the
+            DOCSIS 3.1 - MAC and Upper Layer Protocols Interface Specification"
+            and it ensures a consistent level of performance for specific services within the network.
           allOf:
             - $ref: "#/components/schemas/Rate"
-            - description: |
-                This is the target minimum downstream rate for the QoS profile.
-
-                For 5G networks 3GPP Guaranteed Bit Rate (GBR) refers to a dedicated, fixed data rate assigned to
-                specific services, ensuring a minimum performance level. As per 3GPP TS 23.203,
-                GBR is a QoS parameter used to manage traffic classes in mobile networks. It
-                provides a stable data rate for latency-sensitive applications, such as voice calls or
-                video streaming, helping maintain a consistent user experience.  When this attribute is set
-                this could imply that a GBR QCI is used, though mechanisms on the network can be used to
-                ensure a minimum performance level without using a GBR QCI.
-
-                The committed data rate allocated to specific services, ensuring a consistent level of
-                performance. DOCSIS networks, the "Minimum Reserved Traffic Rate" is defined in the 
-                DOCSIS 3.1 - MAC and Upper Layer Protocols Interface Specification" 
-                and it ensures a consistent level of performance for specific services within the network.
         maxDownstreamRate:
+          description: |
+            The maximum best effort rate
           allOf:
             - $ref: "#/components/schemas/Rate"
-            - description: |
-                The maximum best effort rate
         maxDownstreamBurstRate:
+          description: |
+            When defined, this is the maximum downstream burst rate for the QoS profile, that will enable
+            the network to burst data at a higher rate than the maxDownstreamRate for a period of time.
+            This can result in improved user experience when there is additional network capacity.
+            For instance, when a user is streaming a video, the network can burst data at a higher rate
+            to fill the buffer, and then return to the maxUpstreamRate once the buffer is full.
           allOf:
             - $ref: "#/components/schemas/Rate"
-            - description: |
-                When defined, this is the maximum downstream burst rate for the QoS profile, that will enable
-                the network to burst data at a higher rate than the maxDownstreamRate for a period of time.
-
-                This can result in improved user experience when there is additional network capacity.
-                For instance, when a user is streaming a video, the network can burst data at a higher rate
-                to fill the buffer, and then return to the maxUpstreamRate once the buffer is full.
         minDuration:
+          description: |
+            The shortest time period that this profile can be deployed.
           allOf:
             - $ref: "#/components/schemas/Duration"
-            - description: |
-                The shortest time period that this profile can be deployed.
         maxDuration:
+          description: |
+            The maximum time period that this profile can be deployed.
           allOf:
             - $ref: "#/components/schemas/Duration"
-            - description: |
-                The maximum time period that this profile can be deployed.
         priority:
           type: integer
           example: 20
@@ -613,30 +699,29 @@ components:
             The lower value the higher priority.
             Not all access networks use the same priority range, so this priority will be
             scaled to the access network's priority range.
-          format: integer
+          format: int32
           minimum: 1
           maximum: 100
         packetDelayBudget:
+          description: |
+            The packet delay budget is the maximum allowable one-way latency between the customer's device
+            and the gateway from the operator's network to other networks. By limiting the delay, the network
+            can provide an acceptable level of performance for various services, such as voice calls,
+            video streaming, and data.
+            The end-to-end or round trip latency will be about two times this value plus the latency not controlled
+            by the operator
           allOf:
             - $ref: "#/components/schemas/Duration"
-            - description: |
-                The packet delay budget is the maximum allowable one-way latency between the customer's device
-                and the gateway from the operator's network to other networks. By limiting the delay, the network
-                can provide an acceptable level of performance for various services, such as voice calls,
-                video streaming, and data.
-
-                The end-to-end or round trip latency will be about two times this value plus the latency not controlled
-                by the operator
         jitter:
+          description: |
+            The jitter requirement aims to limit the maximum variation in round-trip
+            packet delay for the 99th percentile of traffic, following ITU Y.1540
+            standards. It considers only acknowledged packets in a session, which are
+            packets that receive a confirmation of receipt from the recipient (e.g.,
+            using TCP). This requirement helps maintain consistent latency, essential
+            for real-time applications such as VoIP, video calls, and gaming.
           allOf:
             - $ref: "#/components/schemas/Duration"
-            - description: |
-                The jitter requirement aims to limit the maximum variation in round-trip
-                packet delay for the 99th percentile of traffic, following ITU Y.1540
-                standards. It considers only acknowledged packets in a session, which are
-                packets that receive a confirmation of receipt from the recipient (e.g.,
-                using TCP). This requirement helps maintain consistent latency, essential
-                for real-time applications such as VoIP, video calls, and gaming.
         packetErrorLossRate:
           type: integer
           description: |
@@ -686,7 +771,7 @@ components:
           maximum: 1024
         unit:
           $ref: "#/components/schemas/RateUnitEnum"
-          
+
     Duration:
       type: object
       properties:
@@ -699,7 +784,7 @@ components:
           allOf:
             - $ref: "#/components/schemas/TimeUnitEnum"
             - example: Minutes
-            
+
     TimeUnitEnum:
       type: string
       enum:
@@ -731,63 +816,57 @@ components:
         - Mbps
         - Gbps
         - Tbps
-    EventNotification:
-      type: object
+
+    CloudEvent:
+      description: Event compliant with the CloudEvents specification
       required:
-        - event
+        - id
+        - source
+        - specversion
+        - type
+        - time
       properties:
-        event:
-          $ref: "#/components/schemas/Event"
-
-    Event:
-      anyOf:
-        - $ref: "#/components/schemas/QosStatusChangedEvent"
-      discriminator:
-        propertyName: eventType
-        mapping:
-          QOS_STATUS_CHANGED: "#/components/schemas/QosStatusChangedEvent"
-
-    EventId:
-      type: string
-      format: uuid
-      example: 5698d710-9b1b-4695-a958-7b228f08128c
-      description: Unique identifier of the event
-
-    EventType:
-      type: string
-      enum:
-        - QOS_STATUS_CHANGED
-      description: Type of the event
-
-    EventTime:
-      type: string
-      format: date-time
-      example: 2023-05-30T10:18:28Z
-      description: Date time when the event occurred
-
-    EventBase:
-      type: object
-      required:
-        - eventType
-        - eventTime
-      properties:
-        eventid:
-          $ref: "#/components/schemas/EventId"
-        eventType:
-          $ref: "#/components/schemas/EventType"
-        eventTime:
-          $ref: "#/components/schemas/EventTime"
-    QosStatusChangedEvent:
-      allOf:
-        - $ref: "#/components/schemas/EventBase"
-        - type: object
+        id:
+          description: Identifier of this event, that must be unique in the source context.
+          type: string
+        source:
+          description: Identifies the context in which an event happened in the specific Provider Implementation.
+          type: string
+          format: uri-reference
+        type:
+          description: The type of the event.
+          type: string
+          enum:
+            - 'org.camaraproject.qod.v0.qos-status-changed'
+        specversion:
+          description: Version of the specification to which this event conforms (must be 1.0 if it conforms to cloudevents 1.0.2 version)
+          type: string
+          enum:
+            - '1.0'
+        datacontenttype:
+          description: 'media-type that describes the event payload encoding, must be "application/json" for CAMARA APIs'
+          type: string
+          enum:
+            - 'application/json'
+        data:
+          description: Event notification details payload, which depends on the event type
+          type: object
+        time:
           description: |
-            Event notifying that there was a change of the QoS status of a requested or previously available session.
-            Applicable values for `qosStatus` in the event are:
-            - `AVAILABLE` - Requested QoS session is already available
-            - `UNAVAILABLE` - A requested or previously available QoS session is currently unavailable. `statusInfo` may provide additional information about the reason for the unavailability.
+            Timestamp of when the occurrence happened. It must follow RFC 3339
+          type: string
+          format: date-time
+      discriminator:
+        propertyName: 'type'
+        mapping:
+          org.camaraproject.qod.v0.qos-status-changed: '#/components/schemas/EventQosStatusChanged'
+
+    EventQosStatusChanged:
+      allOf:
+        - $ref: "#/components/schemas/CloudEvent"
+        - type: object
           properties:
-            eventDetail:
+            data:
               type: object
               description: Event details depending on the event type
               required:
@@ -797,33 +876,34 @@ components:
                 sessionId:
                   $ref: "#/components/schemas/SessionId"
                 qosStatus:
-                  $ref: "#/components/schemas/QosStatus"
+                  $ref: "#/components/schemas/EventQosStatus"
                 statusInfo:
                   $ref: "#/components/schemas/StatusInfo"
           required:
-          - eventDetail
+            - data
+
     StatusInfo:
-          description: |
-            Reason for the new `qosStatus`. Currently `statusInfo` is only applicable when `qosStatus` is 'UNAVAILABLE'.
-            * `DURATION_EXPIRED` - Session terminated due to requested duration expired
-            * `NETWORK_TERMINATED` - Network terminated the session before the requested duration expired
-          type: string
-          enum:
-            - DURATION_EXPIRED
-            - NETWORK_TERMINATED¡
+      description: |
+        Reason for the new `qosStatus`. Currently `statusInfo` is only applicable when `qosStatus` is 'UNAVAILABLE'.
+        * `DURATION_EXPIRED` - Session terminated due to requested duration expired
+        * `NETWORK_TERMINATED` - Network terminated the session before the requested duration expired
+      type: string
+      enum:
+        - DURATION_EXPIRED
+        - NETWORK_TERMINATED
 
     Device:
       description: |
-        End-user equipment able to connect to a mobile network. Examples of devices include smartphones or IoT sensors/actuators. 
+        End-user equipment able to connect to a mobile network. Examples of devices include smartphones or IoT sensors/actuators.
 
         The developer can choose to provide the below specified device identifiers:
 
         * `ipv4Address`
         * `ipv6Address`
         * `phoneNumber`
-        * `networkAccessIdentifier`  
+        * `networkAccessIdentifier`
 
-        NOTE: the MNO might support only a subset of these options. The API invoker can provide multiple identifiers to be compatible across different MNOs. In this case the identifiers MUST belong to the same device     
+        NOTE: the MNO might support only a subset of these options. The API invoker can provide multiple identifiers to be compatible across different MNOs. In this case the identifiers MUST belong to the same device
       type: object
       properties:
         phoneNumber:
@@ -833,23 +913,23 @@ components:
         ipv4Address:
           $ref: "#/components/schemas/DeviceIpv4Addr"
         ipv6Address:
-          $ref: "#/components/schemas/Ipv6Address"
+          $ref: "#/components/schemas/DeviceIpv6Address"
       minProperties: 1
 
     ApplicationServer:
       description: |
         A server hosting backend applications to deliver some business logic to clients.
-        
+
         The developer can choose to provide the below specified device identifiers:
 
         * `ipv4Address`
-        * `ipv6Address` 
+        * `ipv6Address`
       type: object
       properties:
         ipv4Address:
-          $ref: "#/components/schemas/Ipv4Address"
+          $ref: "#/components/schemas/ApplicationServerIpv4Address"
         ipv6Address:
-          $ref: "#/components/schemas/Ipv6Address"
+          $ref: "#/components/schemas/ApplicationServerIpv6Address"
       minProperties: 1
 
     NetworkAccessIdentifier:
@@ -867,11 +947,11 @@ components:
       type: object
       description: |
         The device should be identified by either the public (observed) IP address and port as seen by the application server, or the private (local) and any public (observed) IP addresses in use by the device (this information can be obtained by various means, for example from some DNS servers).
-        
+
         If the allocated and observed IP addresses are the same (i.e. NAT is not in use) then  the same address should be specified for both publicAddress and privateAddress.
-        
+
         If NAT64 is in use, the device should be identified by its publicAddress and publicPort, or separately by its allocated IPv6 address (field ipv6Address of the Device object)
-      
+
         In all cases, publicAddress must be specified, along with at least one of either privateAddress or publicPort, dependent upon which is known. In general, mobile devices cannot be identified by their public IPv4 address alone.
       properties:
         publicAddress:
@@ -884,20 +964,28 @@ components:
         - required: [publicAddress, privateAddress]
         - required: [publicAddress, publicPort]
       example:
-            {
-              "publicAddress": "84.125.93.10",
-              "publicPort" : 59765
-            }
+        {
+          "publicAddress": "84.125.93.10",
+          "publicPort": 59765
+        }
 
     SingleIpv4Addr:
       description: A single IPv4 address with no subnet mask
       type: string
-      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$'
+      format: ipv4
       example: "84.125.93.10"
 
-    Ipv4Address:
+    DeviceIpv6Address:
+      description: |
+        The device should be identified by the observed IPv6 address, or by any single IPv6 address from within the subnet allocated to the device (e.g. adding ::0 to the /64 prefix).
+
+        The session shall apply to all IP flows between the device subnet and the specified application server, unless further restricted by the optional parameters devicePorts or applicationServerPorts.
       type: string
-      pattern: '^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$'
+      format: ipv6
+      example: 2001:db8:85a3:8d3:1319:8a2e:370:7344
+
+    ApplicationServerIpv4Address:
+      type: string
       example: "192.168.0.1/24"
       description: |
         IPv4 address may be specified in form <address/mask> as:
@@ -905,14 +993,11 @@ components:
           - address/mask - an IP number as above with a mask width of the form 1.2.3.4/24.
             In this case, all IP numbers from 1.2.3.0 to 1.2.3.255 will match. The bit width MUST be valid for the IP version.
 
-    Ipv6Address:
+    ApplicationServerIpv6Address:
       type: string
-      allOf:
-        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))?$'
-        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)?$'
       example: "2001:db8:85a3:8d3:1319:8a2e:370:7344"
       description: |
-        IPv6 address, following IETF 5952 format, may be specified in form <address/mask> as:
+        IPv6 address may be specified in form <address/mask> as:
           - address - The /128 subnet is optional for single addresses:
             - 2001:db8:85a3:8d3:1319:8a2e:370:7344
             - 2001:db8:85a3:8d3:1319:8a2e:370:7344/128
@@ -943,6 +1028,16 @@ components:
       type: string
       enum:
         - REQUESTED
+        - AVAILABLE
+        - UNAVAILABLE
+
+    EventQosStatus:
+      description: |
+        The current status of a requested or previously available session. Applicable values in the event are:
+        *  `AVAILABLE` - The requested QoS has been provided by the network
+        *  `UNAVAILABLE` - A requested or previously available QoS session is currently unavailable. `statusInfo` may provide additional information about the reason for the unavailability.
+      type: string
+      enum:
         - AVAILABLE
         - UNAVAILABLE
 
@@ -1073,3 +1168,17 @@ components:
             status: 503
             code: UNAVAILABLE
             message: "Service unavailable"
+
+  examples:
+    QOS_STATUS_CHANGED_EXAMPLE:
+      summary: QoS status changed
+      value:
+        id: 83a0d986-0866-4f38-b8c0-fc65bfcda452
+        source: 'https://api.example.com/qod/v0/sessions/123e4567-e89b-12d3-a456-426614174000'
+        specversion: '1.0'
+        type: 'org.camaraproject.qod.v0.qos-status-changed'
+        time: '2021-12-12T00:00:00Z'
+        data:
+          sessionId: '123e4567-e89b-12d3-a456-426614174000'
+          qosStatus: 'UNAVAILABLE'
+          statusInfo: 'DURATION_EXPIRED'
