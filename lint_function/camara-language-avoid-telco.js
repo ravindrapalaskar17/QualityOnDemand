@@ -23,7 +23,11 @@ export default async function (input) {
 
         // Check if 'original' exists in the value
         if (regex.test(value)) {
-          errors.push(replacement);
+          errors.push({
+            path,
+            original,
+            recommended
+          });
           suggestions.push(`Consider replacing '${original}' with '${recommended}'.`);
         }
       }
@@ -32,6 +36,11 @@ export default async function (input) {
 
   // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
-    console.log('Hint: Telco-specific terminology found in input: ' + suggestions.join(', '));
+    return errors.map((error) => ({
+      message: `Telco-specific terminology found at ${error.path}: Consider replacing '${error.original}' with '${error.recommended}'.`,
+      path: error.path
+    }));
   }
+
+  return null; // No errors found
 };
