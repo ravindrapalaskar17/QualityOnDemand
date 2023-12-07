@@ -23,11 +23,7 @@ export default async function (input) {
 
         // Check if 'original' exists in the value
         if (regex.test(value)) {
-          errors.push({
-            path,
-            original,
-            recommended
-          });
+          errors.push(replacement);
           suggestions.push(`Consider replacing '${original}' with '${recommended}'.`);
         }
       }
@@ -36,11 +32,10 @@ export default async function (input) {
 
   // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
-    return errors.map((error) => ({
-      message: `Telco-specific terminology found at ${error.path}: Consider replacing '${error.original}' with '${error.recommended}'.`,
-      path: error.path
-    }));
+          const warningRuleName = 'camara-language-avoid-telco';
+          const description = `Telco-specific terminology found in input:`;
+          const location = `paths.${path}`;
+    
+    console.log('Hint: ${warningRuleName}  ${description} ' + suggestions.join(', ') + ' ${location} ');
   }
-
-  return null; // No errors found
 };
