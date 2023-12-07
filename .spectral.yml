@@ -56,7 +56,6 @@ rules:
     given: "$..*.*"
     then:
       function: camara-language-avoid-telco
-    recommended: false  # Set to false to disable this rule  
 
   camara-oas-version:
     message: "OpenAPI Version Error: The OpenAPI specification must adhere to version 3.0.3."
