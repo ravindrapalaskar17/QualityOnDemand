@@ -30,12 +30,13 @@ export default async function (input) {
     }
   }
 
+  const description = `Telco-specific terminology found in input:`;
  // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
        //   const warningRuleName = 'camara-language-avoid-telco';
-          const description = `Telco-specific terminology found in input:`;
-          const location = `paths.${path}`;
+          
+        //  const location = `paths.${path}`;
     
-    console.log(`Hint: camara-language-avoid-telco  ${description} ` + suggestions.join(', ') + ` ${location} `);
+    console.log(`Hint: camara-language-avoid-telco  ${description} ` + suggestions.join(', '));
   }
 };
