@@ -24,17 +24,16 @@ export default async function (input) {
         // Check if 'original' exists in the value
         if (regex.test(value)) {
           errors.push(replacement);
-          suggestions.push(`Consider replacing '${original}' with '${recommended}'.`);
+          suggestions.push(` Telco-specific terminology found in input: Consider replacing '${original}' with '${recommended}'.`);
         }
       }
     }
   }
 
-  const description = `Telco-specific terminology found in input:`;
- // const location = `paths.${path}`;
+  //const description = `Telco-specific terminology found in input:`;
   
  // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
-    console.log(`Hint    camara-language-avoid-telco  ${description}` + suggestions.join(', '));
+    console.log(`Hint   camara-language-avoid-telco ` + suggestions.join(', '));
   }
 };
