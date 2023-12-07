@@ -35,6 +35,6 @@ export default async function (input) {
   
  // Check if any word from 'replacements' is in the suggestions
   if (errors.length > 0) {
-    console.log(`Hint: camara-language-avoid-telco  ${description}  ${path} ` + suggestions.join(', '));
+    console.log(`Hint    : camara-language-avoid-telco  ${description}` + suggestions.join(', '));
   }
 };
