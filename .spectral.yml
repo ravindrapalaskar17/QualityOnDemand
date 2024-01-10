@@ -187,7 +187,7 @@ rules:
     then:
       function: casing
       functionOptions:
-        match: pascal
+        type: pascal
 
   camara-parameter-casing-convention:
     description: Paths should be kebab-case.
