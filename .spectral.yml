@@ -185,9 +185,9 @@ rules:
     severity: warn
     given: $.components.schemas[*]~
     then:
-      function: pattern
+      function: casing
       functionOptions:
-        match: "^([A-Z][a-z0-9]*([A-Z][a-z0-9]*)*)$"
+        match: pascal
 
   camara-parameter-casing-convention:
     description: Paths should be kebab-case.
