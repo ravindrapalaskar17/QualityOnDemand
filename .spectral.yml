@@ -189,12 +189,12 @@ rules:
       functionOptions:
         type: pascal
 
-  camara-parameter-casing-convention:
-    description: Paths should be kebab-case.
-    severity: error
-    message: "{{property}} is not kebab-case: {{error}}"
-    given: $.paths[*]~
-    then:
-      function: casing
-      functionOptions:
-        type: kebab
+ # camara-parameter-casing-convention:
+ #   description: Paths should be kebab-case.
+ #   severity: error
+ #   message: "{{property}} is not kebab-case: {{error}}"
+ #   given: $.paths[*]~
+ #   then:
+ #     function: casing
+ #     functionOptions:
+ #       type: kebab
