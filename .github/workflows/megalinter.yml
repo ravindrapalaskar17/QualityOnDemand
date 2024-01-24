@@ -4,6 +4,7 @@
 name: MegaLinter
 
 on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
   # Pull Requests to main
   pull_request:
     branches: [master, main, Extend-the-API-guidelines-with-a-concrete-ruleset]
