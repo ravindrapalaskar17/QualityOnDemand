@@ -43,6 +43,12 @@ jobs:
       - name: Run spectral:oas Spectral Linting
         run: spectral lint code/API_definitions/sample.yaml --verbose .spectral.yml
         # Replace openapi.yaml file with your API specification file
+        # Save Spectral report log file
+      - name: Save Spectral report log
+        if: ${{ success() }}
+        run: |
+          mkdir -p megalinter-reports
+          cp spectral.log megalinter-reports/spectral.log
 
       # MegaLinter
       - name: MegaLinter
