@@ -174,7 +174,7 @@ rules:
     description: |
       Ensure that API definition YAML files with oneOf or anyOf sections include a discriminator object for serialization, deserialization, and validation.
     severity: warn
-    given: "$..[?(@.oneOf || @.anyOf)]"
+    given: "$.paths.*.[?(@.oneOf || @.anyOf)]"
     then:
       field: discriminator
       function: truthy
