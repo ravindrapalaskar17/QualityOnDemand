@@ -163,7 +163,7 @@ rules:
     description: |
       This Spectral rule ensures that each path parameter in the API specification has a descriptive and meaningful description.
     given:
-      - "$.paths..parameters"
+      - "$.paths..parameters.*"
       # - "$.components.*.*"
       # - "$.components.*.*.properties.*"
     then:
