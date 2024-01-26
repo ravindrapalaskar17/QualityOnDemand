@@ -205,12 +205,12 @@ rules:
     recommended: true  # Set to true/false to enable/disable this rule
 
   camara-parameter-casing-convention:
-    description: This rule checks Paths should follow a specific case convention kebab-case.
+    description: Paths should be kebab-case.
     severity: error
-    message: "{{property}} should be kebab-case: {{error}}"
+    message: "{{property}} is not kebab-case: {{error}}"
     given: $.paths[*]~
     then:
-      function: casing
+      function: pattern
       functionOptions:
-        type: kebab
+        match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$"  # doesn't allow /asasd{asdas}sadas pattern or not closed braces
     recommended: true  # Set to true/false to enable/disable this rule
