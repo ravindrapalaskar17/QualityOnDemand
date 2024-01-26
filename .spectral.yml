@@ -164,8 +164,6 @@ rules:
       This Spectral rule ensures that each path parameter in the API specification has a descriptive and meaningful description.
     given:
       - "$.paths..parameters.*"
-      # - "$.components.*.*"
-      # - "$.components.*.*.properties.*"
     then:
       field: description
       function: truthy
@@ -189,6 +187,7 @@ rules:
     description: |
       This Spectral rule ensures that each propoerty withinobjects in the API specification has a descriptive and meaningful description.
     given:
+      - "$.components.*.*"
       - "$.components.*.*.properties.*"
     then:
       field: description
