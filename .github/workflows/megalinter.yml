@@ -66,9 +66,7 @@ jobs:
         run: |
           mkdir -p megalinter-reports
           cp spectral.log megalinter-reports/spectral.log
-          cp linters_logs/mega-linter.log megalinter-reports/mega-linter.log
-
-
+        
           # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
@@ -78,3 +76,4 @@ jobs:
           path: |
             megalinter-reports
             mega-linter.log
+            spectral.log
