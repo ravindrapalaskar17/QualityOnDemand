@@ -66,6 +66,12 @@ jobs:
             mkdir -p megalinter-reports
             cp spectral.log megalinter-reports/spectral.log
             cp linters_logs/mega-linter.log megalinter-reports/mega-linter.log
+        # Always save Spectral log, even if Spectral job fails
+      - name: Save Spectral log on failure
+        if: ${{ failure() }}
+        run: |
+          mkdir -p megalinter-reports
+          cp spectral.log megalinter-reports/spectral.log
 
        # Upload MegaLinter artifacts
       - name: Archive production artifacts
