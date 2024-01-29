@@ -60,24 +60,23 @@ jobs:
          YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
          JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
 
-         # Save MegaLinter and Spectral logs
-      - name: Save Logs
-        run: |
-            mkdir -p megalinter-reports
-            cp spectral.log megalinter-reports/spectral.log
-            cp linters_logs/mega-linter.log megalinter-reports/mega-linter.log
+     
         # Always save Spectral log, even if Spectral job fails
       - name: Save Spectral log on failure
-        if: ${{ failure() }}
+        if: ${{ success() }} || ${{ failure() }}
         run: |
           mkdir -p megalinter-reports
           cp spectral.log megalinter-reports/spectral.log
+          cp linters_logs/mega-linter.log megalinter-reports/mega-linter.log
 
        # Upload MegaLinter artifacts
       - name: Archive production artifacts
+        if: ${{ success() }} || ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-         name: MegaLinter reports
-         path: megalinter-reports
+          name: MegaLinter reports
+          path: |
+            megalinter-reports
+            mega-linter.log
      
        
