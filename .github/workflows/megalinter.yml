@@ -61,22 +61,30 @@ jobs:
          JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
 
      
-        # Always save Spectral log, even if Spectral job fails
+       # Always save Spectral log, even if Spectral job fails
       - name: Save Spectral log on failure
         if: ${{ success() }} || ${{ failure() }}
         run: |
           mkdir -p megalinter-reports
+          # Print current working directory
+          pwd
+          # Print the contents of the linters_logs directory
+          ls -l linters_logs
+          # Check if spectral.log exists and has content
+          if [ -s spectral.log ]; then
           cp spectral.log megalinter-reports/spectral.log
+          else
+          echo "spectral.log does not exist or is empty"
+          fi
           cp linters_logs/mega-linter.log megalinter-reports/mega-linter.log
 
-       # Upload MegaLinter artifacts
+    # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-          name: MegaLinter reports
-          path: |
+         name: MegaLinter reports
+         path: |
             megalinter-reports
             mega-linter.log
-     
-       
+            spectral.log
