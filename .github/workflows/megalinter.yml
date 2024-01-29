@@ -46,7 +46,6 @@ jobs:
         # Replace openapi.yaml file with your API specification file
         # Save Spectral report log file
       - name: Save Spectral report log
-        if: ${{ success() }} || ${{ failure() }}
         run: |
           mkdir -p megalinter-reports
           cp spectral.log megalinter-reports/spectral.log
