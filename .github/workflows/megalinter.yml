@@ -43,39 +43,41 @@ jobs:
       - name: Run spectral:oas Spectral Linting
         run: spectral lint code/API_definitions/qod-api.yaml --verbose .spectral.yml > spectral.log 2>&1
      
-        # Replace openapi.yaml file with your API specification file
-        # Save Spectral report log file
-      - name: Save Spectral report log
-        run: |
-          mkdir -p megalinter-reports
-          cp spectral.log megalinter-reports/spectral.log
+        # Save Spectral report log
+- name: Save Spectral report log
+  run: |
+    mkdir -p megalinter-reports
+    cp spectral.log megalinter-reports/spectral.log
 
-      # MegaLinter
-      - name: MegaLinter
-        id: ml
-        # You can override MegaLinter flavor used to have faster performances
-        # More info at https://megalinter.io/flavors/
-        uses: oxsecurity/megalinter/flavors/java@v7.3.0
-        env:
-          # All available variables are described in documentation
-          # https://megalinter.io/configuration/
-          # VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} # Validates all source when push on main, else just the git diff with main. Override with true if you always want to lint all sources
-          VALIDATE_ALL_CODEBASE: true
-          PRINT_ALPACA: false
-          TEXT_REPORTER_SUB_FOLDER: linters_logs
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
-          DISABLE: COPYPASTE,MARKDOWN,OPENAPI_SPECTRAL
-          DISABLE_LINTERS: SPELL_CSPELL,SPELL_LYCHEE,YAML_PRETTIER,REPOSITORY_SEMGREP,REPOSITORY_DEVSKIM,REPOSITORY_KICS,REPOSITORY_TRIVY,REPOSITORY_CHECKOV,REPOSITORY_GITLEAKS,JAVA_PMD,OPENAPI_SPECTRAL
-          YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
-          JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
+# Always save Spectral log, even if Spectral job fails
+- name: Save Spectral log on failure
+  if: ${{ failure() }}
+  run: |
+    mkdir -p megalinter-reports
+    cp spectral.log megalinter-reports/spectral.log
 
-          # Upload MegaLinter artifacts
-      - name: Archive production artifacts
-        if: ${{ success() }} || ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: MegaLinter reports
-          path: |
-            megalinter-reports
-            mega-linter.log
+# MegaLinter
+- name: MegaLinter
+  id: ml
+  uses: oxsecurity/megalinter/flavors/java@v7.3.0
+  env:
+    # All available variables are described in documentation
+    # https://megalinter.io/configuration/
+    VALIDATE_ALL_CODEBASE: true
+    PRINT_ALPACA: false
+    TEXT_REPORTER_SUB_FOLDER: linters_logs
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
+    DISABLE: COPYPASTE,MARKDOWN,OPENAPI_SPECTRAL
+    DISABLE_LINTERS: SPELL_CSPELL,SPELL_LYCHEE,YAML_PRETTIER,REPOSITORY_SEMGREP,REPOSITORY_DEVSKIM,REPOSITORY_KICS,REPOSITORY_TRIVY,REPOSITORY_CHECKOV,REPOSITORY_GITLEAKS,JAVA_PMD,OPENAPI_SPECTRAL
+    YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
+    JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
+
+# Upload MegaLinter artifacts
+- name: Archive production artifacts
+  uses: actions/upload-artifact@v3
+  with:
+    name: MegaLinter reports
+    path: |
+      megalinter-reports
+      mega-linter.log
