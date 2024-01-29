@@ -7,7 +7,7 @@ on:  # yamllint disable-line rule:truthy
   # Pull Requests to main
   push:
     branches: [master, main, draft/Extend-the-API-guidelines-with-a-concrete-ruleset]
-      
+
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
   ACTIONS_RUNNER_DEBUG: true
@@ -42,7 +42,7 @@ jobs:
         run: npm install -g @stoplight/spectral-functions
       - name: Run spectral:oas Spectral Linting
         run: spectral lint code/API_definitions/sample.yaml --verbose .spectral.yml > spectral.log 2>&1
-        
+     
         # Replace openapi.yaml file with your API specification file
         # Save Spectral report log file
       - name: Save Spectral report log
