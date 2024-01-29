@@ -40,7 +40,7 @@ jobs:
       - name: Install Spectral functions
         run: npm install -g @stoplight/spectral-functions
       - name: Run Spectral linting
-        run: spectral lint code/API_definitions/sample.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
+        run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
 
         # Save Spectral and MegaLinter logs
       - name: Save Logs
