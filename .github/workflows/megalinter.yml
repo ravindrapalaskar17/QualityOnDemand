@@ -41,6 +41,14 @@ jobs:
         run: npm install -g @stoplight/spectral-functions
       - name: Run Spectral linting
         run: spectral lint code/API_definitions/sample.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
+
+        # Save Spectral and MegaLinter logs
+      - name: Save Logs
+        if: ${{ success() }} || ${{ failure() }}
+        run: |
+          mkdir -p megalinter-reports
+          cp spectral.log megalinter-reports/spectral.log
+          
         
 
       # MegaLinter
@@ -61,13 +69,6 @@ jobs:
           YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
           JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
 
-          # Save Spectral and MegaLinter logs
-      - name: Save Logs
-        if: ${{ success() }} || ${{ failure() }}
-        run: |
-          mkdir -p megalinter-reports
-          cp spectral.log megalinter-reports/spectral.log
-          
           # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
