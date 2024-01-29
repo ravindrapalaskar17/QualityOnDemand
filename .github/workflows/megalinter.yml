@@ -41,6 +41,12 @@ jobs:
         run: npm install -g @stoplight/spectral-functions
       - name: Run Spectral linting
         run: spectral lint code/API_definitions/sample.yaml --verbose --ruleset .spectral.yml
+        # Save Spectral and MegaLinter logs
+      - name: Save Logs
+        if: ${{ success() }} || ${{ failure() }}
+        run: |
+          mkdir -p megalinter-reports
+          cp spectral.log megalinter-reports/spectral.log
 
       # MegaLinter
       - name: MegaLinter
@@ -59,20 +65,13 @@ jobs:
           DISABLE_LINTERS: SPELL_CSPELL,SPELL_LYCHEE,YAML_PRETTIER,REPOSITORY_SEMGREP,REPOSITORY_DEVSKIM,REPOSITORY_KICS,REPOSITORY_TRIVY,REPOSITORY_CHECKOV,REPOSITORY_GITLEAKS,JAVA_PMD
           YAML_YAMLLINT_CONFIG_FILE: ".yamllint.yaml"
           JAVA_CHECKSTYLE_CONFIG_FILE: "javalint.xml"
-
-          # Save Spectral and MegaLinter logs
-      - name: Save Logs
-        if: ${{ success() }} || ${{ failure() }}
-        run: |
-          mkdir -p megalinter-reports
-          cp spectral.log megalinter-reports/spectral.log
         
           # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-          name: MegaLinter reports
+          name: MegaLinter and Spectral reports
           path: |
             megalinter-reports
             mega-linter.log
