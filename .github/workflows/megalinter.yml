@@ -41,7 +41,7 @@ jobs:
       - name: Install Spectral functions
         run: npm install -g @stoplight/spectral-functions
       - name: Run spectral:oas Spectral Linting
-        run: spectral lint code/API_definitions/sample.yaml --verbose .spectral.yml > spectral.log 2>&1
+        run: spectral lint code/API_definitions/qod-api.yaml --verbose .spectral.yml > spectral.log 2>&1
      
         # Replace openapi.yaml file with your API specification file
         # Save Spectral report log file
