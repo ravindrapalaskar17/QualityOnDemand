@@ -3,7 +3,10 @@
 # More info at https://megalinter.io
 name: MegaLinter
 
-on: workflow_dispatch
+on:  # yamllint disable-line rule:truthy
+  # Pull Requests to main
+  push:
+    branches: [master, main, draft/Extend-the-API-guidelines-with-a-concrete-ruleset]
       
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
