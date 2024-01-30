@@ -48,9 +48,7 @@ jobs:
         run: |
           mkdir -p megalinter-reports
           cp spectral.log megalinter-reports/spectral.log
-          
-        
-
+    
       # MegaLinter
       - name: MegaLinter
         id: ml
