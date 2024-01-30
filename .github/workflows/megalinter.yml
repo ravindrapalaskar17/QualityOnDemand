@@ -4,8 +4,10 @@
 name: MegaLinter
 
 on:  # yamllint disable-line rule:truthy
+  # Pull Requests to main
   push:
-    branches: [draft/Enable-JAVA-linting-in-test-contribution-of-qod]
+    branches: [master, main, draft/Extend-the-API-guidelines-with-a-concrete-ruleset]
+
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
   APPLY_FIXES: all  # When active, APPLY_FIXES must also be defined as environment variable (in github/workflows/mega-linter.yml or other CI tool)
@@ -33,6 +35,21 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral
+      - name: Install Spectral functions
+        run: npm install -g @stoplight/spectral-functions
+      - name: Run Spectral linting
+        run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
+
+        # Save Spectral and MegaLinter logs
+      - name: Save Logs
+        if: ${{ success() }} || ${{ failure() }}
+        run: |
+          mkdir -p megalinter-reports
+          cp spectral.log megalinter-reports/spectral.log
+          
+        
 
       # MegaLinter
       - name: MegaLinter
@@ -57,7 +74,8 @@ jobs:
         if: ${{ success() }} || ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-          name: MegaLinter reports
+          name: MegaLinter and Spectral reports
           path: |
             megalinter-reports
             mega-linter.log
+            spectral.log
