@@ -41,6 +41,10 @@ jobs:
         run: npm install -g @stoplight/spectral-functions
       - name: Run Spectral linting
         run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
+      - name: Install Gherkin Lint
+        run: npm install gherkin-lint
+      - name: Run gherkin-lint
+        run: gherkin-lint myfile.feature
 
         # Save Spectral and MegaLinter logs
       - name: Save Logs
