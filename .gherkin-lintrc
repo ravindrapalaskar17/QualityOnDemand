@@ -1,0 +1,6 @@
+{
+  "no-trailing-whitespace": {
+    "enabled": true
+  }
+  // Add other rules or configurations as needed
+}
