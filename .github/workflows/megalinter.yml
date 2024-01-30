@@ -38,7 +38,7 @@ jobs:
       - name: Install Gherkin Lint
         run: npm install -g gherkin-lint
       - name: Run gherkin-lint
-        run: gherkin-lint myfile.feature
+        run: gherkin-lint myfile.feature -c .gherkin-lintrc
 
       - name: Install Spectral
         run: npm install -g @stoplight/spectral
