@@ -6,7 +6,7 @@ name: MegaLinter
 on:  # yamllint disable-line rule:truthy
   # Pull Requests to main
   push:
-    branches: [master, main, draft/Extend-the-API-guidelines-with-a-concrete-ruleset]
+    branches: [master, main, test_qod_latest_version]
 
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
