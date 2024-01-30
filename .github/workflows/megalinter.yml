@@ -35,25 +35,24 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
+      - name: Install Gherkin Lint
+        run: npm install gherkin-lint
+      - name: Run gherkin-lint
+        run: gherkin-lint myfile.feature
+
       - name: Install Spectral
         run: npm install -g @stoplight/spectral
       - name: Install Spectral functions
         run: npm install -g @stoplight/spectral-functions
       - name: Run Spectral linting
         run: spectral lint code/API_definitions/qod-api.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
-      - name: Install Gherkin Lint
-        run: npm install gherkin-lint
-      - name: Run gherkin-lint
-        run: gherkin-lint myfile.feature
 
         # Save Spectral and MegaLinter logs
       - name: Save Logs
         if: ${{ success() }} || ${{ failure() }}
         run: |
           mkdir -p megalinter-reports
-          cp spectral.log megalinter-reports/spectral.log
-          
-        
+          cp spectral.log megalinter-reports/spectral.log    
 
       # MegaLinter
       - name: MegaLinter
