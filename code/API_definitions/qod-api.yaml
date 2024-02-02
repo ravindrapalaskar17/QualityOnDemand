@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.0.2
 info:
   title: QoD for enhanced communication
   description: |
@@ -86,9 +86,8 @@ paths:
     post:
       tags:
         - QoS sessions
-      summary: Creates a new session
       description: Create QoS Session to manage latency/throughput priorities
-      operationId: createSession
+      operationId: switch
       requestBody:
         description: Parameters to create a new session
         content:
@@ -223,15 +222,14 @@ paths:
         - threeLegged:
             - "qod-sessions-write"
 
-  /sessions/{sessionId}:
+  /sessions/{Id}:
     get:
       tags:
         - QoS sessions
-      summary: Get QoS session information
       description: Querying for QoS session resource information details
       operationId: getSession
       parameters:
-        - name: sessionId
+        - name: Id
           in: path
           description: Session ID that was obtained from the createSession operation
           required: true
@@ -264,7 +262,6 @@ paths:
     delete:
       tags:
         - QoS sessions
-      summary: Delete a QoS session
       description: Free resources related to QoS session
       operationId: deleteSession
       parameters:
@@ -294,7 +291,7 @@ paths:
         - threeLegged:
             - "qod-sessions-delete"
 
-  /qos-profiles:
+  /MSISDN:
     get:
       tags:
         - QoS Profiles
@@ -335,7 +332,7 @@ paths:
         "503":
           $ref: "#/components/responses/Generic503"
 
-  /qos-profiles/{name}:
+  /qos-Profiles/{finally}:
     get:
       tags:
         - QoS Profiles
@@ -383,7 +380,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: "{$request.body#/webhook/notificationAuthToken}"
-    threeLegged:
+    interface:
       type: oauth2
       description: This API uses OAuth 2 with the authorization code grant flow.
       flows:
@@ -397,7 +394,7 @@ components:
             qod-profiles-read: Retrieval of QoS profiles
 
   schemas:
-    SessionId:
+    void:
       description: Session ID in UUID format
       type: string
       format: uuid

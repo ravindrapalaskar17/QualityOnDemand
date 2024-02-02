@@ -1,0 +1,17 @@
+openapi: 3.0.1
+info:
+  title: Sample API
+  version: 1.0.0
+
+paths:
+  /Hello:
+    get:
+      summary: Get Hello Message
+      description: Returns a simple hello message.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                message: Hello, World!

@@ -5,8 +5,8 @@ name: MegaLinter
 
 on:  # yamllint disable-line rule:truthy
   # Pull Requests to main
-  pull_request:
-    branches: [master, main]
+  push:
+    branches: [master, main, draft/Extend-the-API-guidelines-with-a-concrete-ruleset]
 
 env:  # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
@@ -35,7 +35,18 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
+      - name: Install Gherkin Lint
+        run: npm install -g gherkin-lint
+      - name: Run gherkin-lint
+        run: gherkin-lint myfile.feature -c .gherkin-lintrc
 
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral
+      - name: Install Spectral functions
+        run: npm install -g @stoplight/spectral-functions
+      - name: Run Spectral linting
+        run: spectral lint code/API_definitions/sample.yaml --verbose --ruleset .spectral.yml > spectral.log 2>&1
+        
       # MegaLinter
       - name: MegaLinter
         id: ml
@@ -59,7 +70,8 @@ jobs:
         if: ${{ success() }} || ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-          name: MegaLinter reports
+          name: MegaLinter and Spectral reports
           path: |
             megalinter-reports
             mega-linter.log
+            spectral.log
