@@ -9,8 +9,8 @@ name: MegaLinter
 
 on: # yamllint disable-line rule:truthy
   # Pull Requests to main
-  pull_request:
-    branches: [master, main]
+  push:
+    branches: [master, main,test-feature-file-using-gherkin-lint]
 
 env: # Comment env block if you do not want to apply fixes
   # Apply linter fixes configuration
@@ -41,6 +41,8 @@ jobs:
           fetch-depth: 0 # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
       - name: Install Spectral
         run: npm install -g @stoplight/spectral
+      - name: Install Gherkin Linter
+        run: npm install -g gherkin-lint 
       - name: Install Spectral functions
         run: npm install -g @stoplight/spectral-functions
     # - name: Run spectral:oas Spectral Linting
