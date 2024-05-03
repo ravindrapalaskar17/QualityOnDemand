@@ -21,6 +21,7 @@
 
 @QoD @QoDSanity
 Feature: Automated QoD System Integration Test
+Feature: Automated QoD System normal Test
 
   @QQoDSessionCreateGetDelete
   Scenario: Create QoD session with mandatory parameters
