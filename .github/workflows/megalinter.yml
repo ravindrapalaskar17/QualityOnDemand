@@ -46,7 +46,7 @@ jobs:
       - name: Install Spectral functions
         run: npm install -g @stoplight/spectral-functions
       - name: Run Gherkin Linting
-        run: gherkin-lint path/to/your/feature/files/*.feature --config .gherkin-lintrc  
+        run: gherkin-lint code/Test_definitions/*.feature --config .gherkin-lintrc  
     # - name: Run spectral:oas Spectral Linting
     #   run: spectral lint code/API_definitions/*.yaml --verbose --ruleset .spectral.yml
         # Replace openapi.yaml file with your API specification file
