@@ -1,1 +1,8 @@
-
+{
+  "rules": {
+    "one-feature-per-file": {
+      "enabled": true,
+      "severity": "error"
+    }
+  }
+}
