@@ -1,6 +1,6 @@
 {
   "no-files-without-scenarios" : "on",
-  "one-feature-per-file": "error",
+  "one-feature-per-file": "on",
   "no-unnamed-features": "on",
   "no-unnamed-scenarios": "on",
   "no-dupe-scenario-names": ["on", "in-feature"],
