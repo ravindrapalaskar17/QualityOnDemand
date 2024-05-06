@@ -34,7 +34,7 @@ Feature: Automated QoD System normal Test
     Then Response code is 204
 
   @QoDSessionCreateGetDeleteAllparams
-  Scenario: Create QoD session with all parameters & Deletion of Session id
+  Scenario: Create QoD session with mandatory parameters
     Given Use the QoD MOCK URL
     When Create a new QoD session with all parameters
     Then Response code is 201
