@@ -23,7 +23,7 @@
 Feature: Automated QoD System Integration Test
 Feature: Automated QoD System normal Test
 
-  @QQoDSessionCreateGetDelete
+  @QQoDSessionCreateGetDelete  @QQoDSessionCreateGetDelete
   Scenario: Create QoD session with mandatory parameters
     Given Use the QoD MOCK URL
     When Create a new QoD session with mandatory parameters
