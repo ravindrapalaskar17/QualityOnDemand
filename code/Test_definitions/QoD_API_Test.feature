@@ -19,63 +19,12 @@
 #* ---license-end
 #*/
 
-@QoD @QoDSanity
-Feature: Automated QoD System Integration Test
-Feature: Automated QoD System normal Test
+Feature: Test for the no-dupe-scenario-names rule
 
-  @QQoDSessionCreateGetDelete  @QQoDSessionCreateGetDelete
-  Scenario: Create QoD session with mandatory parameters
-    Given Use the QoD MOCK URL
-    When Create a new QoD session with mandatory parameters
-    Then Response code is 201
-    When Get QoD session
-    Then Response code is 200
-    When Delete existing QoD session
-    Then Response code is 204
-    
- @QQoDSessionCreateGetDelete
-  Scenario: Create QoD session with mandatory parameters
-    Given Use the QoD MOCK URL
-    When Create a new QoD session with mandatory parameters
-    Then Response code is 201
-    When Get QoD session
-    Then Response code is 200
-    When Delete existing QoD session
-    Then Response code is 204   
+Scenario: This is a Scenario for no-dupe-scenario-names
+  Given I have 2 scenarios with the same name
+  Then I should see a no-dupe-scenario-names error
 
-  @QoDSessionCreateGetDeleteAllparams
-  Scenario: Create QoD session with mandatory parameters
-    Given Use the QoD MOCK URL
-    When Create a new QoD session with all parameters
-    Then Response code is 201
-    When Get QoD session
-    Then Response code is 200
-    When Delete existing QoD session
-    Then Response code is 204
-
-  @QoDCreateSessionDeleteInvalidSession
-  Scenario: Delete a Invalid QoD session for session id
-    Given Use the QoD MOCK URL
-    When Create a new QoD session with mandatory parameters
-    Then Response code is 201
-    When Delete Invalid QoD session
-    Then Response code is 404
-
-
-  @QoDInvalidCreateSession
-  Scenario: QoD session with 5XX response
-    # Test with end point not reachable
-    Given Use the QoD MOCK URL with invalid scenario
-    When Create a new QoD session along with all parameters
-    Then Response code is 500
-
-
-  @QoDInvalidCreateSessionpayload
-  Scenario: QoD session with invalid payload 4XX
-    # Test with invalid Payload
-    Given Use the QoD MOCK URL with invalid scenario
-    When Create a new QoD session with parameters
-    Then Response code is 400
-
-
-
+Scenario: This is a Scenario for no-dupe-scenario-names
+  Given I have 2 scenarios with the same name
+  Then I should see a no-dupe-scenario-names error
