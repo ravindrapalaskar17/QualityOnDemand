@@ -42,11 +42,15 @@ jobs:
       - name: Install Spectral
         run: npm install -g @stoplight/spectral
       - name: Install Gherkin Linter
-        run: npm install -g gherkin-lint 
+        run: npm install -g gherkin-lint
       - name: Run Gherkin Linting
-        run: gherkin-lint code/Test_definitions/Qod_API_Test.feature
-      - name: Install Spectral functions
-        run: npm install -g @stoplight/spectral-functions
+        run: |
+          lint_output=$(gherkin-lint code/Test_definitions/Qod_API_Test.feature)
+          echo "$lint_output"   
+     # - name: Run Gherkin Linting
+      #  run: gherkin-lint code/Test_definitions/Qod_API_Test.feature
+   #   - name: Install Spectral functions
+    #    run: npm install -g @stoplight/spectral-functions
     # - name: Run spectral:oas Spectral Linting
     #   run: spectral lint code/API_definitions/*.yaml --verbose --ruleset .spectral.yml
         # Replace openapi.yaml file with your API specification file
