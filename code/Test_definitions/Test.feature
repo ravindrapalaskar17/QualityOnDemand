@@ -1,10 +1,15 @@
-Feature: Test for no-files-without-scenarios rule - Only Scenario Outline
+Feature: Test for the one-feature-per-file
 
-Scenario Outline: Scenario Outline only
-  Given we use "<foo>"
-  And the feature has only scenario outlines
-  Then I should see no no-files-without-scenarios error
+@feature
+Background:
+  Given I have a Feature file with 2 backgrounds
 
-  Examples:
-  | foo |
-  | bar |
+Scenario: This is Scenario 1 for one-feature-per-file
+ Given I have a file with 2 features
+ Then I get a one-feature-per-file error
+
+
+@scenariotag
+Scenario: This is Scenario 2 for one-feature-per-file
+ Given I have a file with 2 features
+ Then I get a one-feature-per-file error
