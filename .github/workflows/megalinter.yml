@@ -44,8 +44,7 @@ jobs:
       - name: Install Gherkin Linter
         run: npm install -g gherkin-lint
       - name: Run Gherkin Linting
-        run: |
-          gherkin-lint code/Test_definitions/Qod_API_Test.feature
+        run: gherkin-lint Test.feature
      # - name: Run Gherkin Linting
       #  run: gherkin-lint code/Test_definitions/Qod_API_Test.feature
    #   - name: Install Spectral functions
