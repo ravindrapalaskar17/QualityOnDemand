@@ -1,9 +1,10 @@
-Feature: Test for the no-dupe-scenario-names rule
+Feature: Test for no-files-without-scenarios rule - Only Scenario Outline
 
-Scenario: This is a Scenario for no-dupe-scenario-names
-  Given I have 2 scenarios with the same name
-  Then I should see a no-dupe-scenario-names error
+Scenario Outline: Scenario Outline only
+  Given we use "<foo>"
+  And the feature has only scenario outlines
+  Then I should see no no-files-without-scenarios error
 
-Scenario: This is a Scenario for no-dupe-scenario-names
-  Given I have 2 scenarios with the same name
-  Then I should see a no-dupe-scenario-names error
+  Examples:
+  | foo |
+  | bar |
