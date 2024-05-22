@@ -1,22 +1,8 @@
-Feature: Test for the no-homogenous-tags
+Feature: Test for the no-partially-commented-tag-lines
 
 Background:
-  Given I have a Feature file with homogenous tags
+  Given I have a Feature file with a line with tags that is half commented out
 
-@homogenousTag
-Scenario: This is a Scenario with some tags
-  Then this is a then step
-
-@homogenousTag
-Scenario Outline: This is a Scenario with the same tags
-  Then this is a then step <foo>
-
-  @homogenousExampleTag
-  Examples:
-  | foo |
-  | bar |
-
-  @homogenousExampleTag
-  Examples:
-  | foo |
-  | bar |
+@tag #@commented-out-tag
+Scenario: This is a Scenario for no-partially-commented-tag-lines
+  Then I should see a no-partially-commented-tag-lines error
