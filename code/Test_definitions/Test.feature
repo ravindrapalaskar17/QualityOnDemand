@@ -1,10 +1,8 @@
-@watch
-Feature: A feature with disallowed tag
+Feature: This is a feature with example on a scenario
 
-@important @wip
-Scenario: A scenario with disallowed tag
-  Then I should see a no-watch tag error
+Scenario: This is a scenario with an example
+ Given I do this
 
-@todo
-Scenario: A scenario with allowed tags
-  Then I should see a no-watch tag error
+Examples:
+ |a|
+ |1|
