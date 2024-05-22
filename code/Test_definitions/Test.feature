@@ -1,8 +1,10 @@
-Feature: Test for the no-partially-commented-tag-lines
+@watch
+Feature: A feature with disallowed tag
 
-Background:
-  Given I have a Feature file with a line with tags that is half commented out
+@important @wip
+Scenario: A scenario with disallowed tag
+  Then I should see a no-watch tag error
 
-@tag #@commented-out-tag
-Scenario: This is a Scenario for no-partially-commented-tag-lines
-  Then I should see a no-partially-commented-tag-lines error
+@todo
+Scenario: A scenario with allowed tags
+  Then I should see a no-watch tag error
