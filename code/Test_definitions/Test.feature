@@ -1,6 +1,7 @@
-Feature: Test for the no-multiple-empty-lines rule
+Feature: Test for the use-and rule
 
+Background:
+  Given first statement
+  And second statement with and
+  Given third statement that does not use and
 
-Scenario: This is a Scenario for no-multiple-empty-lines
-  Given I have a feature file with multiple empty lines
-  Then I should see a no-multiple-empty-lines error
