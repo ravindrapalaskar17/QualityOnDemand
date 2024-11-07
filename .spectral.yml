@@ -1,3 +1,10 @@
+# CAMARA Project - linting ruleset - documentation avaialable here:
+# https://github.com/camaraproject/Commonalities/blob/main/documentation/Linting-rules.md
+# Changelog:
+# - 31.01.2024: Initial version
+# - 19.03.2024: Corrected camara-http-methods rule
+
+
 extends: "spectral:oas"
 functions:
   - camara-reserved-words
@@ -36,7 +43,7 @@ rules:
   typed-enum: true
   oas3-api-servers: true
   oas3-examples-value-or-externalValue: true
-  oas3-operation-security-defined: true
+  oas3-operation-security-defined: false
   oas3-parameter-description: false
   oas3-schema: true
   oas3-server-not-example.com: false
@@ -44,7 +51,7 @@ rules:
   oas3-unused-component: true
   oas3-valid-media-example: true
   oas3-valid-schema-example: true
-  oas3-server-variables: true
+  # oas3-server-variables: true
 
   # Custom Rules Utilizing Spectral's Built-in Functions and JavaScript Implementations
 
@@ -56,6 +63,7 @@ rules:
     given: "$..*.*"
     then:
       function: camara-language-avoid-telco
+    recommended: false  # Set to true/false to enable/disable this rule
 
   camara-oas-version:
     message: "OpenAPI Version Error: The OpenAPI specification must adhere to version 3.0.3."
@@ -68,21 +76,22 @@ rules:
       function: pattern
       functionOptions:
         match: 3.0.3
-    recommended: false  # Set to false to disable this rule
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-path-param-id:
-  message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
-  severity: warn
-  description: |
-    This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
-    Please use 'resource_id' instead of just 'id' for your path parameters.
-  given: "$..parameters[?(@.in == 'path')]"
-  then:
-    field: name
-    function: pattern
-    functionOptions:
-      notMatch: \b(id|Id|ID|iD)\b
-      
+    message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
+    severity: warn
+    description: |
+      This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
+      Please use 'resource_id' instead of just 'id' for your path parameters.
+    given: "$..parameters[?(@.in == 'path')]"
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        notMatch: \b(id|Id|ID|iD)\b
+    recommended: true  # Set to true/false to enable/disable this rule
+
   camara-security-no-secrets-in-path-or-query-parameters:
     message: "Sensitive data found in path: {{error}} Consider avoiding the use of Sesentive data "
     severity: warn
@@ -92,6 +101,7 @@ rules:
       - "$.paths"
     then:
       function: camara-security-no-secrets-in-path-or-query-parameters
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-http-methods:
     description: "Ensure that all path URLs have valid HTTP methods (GET, PUT, POST, DELETE, PATCH, OPTIONS)."
@@ -101,7 +111,8 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^(get|put|post|delete|patch|options)$"
+        match: "^(get|put|post|delete|patch|options|parameters)$"
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-get-no-request-body:
     message: There must be no request body for Get and DELETE
@@ -112,6 +123,7 @@ rules:
     then:
       field: requestBody
       function: falsy
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-reserved-words:
     message: "Reserved words found {{error}} Consider avoiding the use of reserved word "
@@ -128,19 +140,63 @@ rules:
       - "$.paths.*.*.operationId"              # OperationIds:
     then:
       function: camara-reserved-words
+    recommended: true  # Set to true/false to enable/disable this rule
 
+  camara-routes-description:
+    message: "Functionality method description Warning: Each method should have description."
+    severity: warn
+    description: |
+            This rule checks if each operation (POST, GET, DELETE, PUT, PATCH, OPTIONS) in your API specification has a description.
+            Ensure that you have added a 'summary' field for each operation in your OpenAPI specification.
+    given:
+      - "$.paths.*.post"
+      - "$.paths.*.get"
+      - "$.paths.*.delete"
+      - "$.paths.*.put"
+      - "$.paths.*.patch"
+      - "$.paths.*.options"
+    then:
+      field: description
+      function: truthy
+    recommended: true  # Set to true/false to enable/disable this rule
+    
   camara-parameters-descriptions:
     message: "Parameter description is missing or empty: {{error}}"
     severity: warn
     description: |
-      This Spectral rule ensures that each parameter in the API specification, including components and properties, has a descriptive and meaningful description.
+      This Spectral rule ensures that each path parameter in the API specification has a descriptive and meaningful description.
+    given:
+      - "$.paths..parameters.*"
+    then:
+      field: description
+      function: truthy
+    recommended: true  # Set to true/false to enable/disable this rule
+    
+  camara-response-descriptions:
+    message: "Parameter description is missing or empty: {{error}}"
+    severity: warn
+    description: |
+      This Spectral rule ensures that each responese object in the API specification has a descriptive and meaningful description.
+    given:
+      - "$.paths..responses.*"
+    then:
+      field: description
+      function: truthy
+    recommended: true  # Set to true/false to enable/disable this rule
+
+  camara-properties-descriptions:
+    message: "Property description is missing or empty: {{error}}"
+    severity: warn
+    description: |
+      This Spectral rule ensures that each propoerty within objects in the API specification has a descriptive and meaningful description.
     given:
       - "$.components.*.*"
       - "$.components.*.*.properties.*"
     then:
       field: description
       function: truthy
-
+    recommended: true  # Set to true/false to enable/disable this rule
+    
   camara-operation-summary:
     message: "Operation Summary Warning: Each operation should include a short summary for better understanding."
     severity: warn
@@ -157,17 +213,18 @@ rules:
     then:
       field: summary
       function: truthy
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-discriminator-use:
     description: |
       Ensure that API definition YAML files with oneOf or anyOf sections include a discriminator object for serialization, deserialization, and validation.
-    severity: warn
+    severity: hint
     given: "$..[?(@.oneOf || @.anyOf)]"
     then:
       field: discriminator
       function: truthy
       description: "Discriminator object is required when using oneOf or anyOf."
-    
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-operationid-casing-convention:
     message: Operation Id must be in Camel case "{{error}}"
@@ -179,13 +236,26 @@ rules:
       function: casing
       functionOptions:
         type: camel
+    recommended: true  # Set to true/false to enable/disable this rule
 
   camara-schema-casing-convention:
     description: This rule checks schema should follow a specific case convention pascal case.
-    message: "{{property}} should be pascal (uppper camel case)"
+    message: "{{property}} should be pascal case (UppperCamelCase)"
     severity: warn
     given: $.components.schemas[*]~
     then:
       function: casing
       functionOptions:
         type: pascal
+    recommended: true  # Set to true/false to enable/disable this rule
+
+  camara-parameter-casing-convention:
+    description: Paths should be kebab-case.
+    severity: error
+    message: "{{property}} is not kebab-case: {{error}}"
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$"  # doesn't allow /asasd{asdas}sadas pattern or not closed braces
+    recommended: true  # Set to true/false to enable/disable this rule
