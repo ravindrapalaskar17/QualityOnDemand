@@ -82,7 +82,6 @@ rules:
       function: pattern
       functionOptions:
         notMatch: \b(id|Id|ID|iD)\b
-    recommended: false  # Set to false to disable this rule    
 
   camara-security-no-secrets-in-path-or-query-parameters:
     message: "Sensitive data found in path: {{error}} Consider avoiding the use of Sesentive data "
@@ -168,7 +167,7 @@ rules:
       field: discriminator
       function: truthy
       description: "Discriminator object is required when using oneOf or anyOf."
-    recommended: false  # Set to false to disable this rule  
+    
 
   camara-operationid-casing-convention:
     message: Operation Id must be in Camel case "{{error}}"
