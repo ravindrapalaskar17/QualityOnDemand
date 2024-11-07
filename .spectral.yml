@@ -84,7 +84,7 @@ rules:
     description: |
       This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
       Please use 'resource_id' instead of just 'id' for your path parameters.
-    given: "$..parameters[?(@.in == 'path')]"
+    given: "$..parameters[?(@ && @.in && @.in == 'path')]"
     then:
       field: name
       function: pattern
