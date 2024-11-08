@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 paths:
-  /Hello/{hello_id}:
+  /Hello/{hello_Id}:
     get:
       summary: Get Hello Message by ID
       description: Returns a hello message based on the provided ID.
@@ -15,25 +15,6 @@ paths:
           schema:
             type: string
           description: This should ideally be named 'resource_id' for consistency.
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              example:
-                message: Hello, World!
-
-  /Hello/{resource_id}:
-    get:
-      summary: Get Hello Message by Resource ID
-      description: Returns a hello message based on the provided resource ID.
-      parameters:
-        - name: resource_id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: Consistently named path parameter.
       responses:
         '200':
           description: Successful response
