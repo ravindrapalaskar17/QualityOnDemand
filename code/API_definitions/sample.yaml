@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 paths:
-  /Hello/{id}:
+  /Hello/{Hello_id}:
     get:
       summary: Get Hello Message by ID
       description: Returns a hello message based on the provided ID.
