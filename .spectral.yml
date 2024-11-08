@@ -10,7 +10,7 @@ functions:
   - camara-reserved-words
   - camara-language-avoid-telco
   - camara-security-no-secrets-in-path-or-query-parameters
-  - camara-path-param-id
+
 functionsDir: "./lint_function"
 rules:
   #  Built-in OpenAPI Specification ruleset. Each rule then can be enabled individually.
