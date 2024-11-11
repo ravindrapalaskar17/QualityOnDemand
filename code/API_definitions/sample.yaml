@@ -3,22 +3,62 @@ info:
   title: Sample API
   version: 1.0.0
 
-paths:
-  /Hello/{hello_resource_id}:  # Changed from {hello_Id} to {hello_resource_id} for consistency
+ /sessions/{sessionId}:
     get:
-      summary: Get Hello Message by ID
-      description: Returns a hello message based on the provided ID.
+      tags:
+        - QoS Sessions
+      summary: Get QoS session information
+      description: Querying for QoS session resource information details
+      operationId: getSession
       parameters:
-        - name: hello_resource_id  # Changed from hello_id to hello_resource_id
+        - name: sessionId
           in: path
+          description: Session ID that was obtained from the createSession operation
           required: true
           schema:
-            type: string
-          description: This should ideally be named 'resource_id' for consistency.
+            $ref: "#/components/schemas/SessionId"
       responses:
-        '200':
-          description: Successful response
+        "200":
+          description: Contains information about active session
           content:
             application/json:
-              example:
-                message: Hello, World!
+              schema:
+                $ref: "#/components/schemas/SessionInfo"
+        "400":
+          $ref: "#/components/responses/Generic400"
+schemas:
+    SessionId:
+      description: Session ID in UUID format
+      type: string
+      format: uuid
+
+    SessionInfo:
+      description: Session related information.
+      allOf:
+        - $ref: "#/components/schemas/CreateSession"
+        - type: object
+          properties:
+            switch:
+              $ref: "#/components/schemas/SessionId"
+            startedAt:
+              type: integer
+              example: 1639479600
+              description: Timestamp of session start in seconds since Unix epoch
+              format: int64
+            expiresAt:
+              type: integer
+              example: 1639566000
+              description: Timestamp of session expiration if the session was not deleted, in seconds since Unix epoch
+              format: int64
+            qosStatus:
+              $ref: "#/components/schemas/QosStatus"
+            messages:
+              type: array
+              items:
+                $ref: "#/components/schemas/Message"
+          required:
+            - sessionId
+            - duration
+            - startedAt
+            - expiresAt
+            - qosStatus
