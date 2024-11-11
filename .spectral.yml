@@ -80,17 +80,17 @@ rules:
     recommended: true  # Set to true/false to enable/disable this rule
 
   camara-path-param-id:
-  message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
-  severity: warn
-  description: |
-    This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
-    Please use 'resource_id' instead of just 'id' for your path parameters.
-  given: "$..parameters[?(@.in == 'path')]"
-  then:
-    field: name
-    function: pattern
-    functionOptions:
-      match: "^(?!.*\\b(id|Id|ID|iD)\\b).*$"
+    message: "Path Parameter Naming Warning: Use 'resource_id' instead of just 'id' in path parameters."
+    severity: warn
+    description: |
+      This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
+      Please use 'resource_id' instead of just 'id' for your path parameters.
+    given: "$..parameters[?(@.in == 'path')]"
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        match: "^(?!.*\\b(id|Id|ID|iD)\\b).*$"
   recommended: true
 
   camara-security-no-secrets-in-path-or-query-parameters:
