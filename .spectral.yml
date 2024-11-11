@@ -10,7 +10,6 @@ functions:
   - camara-reserved-words
   - camara-language-avoid-telco
   - camara-security-no-secrets-in-path-or-query-parameters
-  - camara-path-param-id
 
 functionsDir: "./lint_function"
 rules:
@@ -86,10 +85,12 @@ rules:
     description: |
       This rule ensures consistent and descriptive naming for path parameters in your OpenAPI specification.
       Please use 'resource_id' instead of just 'id' for your path parameters.
-    given: "$..parameters[?(@.in == 'path')]"
+    given: "$.paths[*][*].parameters[?(@.in == 'path')].name"
     then:
       field: name
-      function: camara-path-param-id
+      function: pattern
+      functionOptions:
+        match: "^(?!.*\\b(id|Id|ID|iD)\\b).*$"
     recommended: true
 
   camara-security-no-secrets-in-path-or-query-parameters:
