@@ -4,12 +4,12 @@ info:
   version: 1.0.0
 
 paths:
-  /Hello/{hello_Id}:
+  /Hello/{hello_resource_id}:  # Changed from {hello_Id} to {hello_resource_id} for consistency
     get:
       summary: Get Hello Message by ID
       description: Returns a hello message based on the provided ID.
       parameters:
-        - name: hello_id
+        - name: hello_resource_id  # Changed from hello_id to hello_resource_id
           in: path
           required: true
           schema:
