@@ -1,24 +1,29 @@
-// customFunctions.js
+const sensitiveData = ['id', 'Id', 'ID', 'iD'];
+
 module.exports = {
-  pathParamIdCheck: (targetVal) => {
+  pathParamIdCheck: async (targetVal) => {
     if (!Array.isArray(targetVal)) {
       return [];
     }
 
     const results = [];
 
-    targetVal.forEach((param, index) => {
-      // Check if 'param' is an object and has the 'in' property with the value 'path'
+    // Iterate over each parameter
+    for (const [index, param] of targetVal.entries()) {
       if (param && param.in === 'path' && param.name) {
-        // Check if the name contains 'id', ignoring case
-        if (/^(id|Id|ID|iD)$/.test(param.name)) {
-          results.push({
-            message: "Path Parameter Naming Warning: Use 'resource_id' instead of 'id' in path parameters.",
-            path: [`parameters[${index}].name`]
-          });
+        for (const word of sensitiveData) {
+          const regex = new RegExp(`^${word}$`, 'i'); // Match exact word case-insensitively
+
+          if (regex.test(param.name)) {
+            results.push({
+              message: `Path Parameter Naming Warning: Use 'resource_id' instead of '${word}' in path parameters.`,
+              path: [`parameters[${index}].name`],
+            });
+            console.log(`Warning: Sensitive path parameter detected - "${word}" at parameters[${index}].name`);
+          }
         }
       }
-    });
+    }
 
     return results;
   }
