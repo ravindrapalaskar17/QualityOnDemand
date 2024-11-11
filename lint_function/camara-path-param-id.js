@@ -1,12 +1,11 @@
-const sensitiveData = ['id', 'Id', 'ID', 'iD'];
-
 module.exports = {
-  pathParamIdCheck: async (targetVal) => {
+  'camara-path-param-id': async (targetVal) => {
     if (!Array.isArray(targetVal)) {
       return [];
     }
 
     const results = [];
+    const sensitiveData = ['id', 'Id', 'ID', 'iD'];
 
     // Iterate over each parameter
     for (const [index, param] of targetVal.entries()) {
