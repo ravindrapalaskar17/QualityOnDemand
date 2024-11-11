@@ -10,6 +10,7 @@ functions:
   - camara-reserved-words
   - camara-language-avoid-telco
   - camara-security-no-secrets-in-path-or-query-parameters
+  - camara-path-param-id
 
 functionsDir: "./lint_function"
 rules:
@@ -88,9 +89,7 @@ rules:
     given: "$..parameters[?(@.in == 'path')]"
     then:
       field: name
-      function: pattern
-      functionOptions:
-        match: "^(?!.*\\b(id|Id|ID|iD)\\b).*$"
+      function: camara-path-param-id
     recommended: true
 
   camara-security-no-secrets-in-path-or-query-parameters:
