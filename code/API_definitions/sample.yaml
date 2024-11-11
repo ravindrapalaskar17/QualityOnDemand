@@ -635,7 +635,7 @@ components:
             code: UNAVAILABLE
             message: "Service unavailable"
 
-examples:
+ examples:
     RETRIEVE_DATE:
       summary: Lastest SIM swap date is send back
       value:
@@ -643,9 +643,9 @@ examples:
     RETRIEVE_MONITORED_NULL:
       summary: Only null value is retrieved
       value:
-        latestSimChange: 2024-09-18T07:37:53.471829447Z
+        latestSimChange: null
     RETRIEVE_MONITORED_PERIOD:
       summary: null is send back for the date but a monitoredPeriod is provided
       value:
-        latestSimChange: 2024-09-18T07:37:53.471829447Z
-        monitoredPeriod: null
+        latestSimChange: null
+        monitoredPeriod: 120
