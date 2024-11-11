@@ -91,7 +91,7 @@ rules:
       function: pattern
       functionOptions:
         match: "^(?!.*\\b(id|Id|ID|iD)\\b).*$"
-  recommended: true
+    recommended: true
 
   camara-security-no-secrets-in-path-or-query-parameters:
     message: "Sensitive data found in path: {{error}} Consider avoiding the use of Sesentive data "
