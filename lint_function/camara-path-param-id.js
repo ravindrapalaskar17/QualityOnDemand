@@ -11,7 +11,8 @@ module.exports = async function lintPathParamId(targetVal) {
   for (const [index, param] of targetVal.entries()) {
     if (param && param.in === 'path' && param.name) {
       for (const word of sensitiveData) {
-        const regex = new RegExp(`^${word}$`, 'i'); // Match exact word case-insensitively
+        // Updated regex: checks for 'id' anywhere in the string (as a substring)
+        const regex = new RegExp(`(?:^|[^a-zA-Z0-9])${word}(?:$|[^a-zA-Z0-9])`, 'i'); // Match 'id' but allow for surrounding characters
 
         if (regex.test(param.name)) {
           results.push({
@@ -26,4 +27,3 @@ module.exports = async function lintPathParamId(targetVal) {
 
   return results;
 };
-
