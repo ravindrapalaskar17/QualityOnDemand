@@ -44,7 +44,7 @@ info:
         "503":
           $ref: "#/components/responses/Generic503"
 
-  /qos-profiles/{name}:
+  /qos-profiles/{id}:
     get:
       tags:
         - QoS Profiles
@@ -53,7 +53,7 @@ info:
       description: |
         Returns a QoS Profile that matches the given name.
       parameters:
-        - name: name
+        - name: id
           in: path
           required: true
           schema:
