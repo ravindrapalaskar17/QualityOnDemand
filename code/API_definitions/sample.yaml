@@ -648,4 +648,4 @@ examples:
       summary: null is send back for the date but a monitoredPeriod is provided
       value:
         latestSimChange: 2024-09-18T07:37:53.471829447Z
-        monitoredPeriod: 120
+        monitoredPeriod: null
